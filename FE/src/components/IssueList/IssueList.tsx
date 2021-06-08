@@ -1,9 +1,11 @@
 import styled from "styled-components";
-import Filter from "./Filter";
+import Filter from "./Filter/Filter";
+import Controller from "./Controller/Controller"
 
 const IssueList = () => (
 	<IssueListWrapper>
 		<Filter />
+    <Controller />
 	</IssueListWrapper>
 );
 

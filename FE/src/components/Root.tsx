@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import IssueList from "./IssueList/IssueList"
+import Login from './Login';
 
 const Root = () => (
 	<RootWrapper>
@@ -12,7 +12,7 @@ const RouterComponent = () => (
 	<Router>
 		<Switch>
 			<Route path="/">
-        <IssueList />
+        <Login/>
       </Route>
 		</Switch>
 	</Router>

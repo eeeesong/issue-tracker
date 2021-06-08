@@ -1,14 +1,20 @@
 import styled from 'styled-components';
-
+import {useEffect} from "react";
 const GitLogin = () => {
+    useEffect(() => {
+        //api
+      }, []);
     return (
         <GitLoginWrapper>
-          GitHub 계정으로 로그인
+        <a href="https://github.com/login/oauth/authorize?client_id=96a319df91592ffb39bc">
+            <GitHubButton>
+            GitHub 계정으로 로그인
+            </GitHubButton>
+        </a>
         </GitLoginWrapper>
     );
 }
-
-const GitLoginWrapper = styled.button`
+const GitHubButton = styled.button`
 padding: 20px;
 font-size: 25px;
 background-color: black;
@@ -20,6 +26,8 @@ border-radius: 20px;
     color: black;
     border: 5px solid black;
 }
-`
+`;
+const GitLoginWrapper = styled.div`
+`;
 
 export default GitLogin;

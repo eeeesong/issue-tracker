@@ -68,6 +68,7 @@ const PopUpWrapper = styled.div`
 
   border: 1px solid #d9dbe9;
   border-radius: 16px;
+  z-index: 2;
 `;
 const PopUpHeader = styled.div`
   position: relative;

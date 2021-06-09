@@ -1,44 +1,61 @@
-import { useState } from "react";
+import { Dispatch } from "react";
 import styled from "styled-components";
 
-const Header = () => {
-  const [isChecked, setChecked] = useState(false);
-  const [search, setSearch] = useState("OPEN");
-  const openIssueCount = 3;
-  const closeIssueCount = 2;
+interface IHeader {
+  isOpen: boolean;
+  setOpen: Dispatch<boolean>;
+  count: {
+    open: number;
+    close: number;
+  };
+  filteredIndex: Array<number>;
+  checkedIndex: Array<number>;
+  setCheckedIndex: Dispatch<Array<number>>;
+}
+
+const Header = ({ isOpen, setOpen, count, filteredIndex, checkedIndex, setCheckedIndex }: IHeader) => {
+  const isCheckedAll = checkedIndex.length === filteredIndex.length;
+  const checkAllEvent = () => setCheckedIndex(isCheckedAll ? [] : [...filteredIndex]);
+
   return (
     <HeaderWrapper>
-      <CheckBox type="checkbox" checked={isChecked} onClick={() => setChecked((status) => !status)} readOnly />
-      {isChecked ? (
-        <></>
+      <CheckBox type="checkbox" checked={isCheckedAll} onClick={checkAllEvent} readOnly />
+      {checkedIndex.length === 0 ? (
+        <>
+          <OpenIssue onClick={() => setOpen(true)}>
+            <OpenIcon activated={isOpen} />
+            <IssueContent activated={isOpen}>{`열린 이슈(${count.open})`}</IssueContent>
+          </OpenIssue>
+          <CloseIssue onClick={() => setOpen(false)}>
+            <CloseIcon activated={!isOpen} />
+            <IssueContent activated={!isOpen}>{`닫힌 이슈(${count.close})`}</IssueContent>
+          </CloseIssue>
+          <Assignee>
+            <FilterText>담당자</FilterText>
+            <FilterIcon />
+          </Assignee>
+          <Label>
+            <FilterText>레이블</FilterText>
+            <FilterIcon />
+          </Label>
+          <Milestone>
+            <FilterText>마일스톤</FilterText>
+            <FilterIcon />
+          </Milestone>
+          <Author>
+            <FilterText>작성자</FilterText>
+            <FilterIcon />
+          </Author>
+        </>
       ) : (
         <>
-          <OpenIssue onClick={() => setSearch("OPEN")}>
-            <OpenIcon activated={search === "OPEN"} />
-            <IssueContent activated={search === "OPEN"}>{`열린 이슈(${openIssueCount})`}</IssueContent>
-          </OpenIssue>
-          <CloseIssue onClick={() => setSearch("CLOSED")}>
-            <CloseIcon activated={search === "CLOSED"} />
-            <IssueContent activated={search === "CLOSED"}>{`닫힌 이슈(${closeIssueCount})`}</IssueContent>
-          </CloseIssue>
+          <CheckedCount>{checkedIndex.length}개 이슈 선택</CheckedCount>
+          <EditState>
+            <FilterText>상태 수정</FilterText>
+            <FilterIcon />
+          </EditState>
         </>
       )}
-      <Assignee>
-        <FilterText>담당자</FilterText>
-        <FilterIcon />
-      </Assignee>
-      <Label>
-        <FilterText>레이블</FilterText>
-        <FilterIcon />
-      </Label>
-      <Milestone>
-        <FilterText>마일스톤</FilterText>
-        <FilterIcon />
-      </Milestone>
-      <Author>
-        <FilterText>작성자</FilterText>
-        <FilterIcon />
-      </Author>
     </HeaderWrapper>
   );
 };
@@ -190,6 +207,23 @@ const Author = styled.div`
   height: 32px;
   left: 1183px;
   top: 16px;
+`;
+const EditState = styled.div`
+  position: absolute;
+  width: 83px;
+  height: 32px;
+  left: 1165px;
+  top: 16px;
+`;
+const CheckedCount = styled.div`
+  position: absolute;
+  height: 28px;
+  left: 80px;
+  top: 18px;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 28px;
+  color: #6e7191;
 `;
 
 export default Header;

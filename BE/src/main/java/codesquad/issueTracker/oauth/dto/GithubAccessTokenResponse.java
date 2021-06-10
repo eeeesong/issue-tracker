@@ -1,4 +1,4 @@
-package codesquad.issueTracker.oauth;
+package codesquad.issueTracker.oauth.dto;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 

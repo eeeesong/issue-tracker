@@ -13,6 +13,7 @@ const IssueList = () => (
 
 const IssueListWrapper = styled.div`
   width: 1280px;
+  height: 300px;
 `;
 
 export default IssueList;

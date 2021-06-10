@@ -1,8 +1,6 @@
-package codesquad.issueTracker.oauth;
+package codesquad.issueTracker.oauth.service;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
+import codesquad.issueTracker.oauth.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,13 +17,14 @@ import java.util.Optional;
 public class OauthService {
     private final Logger logger = LoggerFactory.getLogger(OauthService.class);
 
-    String GITHUB_ACCESS_TOKEN_URI;
-    String CLIENT_ID_iOS;
-    String CLIENT_SECRET_iOS;
-    String CLIENT_ID_WEB;
-    String CLIENT_SECRET_WEB;
-    String GITHUB_USER_URI;
-    String ISSUER;
+    private String GITHUB_ACCESS_TOKEN_URI;
+    private String CLIENT_ID_iOS;
+    private String CLIENT_SECRET_iOS;
+    private String CLIENT_ID_WEB;
+    private String CLIENT_SECRET_WEB;
+    private String GITHUB_USER_URI;
+
+    private final JwtUtils jwtUtils;
 
     public OauthService(@Value("${GITHUB_ACCESS_TOKEN_URI}")String GITHUB_ACCESS_TOKEN_URI,
                         @Value("${CLIENT_ID_iOS}")String CLIENT_ID_iOS,
@@ -33,14 +32,14 @@ public class OauthService {
                         @Value("${CLIENT_ID_WEB}")String CLIENT_ID_WEB,
                         @Value("${CLIENT_SECRET_WEB}")String CLIENT_SECRET_WEB,
                         @Value("${GITHUB_USER_URI}")String GITHUB_USER_URI,
-                        @Value("${ISSUER}")String ISSUER) {
+                        JwtUtils jwtUtils) {
         this.GITHUB_ACCESS_TOKEN_URI = GITHUB_ACCESS_TOKEN_URI;
         this.CLIENT_ID_iOS = CLIENT_ID_iOS;
         this.CLIENT_SECRET_iOS = CLIENT_SECRET_iOS;
         this.CLIENT_ID_WEB = CLIENT_ID_WEB;
         this.CLIENT_SECRET_WEB = CLIENT_SECRET_WEB;
         this.GITHUB_USER_URI = GITHUB_USER_URI;
-        this.ISSUER = ISSUER;
+        this.jwtUtils = jwtUtils;
     }
 
     public OauthDTO githubTokenWeb(String code) {
@@ -59,27 +58,12 @@ public class OauthService {
         OauthUser oauthUser = getUserFromGitHub(accessToken, gitHubRequest)
                 .orElseThrow(() -> new RuntimeException("바디 없음"));
 
-        String jwtToken = getJwt(oauthUser);
+        OauthJwt jwtToken = jwtUtils.getJwt(oauthUser);
         logger.info("accessToken : {}", accessToken);
         logger.info("gitHubRequest : {}", gitHubRequest);
         logger.info("jwtToken : {}", jwtToken);
         logger.info("user : {} ", oauthUser);
         return new OauthDTO(jwtToken, oauthUser.getAvatarUrl(), oauthUser.getLoginId());
-    }
-
-    private String getJwt(OauthUser oauthUser) {
-
-        try {
-            Algorithm algorithm = Algorithm.HMAC256("secret");
-            return JWT.create()
-                    .withClaim("login", oauthUser.getLoginId())
-                    .withClaim("name", oauthUser.getName())
-                    .withIssuer(ISSUER)
-                    .sign(algorithm);
-        } catch (JWTCreationException exception) {
-            //Invalid Signing configuration /or/ Couldn't convert Claims.
-            throw new RuntimeException(exception);
-        }
     }
 
     private Optional<OauthUser> getUserFromGitHub(GithubAccessTokenResponse accessToken, RestTemplate gitHubRequest) {

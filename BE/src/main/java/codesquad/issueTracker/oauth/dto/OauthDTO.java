@@ -1,19 +1,17 @@
-package codesquad.issueTracker.oauth;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package codesquad.issueTracker.oauth.dto;
 
 public class OauthDTO {
-    private String jwt;
+    private OauthJwt jwt;
     private String avatarUrl;
     private String loginId;
 
-    public OauthDTO(String jwt, String avatar_url, String login_id) {
+    public OauthDTO(OauthJwt jwt, String avatar_url, String login_id) {
         this.jwt = jwt;
         this.avatarUrl = avatar_url;
         this.loginId = login_id;
     }
 
-    public String getJwt() {
+    public OauthJwt getJwt() {
         return jwt;
     }
 

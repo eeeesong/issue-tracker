@@ -12,6 +12,7 @@ const IssueList = () => (
 );
 
 const IssueListWrapper = styled.div`
+  position: relative;
   width: 1280px;
   height: 300px;
 `;

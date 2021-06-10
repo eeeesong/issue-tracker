@@ -9,8 +9,9 @@ interface IUser {
 }
 
 interface ILabel {
-  title: string;
-  color: string;
+  id: number;
+  name: string;
+  color_code: string;
 }
 interface IIssue {
   id: number;
@@ -30,7 +31,10 @@ const issues: Array<IIssue> = [
     id: 1,
     title: "FE 이슈트래커 개발",
     body: "김수한무거북이와두루미삼천갑자동방삭",
-    label: [{ title: "documentation", color: "#FFFFFF" }],
+    label: [
+      { id: 1, name: "documentation", color_code: "004de3" },
+      { id: 2, name: "test", color_code: "FF0000" },
+    ],
     milestone: { title: "마스터즈 코스" },
     assignee: [{ name: "Seong", image: "대충 src" }],
     author: { name: "Seong", image: "대충 src" },
@@ -42,7 +46,7 @@ const issues: Array<IIssue> = [
     id: 2,
     title: "개발은 천천히",
     body: "398749382",
-    label: [],
+    label: [{ id: 2, name: "test", color_code: "FF0000" }],
     milestone: { title: "마스터즈 코스" },
     assignee: [{ name: "Seong", image: "대충 src" }],
     author: { name: "Seong", image: "대충 src" },
@@ -54,7 +58,7 @@ const issues: Array<IIssue> = [
     id: 3,
     title: "천천히",
     body: "8749382",
-    label: [],
+    label: [{id:3, name:"test2", color_code:"AAAAAA"},{id:4, name:"test3", color_code:"999999"},{id:5, name:"test4", color_code:"EE99AA"}],
     milestone: null,
     assignee: [{ name: "Seong", image: "대충 src" }],
     author: { name: "Seong", image: "대충 src" },
@@ -102,7 +106,7 @@ const issues: Array<IIssue> = [
     id: 7,
     title: "개수테스트",
     body: "382",
-    label: [],
+    label: [{ id: 2, name: "test", color_code: "FF0000" }],
     milestone: { title: "마스터즈 코스" },
     assignee: [{ name: "Seong", image: "대충 src" }],
     author: { name: "Luke", image: "대충 src" },

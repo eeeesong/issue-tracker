@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
+import Label from "components/common/Label";
 
 interface IUser {
   name: string;
@@ -7,8 +8,9 @@ interface IUser {
 }
 
 interface ILabel {
-  title: string;
-  color: string;
+  id: number;
+  name: string;
+  color_code: string;
 }
 interface IIssue {
   id: number;
@@ -32,7 +34,7 @@ const Issue = ({
   checkedIndex: Array<number>;
   setCheckedIndex: Dispatch<SetStateAction<Array<number>>>;
 }) => {
-  const { id, title, milestone, author } = content;
+  const { id, title, label, milestone, author } = content;
   const check = () => setCheckedIndex((arr) => (checkedIndex.includes(id) ? [...arr.filter((index) => index !== id)] : [...arr, id].sort()));
   return (
     <IssueWrapper>
@@ -40,6 +42,9 @@ const Issue = ({
       <IssueTitle>
         <OpenIcon />
         <TitleText>{title}</TitleText>
+        {label.map(({ id, name, color_code }) => (
+          <Label key={id} name={name} color_code={color_code} />
+        ))}
       </IssueTitle>
       <IssueInfo>
         <InfoText>#{id}</InfoText>

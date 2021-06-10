@@ -1,7 +1,7 @@
 package codesquad.issueTracker.oauth.service;
 
+import codesquad.issueTracker.domain.User;
 import codesquad.issueTracker.oauth.dto.OauthJwt;
-import codesquad.issueTracker.oauth.dto.OauthUser;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -10,6 +10,9 @@ import com.auth0.jwt.interfaces.JWTVerifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+
+import java.sql.Date;
+import java.time.LocalDate;
 
 @Component
 @PropertySource("classpath:oauth.properties")
@@ -37,14 +40,15 @@ public class JwtUtils {
     }
 
 
-    public OauthJwt getJwt(OauthUser oauthUser) {
+    public OauthJwt getJwt(User user) {
         try {
             String token = JWT.create()
-                    .withClaim(ID, oauthUser.getId())
-                    .withClaim(LOGIN_ID, oauthUser.getLoginId())
-                    .withClaim(IMAGE_URL, oauthUser.getAvatarUrl())
-                    .withClaim(NAME, oauthUser.getName())
+                    .withClaim(ID, user.getId())
+                    .withClaim(LOGIN_ID, user.getLoginId())
+                    .withClaim(IMAGE_URL, user.getImageUrl())
+                    .withClaim(NAME, user.getName())
                     .withIssuer(ISSUER)
+                    .withExpiresAt(Date.valueOf(LocalDate.now().plusDays(2)))
                     .sign(ALGORITHM);
             return new OauthJwt(token);
         } catch (JWTCreationException exception) {
@@ -53,12 +57,13 @@ public class JwtUtils {
     }
 
 
-    public OauthUser getUserFromJwt(DecodedJWT jwt) {
-        return OauthUser.of(
+    public User getUserFromJwt(DecodedJWT jwt) {
+        return User.of(
                 jwt.getClaim(ID).asLong(),
                 jwt.getClaim(LOGIN_ID).asString(),
                 jwt.getClaim(IMAGE_URL).asString(),
-                jwt.getClaim(NAME).asString()
+                jwt.getClaim(NAME).asString(),
+                null
         );
     }
 

@@ -1,6 +1,8 @@
 package codesquad.issueTracker.oauth.service;
 
+import codesquad.issueTracker.domain.User;
 import codesquad.issueTracker.oauth.dto.*;
+import codesquad.issueTracker.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,14 +27,15 @@ public class OauthService {
     private String GITHUB_USER_URI;
 
     private final JwtUtils jwtUtils;
+    private final UserRepository userRepository;
 
-    public OauthService(@Value("${GITHUB_ACCESS_TOKEN_URI}")String GITHUB_ACCESS_TOKEN_URI,
-                        @Value("${CLIENT_ID_iOS}")String CLIENT_ID_iOS,
-                        @Value("${CLIENT_SECRET_iOS}")String CLIENT_SECRET_iOS,
-                        @Value("${CLIENT_ID_WEB}")String CLIENT_ID_WEB,
-                        @Value("${CLIENT_SECRET_WEB}")String CLIENT_SECRET_WEB,
-                        @Value("${GITHUB_USER_URI}")String GITHUB_USER_URI,
-                        JwtUtils jwtUtils) {
+    public OauthService(@Value("${GITHUB_ACCESS_TOKEN_URI}") String GITHUB_ACCESS_TOKEN_URI,
+                        @Value("${CLIENT_ID_iOS}") String CLIENT_ID_iOS,
+                        @Value("${CLIENT_SECRET_iOS}") String CLIENT_SECRET_iOS,
+                        @Value("${CLIENT_ID_WEB}") String CLIENT_ID_WEB,
+                        @Value("${CLIENT_SECRET_WEB}") String CLIENT_SECRET_WEB,
+                        @Value("${GITHUB_USER_URI}") String GITHUB_USER_URI,
+                        JwtUtils jwtUtils, UserRepository userRepository) {
         this.GITHUB_ACCESS_TOKEN_URI = GITHUB_ACCESS_TOKEN_URI;
         this.CLIENT_ID_iOS = CLIENT_ID_iOS;
         this.CLIENT_SECRET_iOS = CLIENT_SECRET_iOS;
@@ -40,6 +43,7 @@ public class OauthService {
         this.CLIENT_SECRET_WEB = CLIENT_SECRET_WEB;
         this.GITHUB_USER_URI = GITHUB_USER_URI;
         this.jwtUtils = jwtUtils;
+        this.userRepository = userRepository;
     }
 
     public OauthDTO githubTokenWeb(String code) {
@@ -55,10 +59,13 @@ public class OauthService {
         RestTemplate gitHubRequest = new RestTemplate();
         GithubAccessTokenResponse accessToken = getAccessToken(code, clientId, clientSecret, gitHubRequest)
                 .orElseThrow(() -> new RuntimeException("바디 없음"));
+
         OauthUser oauthUser = getUserFromGitHub(accessToken, gitHubRequest)
                 .orElseThrow(() -> new RuntimeException("바디 없음"));
 
-        OauthJwt jwtToken = jwtUtils.getJwt(oauthUser);
+        User user = userRepository.findByLoginId(oauthUser.getLoginId());
+
+        OauthJwt jwtToken = jwtUtils.getJwt(user);
         logger.info("accessToken : {}", accessToken);
         logger.info("gitHubRequest : {}", gitHubRequest);
         logger.info("jwtToken : {}", jwtToken);

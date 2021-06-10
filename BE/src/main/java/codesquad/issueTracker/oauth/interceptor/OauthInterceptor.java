@@ -1,9 +1,9 @@
 package codesquad.issueTracker.oauth.interceptor;
 
-import codesquad.issueTracker.oauth.service.JwtUtils;
-import codesquad.issueTracker.oauth.dto.OauthUser;
+import codesquad.issueTracker.domain.User;
 import codesquad.issueTracker.oauth.exception.BadRequest;
 import codesquad.issueTracker.oauth.exception.NoAuthorizationException;
+import codesquad.issueTracker.oauth.service.JwtUtils;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -27,7 +27,7 @@ public class OauthInterceptor implements HandlerInterceptor {
 
         String token = getJwt(request);
         DecodedJWT jwt = jwtUtils.verify(token);
-        OauthUser user = jwtUtils.getUserFromJwt(jwt);
+        User user = jwtUtils.getUserFromJwt(jwt);
         request.setAttribute("user", user);
         return true;
     }

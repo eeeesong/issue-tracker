@@ -4,7 +4,7 @@ import AddButton from "components/common/AddButton";
 import Tabs from "components/common/Tabs";
 import Filter from "./Filter/Filter";
 import List from "./List/List";
-import { RecoilRoot, useRecoilState, atom, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { LoginState } from "../../atoms/atoms";
 
 const IssueList = () => {

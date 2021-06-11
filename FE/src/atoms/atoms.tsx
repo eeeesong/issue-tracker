@@ -2,7 +2,9 @@ import { atom, selector } from "recoil";
 
 export const userInfoAtom = atom({
   key: "userInfo",
-  default: {},
+  default: {
+    profileUrl: "",
+  },
 });
 
 export const currentIssueAtom = atom({
@@ -38,6 +40,8 @@ export const milestoneCountSelector = selector({
   get({ get }) {
     return get(milestoneListAtom).length;
   },
+});
+
 export const LoginState = atom({
   key: "isLogin",
   default: false,

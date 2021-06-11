@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import {useEffect} from "react";
 import { RouteComponentProps } from "react-router-dom";
 interface Props extends RouteComponentProps {};
@@ -21,9 +20,6 @@ const Callback = ({location, history}:Props) => {
   }, [])
   return <>loading...</>;
 };
-
-
-const CallbackWrapper = styled.div``;
 
 export default Callback;
 

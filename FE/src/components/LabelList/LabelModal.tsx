@@ -2,7 +2,13 @@ import styled from "styled-components";
 import Label from "components/common/Label";
 import { Dispatch, MouseEventHandler, useEffect, useState } from "react";
 
-const EditModal = ({ label, setEdit }: { label: { id: number; name: string; content: string; color_code: string }; setEdit: Dispatch<boolean> }) => {
+interface ILabelModal {
+  label: { id: number; name: string; content: string; color_code: string };
+  type: "ADD" | "EDIT";
+  setEdit?: Dispatch<boolean>;
+}
+
+const LabelModal = ({ label, type, setEdit }: ILabelModal) => {
   const [name, setName] = useState(label.name);
   const [content, setContent] = useState(label.content);
   const [colorCode, setColorCode] = useState(label.color_code);
@@ -11,8 +17,8 @@ const EditModal = ({ label, setEdit }: { label: { id: number; name: string; cont
   }, [colorCode]);
   const setRandomColorCode = () => setColorCode(Math.floor(Math.random() * (parseInt("FFFFFF", 16) + 1)).toString(16));
   return (
-    <EditModalWrapper>
-      <Title>레이블 편집</Title>
+    <EditModalWrapper type={type}>
+      <Title>{type === "ADD" ? "새로운 레이블 추가" : "레이블 편집"}</Title>
       <LabelWrapper>
         <Label name={name} color_code={colorCode} />
       </LabelWrapper>
@@ -29,12 +35,14 @@ const EditModal = ({ label, setEdit }: { label: { id: number; name: string; cont
         <LabelColorInput value={"#" + colorCode} onChange={({ target }) => setColorCode(target.value.replace("#", ""))} />
         <RefreshIcon onClick={setRandomColorCode} />
       </LabelColor>
-      <CancelButton onClick={() => setEdit(false)}>
-        <CancelIcon />
-        <CancelButtonText>취소</CancelButtonText>
-      </CancelButton>
-      <ConfirmButton>
-        <ConfirmIcon />
+      {type === "EDIT" && (
+        <CancelButton onClick={() => setEdit && setEdit(false)}>
+          <CancelIcon />
+          <CancelButtonText>취소</CancelButtonText>
+        </CancelButton>
+      )}
+      <ConfirmButton isActivated={name.length > 0}>
+        <ConfirmIcon type={type} />
         <ConfirmButtonText>확인</ConfirmButtonText>
       </ConfirmButton>
     </EditModalWrapper>
@@ -78,31 +86,41 @@ const CancelIcon = () => (
   </CancelIconWrapper>
 );
 
-const ConfirmIcon = () => (
+const ConfirmIcon = ({ type }: { type: "ADD" | "EDIT" }) => (
   <ConfirmIconWrapper>
-    <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M13.8335 9.77366V13.3337C13.8335 13.6873 13.693 14.0264 13.443 14.2765C13.1929 14.5265 12.8538 14.667 12.5002 14.667H3.16683C2.81321 14.667 2.47407 14.5265 2.22402 14.2765C1.97397 14.0264 1.8335 13.6873 1.8335 13.3337V4.00033C1.8335 3.6467 1.97397 3.30756 2.22402 3.05752C2.47407 2.80747 2.81321 2.66699 3.16683 2.66699H6.72683"
-        stroke="#FEFEFE"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12.5002 1.33301L15.1668 3.99967L8.50016 10.6663H5.8335V7.99967L12.5002 1.33301Z"
-        stroke="#FEFEFE"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    {type === "ADD" ? (
+      <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 3.33301V12.6663" stroke="#FEFEFE" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3.83325 8H13.1666" stroke="#FEFEFE" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ) : (
+      <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M13.8335 9.77366V13.3337C13.8335 13.6873 13.693 14.0264 13.443 14.2765C13.1929 14.5265 12.8538 14.667 12.5002 14.667H3.16683C2.81321 14.667 2.47407 14.5265 2.22402 14.2765C1.97397 14.0264 1.8335 13.6873 1.8335 13.3337V4.00033C1.8335 3.6467 1.97397 3.30756 2.22402 3.05752C2.47407 2.80747 2.81321 2.66699 3.16683 2.66699H6.72683"
+          stroke="#FEFEFE"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M12.5002 1.33301L15.1668 3.99967L8.50016 10.6663H5.8335V7.99967L12.5002 1.33301Z"
+          stroke="#FEFEFE"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    )}
   </ConfirmIconWrapper>
 );
 
-const EditModalWrapper = styled.div`
+const EditModalWrapper = styled.div<{ type: "ADD" | "EDIT" }>`
   position: relative;
   width: 1280px;
   height: 345px;
+  top: ${({ type }) => (type === "ADD" ? "64px" : "0px")};
+  border: ${({ type }) => (type === "ADD" ? "1px solid #d9dbe9" : "")};
+  border-radius: ${({ type }) => (type === "ADD" ? "16px" : "")};
   background: #fefefe;
   margin-top: 1px;
   &:last-child {
@@ -119,8 +137,13 @@ const Title = styled.div`
 `;
 const LabelWrapper = styled.div`
   position: absolute;
-  left: 116px;
-  top: 191px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 288px;
+  height: 217px;
+  left: 32px;
+  top: 96px;
 `;
 const LabelTitle = styled.div`
   position: absolute;
@@ -230,7 +253,7 @@ const CancelButtonText = styled.div`
   line-height: 20px;
   color: #007aff;
 `;
-const ConfirmButton = styled.div`
+const ConfirmButton = styled.div<{ isActivated: boolean }>`
   position: absolute;
   width: 120px;
   height: 40px;
@@ -238,6 +261,7 @@ const ConfirmButton = styled.div`
   top: 273px;
   background: #007aff;
   border-radius: 11px;
+  opacity: ${({ isActivated }) => (isActivated ? 1 : 0.5)};
 `;
 const ConfirmIconWrapper = styled.div`
   position: absolute;
@@ -258,4 +282,4 @@ const ConfirmButtonText = styled.div`
   color: #fefefe;
 `;
 
-export default EditModal;
+export default LabelModal;

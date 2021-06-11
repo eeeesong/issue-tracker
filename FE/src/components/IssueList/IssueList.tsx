@@ -6,7 +6,7 @@ import List from "./List/List";
 
 const IssueList = () => (
   <IssueListWrapper>
-    <AddButton text="이슈 작성"/>
+    <AddButton text="이슈 작성" onClick={()=>console.log("기능추가요망")}/>
     <Tabs left={823} type="ISSUE"/>
     <Filter />
     <List />

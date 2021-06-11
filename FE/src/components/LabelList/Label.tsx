@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import EachLabel from "components/common/Label";
-import EditModal from "./EditModal";
+import LabelModal from "./LabelModal";
 import { useState } from "react";
 
 const Label = ({ id, name, content, color_code }: { id: number; name: string; content: string; color_code: string }) => {
   const [isEdit, setEdit] = useState(false);
   return isEdit ? (
-    <EditModal label={{ id, name, content, color_code }} setEdit={setEdit} />
+    <LabelModal label={{ id, name, content, color_code }} type="EDIT" setEdit={setEdit} />
   ) : (
     <LabelWrapper>
       <LabelTitle>

@@ -3,25 +3,24 @@ import { useRecoilValue } from "recoil";
 import { labelCountSelector, labelListAtom } from "atoms/atoms";
 import Label from "./Label";
 
-const List = () => {
+const List = ({ isAdding }: { isAdding: boolean }) => {
   const labelCount = useRecoilValue(labelCountSelector);
   const labelList = useRecoilValue(labelListAtom);
   return (
-    <ListWrapper>
+    <ListWrapper isAdding={isAdding}>
       <Header>
         <HeaderText>{`${labelCount}개의 레이블`}</HeaderText>
       </Header>
       {labelList.map((label) => (
         <Label key={label.id} {...label} />
       ))}
-      {/* <Label /> */}
     </ListWrapper>
   );
 };
 
-const ListWrapper = styled.div`
+const ListWrapper = styled.div<{ isAdding: boolean }>`
   position: absolute;
-  top: 64px;
+  top: ${({ isAdding }) => (isAdding ? "433px" : "64px")};
   background: #d9dbe9;
   border: 1px solid #d9dbe9;
   border-radius: 16px;

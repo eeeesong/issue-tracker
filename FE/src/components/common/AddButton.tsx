@@ -1,8 +1,9 @@
+import { MouseEventHandler } from "react";
 import styled from "styled-components";
 
-const AddButton = ({ text }: { text: string }) => {
+const AddButton = ({ text, onClick }: { text: string; onClick: MouseEventHandler }) => {
   return (
-    <AddButtonWrapper>
+    <AddButtonWrapper onClick={onClick}>
       <PlusIcon />
       <ButtonText>{text}</ButtonText>
     </AddButtonWrapper>

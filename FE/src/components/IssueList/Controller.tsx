@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import Tabs from "components/common/Tabs";
-import AddButton from "./AddButton";
+import AddButton from "components/common/AddButton";
 
 const Controller = () => {
   return (
     <ControllerWrapper>
       <Tabs type="ISSUE"/>
-      <AddButton />
+      <AddButton text="이슈 작성" />
     </ControllerWrapper>
   );
 };

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-const AddButton = () => {
+const AddButton = ({ text }: { text: string }) => {
   return (
     <AddButtonWrapper>
-      <ButtonText>이슈 작성</ButtonText>
       <PlusIcon />
+      <ButtonText>{text}</ButtonText>
     </AddButtonWrapper>
   );
 };
@@ -20,6 +20,9 @@ const PlusIcon = () => (
 
 const AddButtonWrapper = styled.div`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 120px;
   height: 40px;
   left: 337px;
@@ -27,20 +30,15 @@ const AddButtonWrapper = styled.div`
   border-radius: 11px;
 `;
 const ButtonText = styled.div`
-  position: absolute;
-  left: 46.5px;
-  top: 10px;
   font-weight: bold;
   font-size: 12px;
   line-height: 20px;
   color: #fefefe;
+  margin-left: 1px;
 `;
 const IconWrapper = styled.div`
-  position: absolute;
-  left: 22.08%;
-  right: 64.58%;
-  top: 30%;
-  bottom: 30%;
+  position: relative;
+  top: 1px;
 `;
 
 export default AddButton;

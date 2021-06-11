@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Filter from "./Filter/Filter";
-import Controller from "./Controller/Controller";
+import Controller from "./Controller";
 import List from "./List/List";
 
 const IssueList = () => (

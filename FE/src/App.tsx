@@ -1,11 +1,14 @@
 import GlobalStyle from "config/GlobalStyle";
 import Root from "components/Root";
+import { RecoilRoot } from "recoil";
 
 const App = () => (
-	<>
-		<Root />
-		<GlobalStyle />
-	</>
+  <>
+    <RecoilRoot>
+      <Root />
+      <GlobalStyle />
+    </RecoilRoot>
+  </>
 );
 
 export default App;

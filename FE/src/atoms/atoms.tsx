@@ -38,4 +38,7 @@ export const milestoneCountSelector = selector({
   get({ get }) {
     return get(milestoneListAtom).length;
   },
+export const LoginState = atom({
+  key: "isLogin",
+  default: false,
 });

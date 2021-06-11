@@ -1,41 +1,41 @@
-import { useState } from "react";
-import { RecoilRoot } from "recoil";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from "./Login";
+import Login from "components/Login/Login";
 import IssueList from "./IssueList/IssueList";
-import NewIssue from "./NewIssue/NewIssue"
-import Header from "./Header/Header";
+import Header from "components/Header/Header";
+import Callback from "components/Login/Callback";
+import NewIssue from "./NewIssue/NewIssue";
+import { useRecoilValue } from "recoil";
+import { LoginState } from "../atoms/atoms";
 
 const Root = () => {
-  const [isLogin, setIsLogin] = useState(false);
   return (
-    <RecoilRoot>
-      <RootWrapper>
-        <RouterComponent isLogin={isLogin} />
-      </RootWrapper>
-    </RecoilRoot>
+    <RootWrapper>
+      <RouterComponent />
+    </RootWrapper>
   );
 };
-type Props = {
-  isLogin: boolean;
-};
-const RouterComponent = ({ isLogin }: Props) => (
-  <Router>
-    {/* reverse */}
-    {!isLogin && (
+const RouterComponent = () => {
+  const isLogin = useRecoilValue(LoginState);
+  return (
+    <Router>
+      {/* reverse */}
+      {isLogin && (
+        <Switch>
+          <Header />
+        </Switch>
+      )}
+      {/* 라우트 추가 부분 */}
       <Switch>
-        <Header />
+        <Route path="/" component={Login} exact />
+        <Route path="/issuelist" component={IssueList} />
+        <Route path="/newissue" component={NewIssue} />
+        <Route path="/callback" component={Callback} />
       </Switch>
-    )}
-    {/* 라우트 추가 부분 */}
-    <Switch>
-      <Route path="/" component={Login} exact />
-      <Route path="/issuelist" component={IssueList} />
-      <Route path="/newissue" component={NewIssue} />
-    </Switch>
-  </Router>
-);
+    </Router>
+  );
+};
 
 const RootWrapper = styled.div``;
 

@@ -13,11 +13,11 @@ export const currentIssueAtom = atom({
 export const labelListAtom = atom({
   key: "labelList",
   default: [
-    { id: 1, name: "documentation", color_code: "004de3" },
-    { id: 2, name: "test", color_code: "FF0000" },
-    { id: 3, name: "test2", color_code: "AAAAAA" },
-    { id: 4, name: "test3", color_code: "999999" },
-    { id: 5, name: "test4", color_code: "EE99AA" },
+    { id: 1, name: "documentation", content: "문서 관련", color_code: "004de3" },
+    { id: 2, name: "test", content: "색테스트", color_code: "FF0000" },
+    { id: 3, name: "test2", content: "글자색 반응 테스트", color_code: "AAAAAA" },
+    { id: 4, name: "test3", content: "글자색 반응 테스트", color_code: "999999" },
+    { id: 5, name: "test4", content: "글자색 반응 테스트", color_code: "EE99AA" },
   ],
 });
 

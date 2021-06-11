@@ -25,7 +25,7 @@ const AddButtonWrapper = styled.div`
   align-items: center;
   width: 120px;
   height: 40px;
-  left: 337px;
+  right: 0px;
   background: #007aff;
   border-radius: 11px;
 `;

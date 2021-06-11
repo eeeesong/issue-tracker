@@ -1,12 +1,14 @@
 import styled from "styled-components";
+import AddButton from "components/common/AddButton";
+import Tabs from "components/common/Tabs";
 import Filter from "./Filter/Filter";
-import Controller from "./Controller";
 import List from "./List/List";
 
 const IssueList = () => (
   <IssueListWrapper>
+    <AddButton text="이슈 작성"/>
+    <Tabs left={823} type="ISSUE"/>
     <Filter />
-    <Controller />
     <List />
   </IssueListWrapper>
 );

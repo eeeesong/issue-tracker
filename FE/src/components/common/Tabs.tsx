@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-const Tabs = ({ type }: { type: string }) => {
+const Tabs = ({ type, left }: { type: string; left: number }) => {
   const labelCount = useRecoilValue(labelCountSelector);
   const milestoneCount = useRecoilValue(milestoneCountSelector);
   return (
-    <TabsWrapper>
+    <TabsWrapper left={left}>
       <Tab isActivated={type === "LABEL"}>
         <Link to={"/labellist"}>
           <LabelIcon />
@@ -53,7 +53,7 @@ const MilestoneIcon = () => (
   </IconWrapper>
 );
 
-const TabsWrapper = styled.div`
+const TabsWrapper = styled.div<{ left: number }>`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -62,6 +62,7 @@ const TabsWrapper = styled.div`
   position: absolute;
   width: 321px;
   height: 40px;
+  left: ${({ left }) => `${left}px`};
   border: 1px solid #d9dbe9;
   border-radius: 11px;
 `;
@@ -74,8 +75,6 @@ const Tab = styled.div<{ isActivated: boolean }>`
   position: relative;
   width: 160px;
   height: 40px;
-
-  /* background: #f7f7fc; */
   background: ${({ isActivated }) => (isActivated ? "#D9DBE9" : "#f7f7fc")};
   border-radius: 11px 0px 0px 11px;
   &:last-child {

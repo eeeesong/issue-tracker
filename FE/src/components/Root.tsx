@@ -6,27 +6,18 @@ import IssueList from "./IssueList/IssueList";
 import Header from "components/Header/Header";
 import Callback from "components/Login/Callback";
 import NewIssue from "./NewIssue/NewIssue";
+import { useRecoilValue } from "recoil";
+import { LoginState } from "../atoms/atoms";
 
 const Root = () => {
-  const [isLogin, setIsLogin] = useState(false);
-  const token = localStorage.getItem("token");
-  useEffect(() => {
-    console.log(token);
-    if (token) setIsLogin(true);
-    console.log(isLogin);
-  }, [token]);
-
   return (
     <RootWrapper>
-      <RouterComponent isLogin={isLogin} />
+      <RouterComponent />
     </RootWrapper>
   );
 };
-type Props = {
-  isLogin: boolean;
-};
-const RouterComponent = ({ isLogin }: Props) => {
-  console.log("dididid", isLogin);
+const RouterComponent = () => {
+  const isLogin = useRecoilValue(LoginState);
   return (
     <Router>
       {/* reverse */}

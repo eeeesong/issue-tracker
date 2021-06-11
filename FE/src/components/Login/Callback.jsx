@@ -7,10 +7,8 @@ const Callback = ({location, history}:Props) => {
     const getData = async () => {
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
-      console.log(code);
       const res = await fetch(`http://3.34.122.67/api/login/web?code=${code}`);
       const json = await res.json();
-      console.log(json);
 
       localStorage.setItem("token", json.jwt);
       localStorage.setItem("profileUrl", json.avatarUrl);

@@ -11,7 +11,6 @@ const IssueList = () => {
   const token = localStorage.getItem("token");
   useEffect(() => {
     if (token !== null) setIsLogin((v) => true);
-    // console.log(login);
   }, [token]);
 
   return (

@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import Tabs from "./Tabs";
+import Tabs from "components/common/Tabs";
 import AddButton from "./AddButton";
 
 const Controller = () => {
   return (
     <ControllerWrapper>
-      <Tabs />
+      <Tabs type="ISSUE"/>
       <AddButton />
     </ControllerWrapper>
   );

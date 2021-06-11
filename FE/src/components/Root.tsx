@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./Login";
 import IssueList from "./IssueList/IssueList";
+import LabelList from "./LabelList/LabelList"
 import NewIssue from "./NewIssue/NewIssue"
 import Header from "./Header/Header";
 
@@ -32,6 +33,7 @@ const RouterComponent = ({ isLogin }: Props) => (
     <Switch>
       <Route path="/" component={Login} exact />
       <Route path="/issuelist" component={IssueList} />
+      <Route path="/labellist" component={LabelList} />
       <Route path="/newissue" component={NewIssue} />
     </Switch>
   </Router>

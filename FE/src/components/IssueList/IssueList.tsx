@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Filter from "./Filter/Filter";
 import Controller from "./Controller/Controller";
 import List from "./List/List";
-import { RecoilRoot, useRecoilState, atom, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { LoginState } from "../../atoms/atoms";
 
 const IssueList = () => {

@@ -2,8 +2,11 @@
 import {useRecoilValue} from 'recoil';
 import styled from 'styled-components';
 import {userInfoAtom} from "../../atoms/atoms";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
 
 const HeaderModal = ({}) => {
+    const [, setIsLogin] = useRecoilState(LoginState);
     const userInfo = useRecoilValue(userInfoAtom)
     const createID = () => {
         let newObj= { ...userInfo };
@@ -13,6 +16,7 @@ const HeaderModal = ({}) => {
         localStorage.removeItem("token");
         localStorage.removeItem("profileUrl");
         localStorage.removeItem("loginID");
+        setIsLogin((v) => false);
     }
     return (
         <HeaderModalWrapper onClick={e => e.stopPropagation()}>

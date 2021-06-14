@@ -8,6 +8,7 @@ import Callback from "components/Login/Callback";
 import NewIssue from "./NewIssue/NewIssue";
 import { useRecoilValue } from "recoil";
 import { LoginState } from "../atoms/atoms";
+import NotFound from "./Error/NotFound";
 
 const Root = () => {
   return (
@@ -28,6 +29,7 @@ const RouterComponent = () => {
         <Route path="/issuelist" component={IssueList} />
         <Route path="/newissue" component={NewIssue} />
         <Route path="/callback" component={Callback} />
+        <Route component={NotFound} />
       </Switch>
     </Router>
   );

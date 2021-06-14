@@ -19,7 +19,6 @@ import java.time.LocalDate;
 public class JwtUtils {
 
     private static final String ISSUER = "issue";
-    private static final String ID = "id";
     private static final String LOGIN_ID = "login_id";
     private static final String IMAGE_URL = "image_url";
     private static final String NAME = "name";
@@ -39,7 +38,6 @@ public class JwtUtils {
         return jwtVerifier;
     }
 
-
     public OauthJwt getJwt(User user) {
         try {
             String token = JWT.create()
@@ -54,7 +52,6 @@ public class JwtUtils {
             throw new RuntimeException(exception);
         }
     }
-
 
     public User getUserFromJwt(DecodedJWT jwt) {
         return User.of(

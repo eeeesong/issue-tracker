@@ -17,7 +17,6 @@ public class OauthController {
         this.oauthService = oauthService;
     }
 
-
     @GetMapping("/web")
     public OauthDTO oauthGitHubTokenByWeb(@RequestParam String code) {
         return oauthService.githubTokenWeb(code);

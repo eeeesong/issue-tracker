@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import AddButton from "components/common/AddButton";
 import Tabs from "components/common/Tabs";
 import Filter from "./Filter/Filter";
@@ -11,23 +12,24 @@ const IssueList = () => {
   const [, setIsLogin] = useRecoilState(LoginState);
   const token = localStorage.getItem("token");
   useEffect(() => {
-    if (token !== null) setIsLogin((v) => true);
-  }, [token]);
+    if (token !== null) setIsLogin(true);
+  }, [token, setIsLogin]);
 
   return (
     <IssueListWrapper>
-      <AddButton text="이슈 작성" onClick={()=>console.log("기능추가요망")}/>
-      <Tabs left={823} type="ISSUE"/>
+      <Link to={"/newissue"}>
+        <AddButton text="이슈 작성" />
+      </Link>
+      <Tabs left={823} type="ISSUE" />
       <Filter />
       <List />
-  </IssueListWrapper>
+    </IssueListWrapper>
   );
 };
 
 const IssueListWrapper = styled.div`
   position: relative;
   width: 1280px;
-  height: 300px;
 `;
 
 export default IssueList;

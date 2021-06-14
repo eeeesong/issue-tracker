@@ -20,21 +20,12 @@ const Header = () => {
     return newArr.profileUrl;
   };
   return (
-    // <PriceBtn  onClick={() => setIsComponentVisible(!isComponentVisible)}>
-    // <Title>요금</Title>
-    // <View>
-    // {!isCheck() && `금액대 설정`}
-    // {isCheck() && <PriceRange>
-    //  <div>{numToCash(minVal)}</div>
-    //  <div>~</div>
-    //  <div>{numToCash(maxVal)}</div>
-    // </PriceRange>}
-    // </View>
-    // {!isComponentVisible && <PriceModal/>}
-
-    <HeaderWrapper ref={ref}>
+    <HeaderWrapper>
       <Title>Issue Tracker</Title>
-      <LoginInfo onClick={() => setIsComponentVisible(!isComponentVisible)}>
+      <LoginInfo
+        ref={ref}
+        onClick={() => setIsComponentVisible(!isComponentVisible)}
+      >
         <ProfileIMG src={createImg()}>
           {/* <img src={profileImg}></img> */}
         </ProfileIMG>

@@ -9,7 +9,6 @@ export default function useComponentVisible(initialIsVisible) {
             setIsComponentVisible(true);
         }
     };
-
     useEffect(() => {
         document.addEventListener('click', handleClickOutside, true);
         return () => {

@@ -1,17 +1,14 @@
 package codesquad.issueTracker.domain;
 
 import codesquad.issueTracker.oauth.dto.OauthUser;
-import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-@Getter
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "login_id", nullable = false)
@@ -20,22 +17,39 @@ public class User {
     @Column(name = "image_url")
     private String imageUrl;
     private String name;
-    private String password;
 
 
     public User() {
 
     }
 
-    private User(Long id, String loginId, String imageUrl, String name, String password) {
-        this.id = id;
+    private User(String loginId, String imageUrl, String name) {
         this.loginId = loginId;
         this.imageUrl = imageUrl;
         this.name = name;
-        this.password = password;
     }
 
-    public static User of (Long id, String loginId, String avatarUrl, String name, String password) {
-        return new User(id, loginId, avatarUrl, name, password);
+    public static User of (String loginId, String avatarUrl, String name) {
+        return new User(loginId, avatarUrl, name);
+    }
+
+    public static User fromGitHubUser(OauthUser oauthUser) {
+        return new User(oauthUser.getLoginId(), oauthUser.getAvatarUrl(), oauthUser.getName());
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -43,7 +43,6 @@ public class JwtUtils {
     public OauthJwt getJwt(User user) {
         try {
             String token = JWT.create()
-                    .withClaim(ID, user.getId())
                     .withClaim(LOGIN_ID, user.getLoginId())
                     .withClaim(IMAGE_URL, user.getImageUrl())
                     .withClaim(NAME, user.getName())
@@ -59,11 +58,9 @@ public class JwtUtils {
 
     public User getUserFromJwt(DecodedJWT jwt) {
         return User.of(
-                jwt.getClaim(ID).asLong(),
                 jwt.getClaim(LOGIN_ID).asString(),
                 jwt.getClaim(IMAGE_URL).asString(),
-                jwt.getClaim(NAME).asString(),
-                null
+                jwt.getClaim(NAME).asString()
         );
     }
 

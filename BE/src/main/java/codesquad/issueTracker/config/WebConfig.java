@@ -23,7 +23,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(oauthInterceptor).addPathPatterns("/api/labels/**")
-                .addPathPatterns("/api/login/**");
+        registry.addInterceptor(oauthInterceptor).addPathPatterns("/api/labels/**");
     }
 }

@@ -63,7 +63,8 @@ public class OauthService {
         OauthUser oauthUser = getUserFromGitHub(accessToken, gitHubRequest)
                 .orElseThrow(() -> new RuntimeException("바디 없음"));
 
-        User user = userRepository.findByLoginId(oauthUser.getLoginId());
+        User user = userRepository.findByLoginId(oauthUser.getLoginId())
+                .orElseGet(() -> userRepository.save(User.fromGitHubUser(oauthUser)));
 
         OauthJwt jwtToken = jwtUtils.getJwt(user);
         logger.info("accessToken : {}", accessToken);

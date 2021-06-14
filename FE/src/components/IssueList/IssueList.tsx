@@ -1,18 +1,9 @@
-import { useEffect } from "react";
 import styled from "styled-components";
 import Filter from "./Filter/Filter";
 import Controller from "./Controller/Controller";
 import List from "./List/List";
-import { useRecoilState } from "recoil";
-import { LoginState } from "../../atoms/atoms";
 
 const IssueList = () => {
-  const [, setIsLogin] = useRecoilState(LoginState);
-  const token = localStorage.getItem("token");
-  useEffect(() => {
-    if (token !== null) setIsLogin((v) => true);
-  }, [token]);
-
   return (
     <IssueListWrapper>
       <Filter />

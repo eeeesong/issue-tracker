@@ -21,11 +21,7 @@ const RouterComponent = () => {
   return (
     <Router>
       {/* reverse */}
-      {isLogin && (
-        <Switch>
-          <Header />
-        </Switch>
-      )}
+      {isLogin && <Header />}
       {/* 라우트 추가 부분 */}
       <Switch>
         <Route path="/" component={Login} exact />

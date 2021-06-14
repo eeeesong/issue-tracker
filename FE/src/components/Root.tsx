@@ -8,6 +8,8 @@ import Callback from "components/Login/Callback";
 import NewIssue from "./NewIssue/NewIssue";
 import { useRecoilValue } from "recoil";
 import { LoginState } from "../atoms/atoms";
+import NotFound from "./Error/NotFound";
+import AuthRoute from "./Login/AuthRoute";
 
 const Root = () => {
   return (
@@ -21,17 +23,17 @@ const RouterComponent = () => {
   return (
     <Router>
       {/* reverse */}
-      {isLogin && (
-        <Switch>
-          <Header />
-        </Switch>
-      )}
+      {isLogin && <Header />}
       {/* 라우트 추가 부분 */}
       <Switch>
         <Route path="/" component={Login} exact />
-        <Route path="/issuelist" component={IssueList} />
+        <AuthRoute
+          path="/issuelist"
+          render={(props) => <IssueList {...props} />}
+        />
         <Route path="/newissue" component={NewIssue} />
         <Route path="/callback" component={Callback} />
+        <Route component={NotFound} />
       </Switch>
     </Router>
   );

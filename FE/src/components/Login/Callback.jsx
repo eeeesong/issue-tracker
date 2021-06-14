@@ -1,18 +1,19 @@
 import styled from "styled-components";
 import {useEffect} from "react";
 import { RouteComponentProps } from "react-router-dom";
-interface Props extends RouteComponentProps {};
-const Callback = ({location, history}:Props) => {
+interface ICallback {
+  location: RouteComponentProps['location'];
+  history: RouteComponentProps['history'];
+};
+const Callback = ({location, history}:ICallback) => {
+  console.log(typeof(history))
   useEffect(() => {
-    const getData = async () => {
+      const getData = async () => {
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
-      console.log(code);
       const res = await fetch(`http://3.34.122.67/api/login/web?code=${code}`);
       const json = await res.json();
-      console.log(json);
-
-      localStorage.setItem("token", json.jwt);
+      localStorage.setItem("token", json.jwt.jwt);
       localStorage.setItem("profileUrl", json.avatarUrl);
       localStorage.setItem("loginID", json.loginId);
       history.push("/issuelist");

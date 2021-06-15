@@ -14,13 +14,17 @@ const Header = () => {
   const isLogin = useRecoilValue(LoginState);
   useEffect(() => {
     const profile = localStorage.getItem("profileUrl");
-    const userID = localStorage.getItem("loginID");
+    const userID: string | null = localStorage.getItem("loginID");
     if (profile)
-      setUserInfo({ ...userInfo, profileUrl: profile, loginID: userID });
-  }, [isLogin]);
+      setUserInfo((userInfo) => ({
+        ...userInfo,
+        profileUrl: profile,
+        loginID: userID,
+      }));
+  }, [isLogin, setUserInfo]);
   const createImg = () => {
-    let newArr = { ...userInfo };
-    return newArr.profileUrl;
+    let newObj = { ...userInfo };
+    return newObj.profileUrl;
   };
   return (
     <HeaderWrapper>

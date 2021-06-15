@@ -1,20 +1,27 @@
+import { labelCountSelector, milestoneCountSelector } from "atoms/atoms";
+import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-const Tabs = () => {
-  const labelCount = 3;
-  const milestoneCount = 2;
+const Tabs = ({ type, left }: { type: string; left: number }) => {
+  const labelCount = useRecoilValue(labelCountSelector);
+  const milestoneCount = useRecoilValue(milestoneCountSelector);
   return (
-    <TabsWrapper>
-      <Tab>
-        <LabelIcon />
-        <TabText>레이블</TabText>
-        <TabCount left={105}>({labelCount})</TabCount>
+    <TabsWrapper left={left}>
+      <Tab isActivated={type === "LABEL"}>
+        <Link to={"/labellist"}>
+          <LabelIcon />
+          <TabText>레이블</TabText>
+          <TabCount left={105}>({labelCount})</TabCount>
+        </Link>
       </Tab>
       <Line />
-      <Tab>
-        <MilestoneIcon />
-        <TabText>마일스톤</TabText>
-        <TabCount left={117}>({milestoneCount})</TabCount>
+      <Tab isActivated={type === "MILESTONE"}>
+        <Link to={"/milestonelist"}>
+          <MilestoneIcon />
+          <TabText>마일스톤</TabText>
+          <TabCount left={117}>({milestoneCount})</TabCount>
+        </Link>
       </Tab>
     </TabsWrapper>
   );
@@ -46,7 +53,7 @@ const MilestoneIcon = () => (
   </IconWrapper>
 );
 
-const TabsWrapper = styled.div`
+const TabsWrapper = styled.div<{ left: number }>`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -55,11 +62,12 @@ const TabsWrapper = styled.div`
   position: absolute;
   width: 321px;
   height: 40px;
+  left: ${({ left }) => `${left}px`};
   border: 1px solid #d9dbe9;
   border-radius: 11px;
 `;
 
-const Tab = styled.div`
+const Tab = styled.div<{ isActivated: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -67,8 +75,7 @@ const Tab = styled.div`
   position: relative;
   width: 160px;
   height: 40px;
-
-  background: #f7f7fc;
+  background: ${({ isActivated }) => (isActivated ? "#D9DBE9" : "#f7f7fc")};
   border-radius: 11px 0px 0px 11px;
   &:last-child {
     border-radius: 0px 11px 11px 0px;

@@ -9,7 +9,7 @@ const isDark = (code: string): boolean => {
 
 const Label = ({ name, color_code }: { name: string; color_code: string }) => (
   <LabelWrapper color={color_code}>
-    <LabelText isDark={isDark(color_code)}>{name}</LabelText>
+    <LabelText isDark={isDark(color_code)}>{name === "" ? "레이블 이름" : name}</LabelText>
   </LabelWrapper>
 );
 

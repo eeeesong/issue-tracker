@@ -1,43 +1,31 @@
 import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import Label from "components/common/Label";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentIssueIdAtom, issueListAtom } from "atoms/atoms";
+import { useHistory } from "react-router-dom";
 
-interface IUser {
-  name: string;
-  image: string;
-}
-
-interface ILabel {
-  id: number;
-  name: string;
-  color_code: string;
-}
 interface IIssue {
   id: number;
-  title: string;
-  body: string;
-  label: Array<ILabel>;
-  milestone: { title: string } | null;
-  assignee: Array<IUser>;
-  author: IUser;
-  date: string;
-  comments: Array<any>;
-  status: boolean;
-}
-
-const Issue = ({
-  content,
-  checkedIndex,
-  setCheckedIndex,
-}: {
-  content: IIssue;
   checkedIndex: Array<number>;
   setCheckedIndex: Dispatch<SetStateAction<Array<number>>>;
-}) => {
-  const { id, title, label, milestone, author } = content;
-  const check = () => setCheckedIndex((arr) => (checkedIndex.includes(id) ? [...arr.filter((index) => index !== id)] : [...arr, id].sort()));
+}
+
+const Issue = ({ id, checkedIndex, setCheckedIndex }: IIssue) => {
+  const { title, label, milestone, author } = useRecoilValue(issueListAtom).filter((issue) => issue.id === id)[0];
+  const check = () =>
+    setCheckedIndex((arr) =>
+      checkedIndex.includes(id) ? [...arr.filter((index) => index !== id)] : [...arr, id].sort()
+    );
+  const [, setCurrentIssueId] = useRecoilState(currentIssueIdAtom);
+
+  let history = useHistory();
+  const moveDetailEvent = () => {
+    setCurrentIssueId(id);
+    history.push("/detailissue");
+  };
   return (
-    <IssueWrapper>
+    <IssueWrapper onClick={moveDetailEvent}>
       <CheckBox type="checkbox" checked={checkedIndex.includes(id)} onClick={check} readOnly />
       <IssueTitle>
         <OpenIcon />

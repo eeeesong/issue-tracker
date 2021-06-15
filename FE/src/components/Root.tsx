@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "components/Login/Login";
 import IssueList from "./IssueList/IssueList";
+import LabelList from "./LabelList/LabelList";
+import NewIssue from "./NewIssue/NewIssue";
 import Header from "components/Header/Header";
 import Callback from "components/Login/Callback";
-import NewIssue from "./NewIssue/NewIssue";
+import DetailIssue from "./DetailIssue/DetailIssue";
 import { useRecoilValue } from "recoil";
 import { LoginState } from "../atoms/atoms";
 import NotFound from "./Error/NotFound";
@@ -29,9 +30,11 @@ const RouterComponent = () => {
         <Route path="/" component={Login} exact />
         <AuthRoute
           path="/issuelist"
-          render={(props) => <IssueList {...props} />}
+          render={(props: any) => <IssueList {...props} />}
         />
+        <Route path="/labellist" component={LabelList} />
         <Route path="/newissue" component={NewIssue} />
+        <Route path="/detailissue" component={DetailIssue} />
         <Route path="/callback" component={Callback} />
         <Route component={NotFound} />
       </Switch>

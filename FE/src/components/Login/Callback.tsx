@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
+
 interface ICallback {
   history: RouteComponentProps["history"];
 }
+
 const Callback = ({ history }: ICallback) => {
   useEffect(() => {
     const getData = async () => {

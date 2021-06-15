@@ -39,7 +39,6 @@ const TitleButton = () => (
 const SideBarWrapper = styled.div`
   position: absolute;
   width: 308px;
-  /* height: 290px; */
   right: 0px;
   top: 0px;
   background: #d9dbe9;

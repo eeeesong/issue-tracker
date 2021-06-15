@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface LabelRepository extends JpaRepository<Label, Long> {
     List<Label> findAll();
     Optional<Label> findById(Long id);
+    List<Label> findByDeleteIsFalse();
 }

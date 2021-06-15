@@ -21,6 +21,7 @@ public class Label {
     @JsonProperty("color_code")
     private String colorCode;
     private String content;
+    private boolean delete;
 
     public Label() {
     }
@@ -35,6 +36,10 @@ public class Label {
         this.name = updateLabel.getName();
         this.colorCode = updateLabel.getColorCode();
         this.content = updateLabel.getContent();
+    }
+
+    public void delete() {
+        delete = true;
     }
 
     public Long getId() {

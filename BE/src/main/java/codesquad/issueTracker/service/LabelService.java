@@ -15,7 +15,7 @@ public class LabelService {
     }
 
     public Data findAll() {
-        return Data.ok(labelRepository.findAll(), "Label");
+        return Data.ok(labelRepository.findByDeleteIsFalse(), "Label");
     }
 
     public void creatLabel(Label label) {
@@ -35,6 +35,7 @@ public class LabelService {
     public void deleteLabel(Long id) {
         Label label = labelRepository.findById(id)
                 .orElseThrow(() -> new NullPointerException("존재하지 않는 라벨입니다"));
-        labelRepository.delete(label);
+        label.delete();
+        labelRepository.save(label);
     }
 }

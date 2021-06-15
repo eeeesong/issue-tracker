@@ -1,14 +1,11 @@
-import styled from "styled-components";
-import {useEffect} from "react";
+import { useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
 interface ICallback {
-  location: RouteComponentProps['location'];
-  history: RouteComponentProps['history'];
-};
-const Callback = ({location, history}:ICallback) => {
-  console.log(typeof(history))
+  history: RouteComponentProps["history"];
+}
+const Callback = ({ history }: ICallback) => {
   useEffect(() => {
-      const getData = async () => {
+    const getData = async () => {
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
       const res = await fetch(`http://3.34.122.67/api/login/web?code=${code}`);
@@ -17,14 +14,10 @@ const Callback = ({location, history}:ICallback) => {
       localStorage.setItem("profileUrl", json.avatarUrl);
       localStorage.setItem("loginID", json.loginId);
       history.push("/issuelist");
-    }
+    };
     getData();
-  }, [])
+  }, [history]);
   return <>loading...</>;
 };
 
-
-const CallbackWrapper = styled.div``;
-
 export default Callback;
-

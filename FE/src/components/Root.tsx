@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "components/Login/Login";
@@ -29,7 +28,7 @@ const RouterComponent = () => {
         <Route path="/" component={Login} exact />
         <AuthRoute
           path="/issuelist"
-          render={(props) => <IssueList {...props} />}
+          render={(props: any) => <IssueList {...props} />}
         />
         <Route path="/newissue" component={NewIssue} />
         <Route path="/callback" component={Callback} />

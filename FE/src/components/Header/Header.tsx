@@ -2,25 +2,41 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { userInfoAtom } from "../../atoms/atoms";
+import useComponentVisible from "../common/Modal";
+import HeaderModal from "./HeaderModal";
+import { useRecoilValue } from "recoil";
+import { LoginState } from "../../atoms/atoms";
 
 const Header = () => {
+  const { ref, isComponentVisible, setIsComponentVisible } =
+    useComponentVisible(true);
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const isLogin = useRecoilValue(LoginState);
   useEffect(() => {
     const profile = localStorage.getItem("profileUrl");
-    if (profile) setUserInfo({ ...userInfo, profileUrl: profile });
-  }, []);
+    const userID: string | null = localStorage.getItem("loginID");
+    if (profile)
+      setUserInfo((userInfo) => ({
+        ...userInfo,
+        profileUrl: profile,
+        loginID: userID,
+      }));
+  }, [isLogin, setUserInfo]);
   const createImg = () => {
-    let newArr = { ...userInfo };
-    return newArr.profileUrl;
+    let newObj = { ...userInfo };
+    return newObj.profileUrl;
   };
   return (
     <HeaderWrapper>
-      <div></div>
       <Title>Issue Tracker</Title>
-      <LoginInfo>
+      <LoginInfo
+        ref={ref}
+        onClick={() => setIsComponentVisible(!isComponentVisible)}
+      >
         <ProfileIMG src={createImg()}>
           {/* <img src={profileImg}></img> */}
         </ProfileIMG>
+        {!isComponentVisible && <HeaderModal />}
       </LoginInfo>
     </HeaderWrapper>
   );

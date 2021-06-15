@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import GitLogin from "./GitLogin";
-
 const Login = () => {
   return (
     <LoginWrapper>

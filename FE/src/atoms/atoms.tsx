@@ -1,10 +1,13 @@
-import { atom, selector } from "recoil";
+import { atom } from "recoil";
 
-export const userInfoAtom = atom({
+interface IuserinfoAtom {
+  profileUrl: string;
+  loginID: string | null;
+}
+
+export const userInfoAtom = atom<IuserinfoAtom>({
   key: "userInfo",
-  default: {
-    profileUrl: "",
-  },
+  default: { profileUrl: "", loginID: "" },
 });
 
 export const issueListAtom = atom({

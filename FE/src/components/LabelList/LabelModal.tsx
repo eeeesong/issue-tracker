@@ -1,21 +1,61 @@
 import styled from "styled-components";
 import Label from "components/common/Label";
 import { Dispatch, MouseEventHandler, useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { labelListAtom } from "atoms/atoms";
 
 interface ILabelModal {
   label: { id: number; name: string; content: string; color_code: string };
   type: "ADD" | "EDIT";
   setEdit?: Dispatch<boolean>;
+  setAdding?: Dispatch<boolean>;
 }
 
-const LabelModal = ({ label, type, setEdit }: ILabelModal) => {
+const LabelModal = ({ label, type, setEdit, setAdding }: ILabelModal) => {
   const [name, setName] = useState(label.name);
   const [content, setContent] = useState(label.content);
   const [colorCode, setColorCode] = useState(label.color_code);
+  const [, setLabelList] = useRecoilState(labelListAtom);
+
   useEffect(() => {
-    if (colorCode.length > 6) setColorCode((code) => code.slice(0, 6));
+    if (colorCode.length > 7) setColorCode((code) => code.slice(0, 7));
   }, [colorCode]);
-  const setRandomColorCode = () => setColorCode(Math.floor(Math.random() * (parseInt("FFFFFF", 16) + 1)).toString(16));
+
+  const setRandomColorCode = () =>
+    setColorCode("#" + Math.floor(Math.random() * (parseInt("FFFFFF", 16) + 1)).toString(16));
+
+  const refreshLabelList = () =>
+    fetch(`http://3.34.122.67/api/labels`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
+      .then((res) => res.json())
+      .then((json) => setLabelList(json.data));
+
+  const addLabel = () => {
+    fetch(`http://3.34.122.67/api/labels`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
+      body: JSON.stringify({
+        name: name,
+        content: content,
+        color_code: colorCode,
+      }),
+    })
+      .then(() => refreshLabelList())
+      .then(() => setAdding && setAdding(false));
+  };
+  const editLabel = () => {
+    fetch(`http://3.34.122.67/api/labels/${label.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
+      body: JSON.stringify({
+        name: name,
+        content: content,
+        color_code: colorCode,
+      }),
+    })
+      .then(() => refreshLabelList())
+      .then(() => setEdit && setEdit(false));
+  };
+
   return (
     <EditModalWrapper type={type}>
       <Title>{type === "ADD" ? "새로운 레이블 추가" : "레이블 편집"}</Title>
@@ -32,7 +72,7 @@ const LabelModal = ({ label, type, setEdit }: ILabelModal) => {
       </LabelContent>
       <LabelColor>
         <LabelTitle>배경 색상</LabelTitle>
-        <LabelColorInput value={"#" + colorCode} onChange={({ target }) => setColorCode(target.value.replace("#", ""))} />
+        <LabelColorInput value={colorCode} onChange={({ target }) => setColorCode(target.value)} />
         <RefreshIcon onClick={setRandomColorCode} />
       </LabelColor>
       {type === "EDIT" && (
@@ -41,7 +81,7 @@ const LabelModal = ({ label, type, setEdit }: ILabelModal) => {
           <CancelButtonText>취소</CancelButtonText>
         </CancelButton>
       )}
-      <ConfirmButton isActivated={name.length > 0}>
+      <ConfirmButton isActivated={name.length > 0} onClick={type === "ADD" ? addLabel : editLabel}>
         <ConfirmIcon type={type} />
         <ConfirmButtonText>확인</ConfirmButtonText>
       </ConfirmButton>
@@ -53,8 +93,20 @@ const RefreshIcon = ({ onClick }: { onClick: MouseEventHandler }) => (
   <RefreshIconWrapper onClick={onClick}>
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0)">
-        <path d="M0.666748 2.66699V6.66699H4.66675" stroke="#6E7191" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M15.3333 13.333V9.33301H11.3333" stroke="#6E7191" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M0.666748 2.66699V6.66699H4.66675"
+          stroke="#6E7191"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M15.3333 13.333V9.33301H11.3333"
+          stroke="#6E7191"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
         <path
           d="M13.6601 6.00038C13.322 5.0449 12.7473 4.19064 11.9898 3.51732C11.2322 2.844 10.3164 2.37355 9.32789 2.14988C8.33934 1.92621 7.31024 1.9566 6.33662 2.23823C5.363 2.51985 4.47658 3.04352 3.76008 3.76038L0.666748 6.66704M15.3334 9.33371L12.2401 12.2404C11.5236 12.9572 10.6372 13.4809 9.66354 13.7625C8.68992 14.0441 7.66082 14.0745 6.67227 13.8509C5.68372 13.6272 4.76795 13.1568 4.01039 12.4834C3.25284 11.8101 2.67819 10.9559 2.34008 10.0004"
           stroke="#6E7191"
@@ -90,7 +142,13 @@ const ConfirmIcon = ({ type }: { type: "ADD" | "EDIT" }) => (
   <ConfirmIconWrapper>
     {type === "ADD" ? (
       <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8.5 3.33301V12.6663" stroke="#FEFEFE" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M8.5 3.33301V12.6663"
+          stroke="#FEFEFE"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
         <path d="M3.83325 8H13.1666" stroke="#FEFEFE" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ) : (

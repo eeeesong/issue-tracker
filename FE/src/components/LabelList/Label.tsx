@@ -2,9 +2,25 @@ import styled from "styled-components";
 import EachLabel from "components/common/Label";
 import LabelModal from "./LabelModal";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { labelListAtom } from "atoms/atoms";
 
 const Label = ({ id, name, content, color_code }: { id: number; name: string; content: string; color_code: string }) => {
   const [isEdit, setEdit] = useState(false);
+
+  const [, setLabelList] = useRecoilState(labelListAtom);
+  const refreshLabelList = () =>
+    fetch(`http://3.34.122.67/api/labels`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
+      .then((res) => res.json())
+      .then((json) => setLabelList(json.data));
+
+  const deleteLabel = () => {
+    fetch(`http://3.34.122.67/api/labels/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
+    }).then(() => refreshLabelList())
+  }
+
   return isEdit ? (
     <LabelModal label={{ id, name, content, color_code }} type="EDIT" setEdit={setEdit} />
   ) : (
@@ -17,7 +33,7 @@ const Label = ({ id, name, content, color_code }: { id: number; name: string; co
         <EditIcon />
         <EditText>편집</EditText>
       </Edit>
-      <Delete>
+      <Delete onClick={deleteLabel}>
         <DeleteIcon />
         <DeleteText>삭제</DeleteText>
       </Delete>

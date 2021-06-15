@@ -1,6 +1,7 @@
 package codesquad.issueTracker.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,7 +17,8 @@ public class Milestone {
     private boolean deleted;
 
     @Column(name = "due_date")
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm")
+    @JsonProperty("due_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dueDate;
 
     public Milestone() {

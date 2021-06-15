@@ -1,7 +1,6 @@
 package codesquad.issueTracker.service;
 
 import codesquad.issueTracker.Data;
-import codesquad.issueTracker.domain.Label;
 import codesquad.issueTracker.domain.Milestone;
 import codesquad.issueTracker.repository.MilestoneRepository;
 import org.springframework.stereotype.Service;

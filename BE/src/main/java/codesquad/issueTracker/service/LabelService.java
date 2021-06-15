@@ -15,7 +15,7 @@ public class LabelService {
     }
 
     public Data findAll() {
-        return Data.ok(labelRepository.findByDeleteIsFalse(), "Label");
+        return Data.ok(labelRepository.findByDeletedIsFalse(), "Label");
     }
 
     public void creatLabel(Label label) {

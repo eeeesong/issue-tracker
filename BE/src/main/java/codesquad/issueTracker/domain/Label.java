@@ -1,7 +1,6 @@
 package codesquad.issueTracker.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -21,7 +20,7 @@ public class Label {
     @JsonProperty("color_code")
     private String colorCode;
     private String content;
-    private boolean delete;
+    private boolean deleted;
 
     public Label() {
     }
@@ -39,7 +38,7 @@ public class Label {
     }
 
     public void delete() {
-        delete = true;
+        deleted = true;
     }
 
     public Long getId() {

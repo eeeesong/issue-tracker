@@ -11,6 +11,11 @@ interface ILabelModal {
   setAdding?: Dispatch<boolean>;
 }
 
+const makeRandomColor = (): string => {
+  const result = "#" + Math.floor(Math.random() * (parseInt("FFFFFF", 16) + 1)).toString(16);
+  return result.length === 7 ? result : makeRandomColor();
+};
+
 const LabelModal = ({ label, type, setEdit, setAdding }: ILabelModal) => {
   const [name, setName] = useState(label.name);
   const [content, setContent] = useState(label.content);
@@ -20,9 +25,6 @@ const LabelModal = ({ label, type, setEdit, setAdding }: ILabelModal) => {
   useEffect(() => {
     if (colorCode.length > 7) setColorCode((code) => code.slice(0, 7));
   }, [colorCode]);
-
-  const setRandomColorCode = () =>
-    setColorCode("#" + Math.floor(Math.random() * (parseInt("FFFFFF", 16) + 1)).toString(16));
 
   const refreshLabelList = () =>
     fetch(`http://3.34.122.67/api/labels`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
@@ -73,7 +75,7 @@ const LabelModal = ({ label, type, setEdit, setAdding }: ILabelModal) => {
       <LabelColor>
         <LabelTitle>배경 색상</LabelTitle>
         <LabelColorInput value={colorCode} onChange={({ target }) => setColorCode(target.value)} />
-        <RefreshIcon onClick={setRandomColorCode} />
+        <RefreshIcon onClick={() => setColorCode(makeRandomColor())} />
       </LabelColor>
       {type === "EDIT" && (
         <CancelButton onClick={() => setEdit && setEdit(false)}>

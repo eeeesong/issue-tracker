@@ -12,65 +12,104 @@ interface IIssue {
 }
 
 const Issue = ({ id, checkedIndex, setCheckedIndex }: IIssue) => {
-  const { title, label, milestone, author } = useRecoilValue(issueListAtom).filter((issue) => issue.id === id)[0];
+  const { title, label, milestone, author, status } = useRecoilValue(issueListAtom).filter(
+    (issue) => issue.id === id
+  )[0];
   const check = () =>
     setCheckedIndex((arr) =>
       checkedIndex.includes(id) ? [...arr.filter((index) => index !== id)] : [...arr, id].sort()
     );
   const [, setCurrentIssueId] = useRecoilState(currentIssueIdAtom);
 
-  let history = useHistory();
+  const history = useHistory();
   const moveDetailEvent = () => {
     setCurrentIssueId(id);
     history.push("/detailissue");
   };
   return (
-    <IssueWrapper onClick={moveDetailEvent}>
+    <IssueWrapper>
       <CheckBox type="checkbox" checked={checkedIndex.includes(id)} onClick={check} readOnly />
-      <IssueTitle>
-        <OpenIcon />
-        <TitleText>{title}</TitleText>
-        {label.map(({ id, name, color_code }) => (
-          <Label key={id} name={name} color_code={color_code} />
-        ))}
-      </IssueTitle>
-      <IssueInfo>
-        <InfoText>#{id}</InfoText>
-        <InfoText>
-          이 이슈가 {"대충시간처리로직"} 전, {author.name}님에 의해 작성되었습니다
-        </InfoText>
-        {milestone && (
+      <div onClick={moveDetailEvent}>
+        <IssueTitle>
+          <OpenIcon status={status}/>
+          <TitleText>{title}</TitleText>
+          {label.map(({ id, name, color_code }) => (
+            <LabelWrapper>
+              <Label key={id} name={name} color_code={color_code} />
+            </LabelWrapper>
+          ))}
+        </IssueTitle>
+        <IssueInfo>
+          <InfoText>#{id}</InfoText>
           <InfoText>
-            <MilestoneIcon />
-            {" " + milestone.title}
+            이 이슈가 {"대충시간처리로직"} 전, {author.name}님에 의해 작성되었습니다
           </InfoText>
-        )}
-      </IssueInfo>
+          {milestone && (
+            <InfoText>
+              <MilestoneIcon />
+              {" " + milestone.title}
+            </InfoText>
+          )}
+        </IssueInfo>
+      </div>
     </IssueWrapper>
   );
 };
 
-const OpenIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clipPath="url(#clip0)">
-      <path
-        d="M8 14.6667C11.6819 14.6667 14.6667 11.6819 14.6667 8.00004C14.6667 4.31814 11.6819 1.33337 8 1.33337C4.3181 1.33337 1.33333 4.31814 1.33333 8.00004C1.33333 11.6819 4.3181 14.6667 8 14.6667Z"
-        fill="#C7EBFF"
-        stroke="#007AFF"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M8 5.33337V8.00004" stroke="#007AFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M8 10.6666H8.00667" stroke="#007AFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </g>
-    <defs>
-      <clipPath id="clip0">
-        <rect width="16" height="16" fill="white" />
-      </clipPath>
-    </defs>
-  </svg>
-);
+const OpenIcon = ({ status }: { status: boolean }) =>
+  status ? (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clipPath="url(#clip0)">
+        <path
+          d="M8 14.6667C11.6819 14.6667 14.6667 11.6819 14.6667 8.00004C14.6667 4.31814 11.6819 1.33337 8 1.33337C4.3181 1.33337 1.33333 4.31814 1.33333 8.00004C1.33333 11.6819 4.3181 14.6667 8 14.6667Z"
+          fill="#C7EBFF"
+          stroke="#007AFF"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M8 5.33337V8.00004" stroke="#007AFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M8 10.6666H8.00667" stroke="#007AFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <defs>
+        <clipPath id="clip0">
+          <rect width="16" height="16" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  ) : (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0)">
+        <path d="M14 5.33325V13.9999H2V5.33325" fill="#CCD4FF" />
+        <path
+          d="M14 5.33325V13.9999H2V5.33325"
+          stroke="#0025E7"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M15.3332 2H0.666504V5.33333H15.3332V2Z"
+          stroke="#0025E7"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M6.6665 8H9.33317"
+          stroke="#0025E7"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0">
+          <rect width="16" height="16" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
 
 const MilestoneIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -114,6 +153,9 @@ const TitleText = styled.div`
   font-size: 18px;
   line-height: 32px;
   color: #14142b;
+  margin-left: 8px;
+`;
+const LabelWrapper = styled.div`
   margin-left: 8px;
 `;
 const IssueInfo = styled.div`

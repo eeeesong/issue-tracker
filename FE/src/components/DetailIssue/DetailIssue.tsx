@@ -13,7 +13,7 @@ const DetailIssue = () => {
       <Header />
       <Line />
       <Content>
-        <SideBar />
+        <SideBar isDetail />
         <Comment comment={{ body: body, author: author, time: date }} issueAuthor={author} />
         {comments.map((comment) => (
           <Comment key={comment.id} issueAuthor={author} comment={comment} />

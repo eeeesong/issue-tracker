@@ -22,7 +22,7 @@ export const issueListAtom = atom({
         { id: 2, name: "test", color_code: "#FF0000" },
       ],
       milestone: { title: "마스터즈 코스" },
-      assignee: [{ name: "Seong", image: "대충 src" }],
+      assignee: [{ name: "Seong", image: "대충 src" },{ name: "Luke", image: "대충 src" }],
       author: { name: "Seong", image: "대충 src" },
       date: "대충년월일",
       comments: [

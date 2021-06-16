@@ -1,9 +1,9 @@
+import { openFilterAtom } from "atoms/atoms";
 import { Dispatch } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 interface IHeader {
-  isOpen: boolean;
-  setOpen: Dispatch<boolean>;
   count: {
     open: number;
     close: number;
@@ -13,9 +13,10 @@ interface IHeader {
   setCheckedIndex: Dispatch<Array<number>>;
 }
 
-const Header = ({ isOpen, setOpen, count, filteredIndex, checkedIndex, setCheckedIndex }: IHeader) => {
+const Header = ({ count, filteredIndex, checkedIndex, setCheckedIndex }: IHeader) => {
   const isCheckedAll = checkedIndex.length === filteredIndex.length;
   const checkAllEvent = () => setCheckedIndex(isCheckedAll ? [] : [...filteredIndex]);
+  const [isOpen, setOpen] = useRecoilState(openFilterAtom);
 
   return (
     <HeaderWrapper>

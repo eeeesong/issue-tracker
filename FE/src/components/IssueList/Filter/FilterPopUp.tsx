@@ -1,31 +1,32 @@
-import { Dispatch } from "react";
+import { filterIndexAtom } from "atoms/atoms";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
-interface IFilter {
-  id: number;
-  title: string;
-  body: string;
-}
+const FilterPopUp = () => {
+  const list = ["전체 이슈", "내가 작성한 이슈", "나에게 할당된 이슈", "내가 댓글을 남긴 이슈"];
+  return (
+    <PopUpWrapper>
+      <PopUpHeader>
+        <HeaderText>이슈 필터</HeaderText>
+      </PopUpHeader>
+      <ContentContainer>
+        {list.map((el, i) => (
+          <PopUpContent key={i} title={el} id={i} />
+        ))}
+      </ContentContainer>
+    </PopUpWrapper>
+  );
+};
 
-const FilterPopUp = ({ list, index, setIndex }: { list: Array<IFilter>; index: number; setIndex: Dispatch<number> }) => (
-  <PopUpWrapper>
-    <PopUpHeader>
-      <HeaderText>이슈 필터</HeaderText>
-    </PopUpHeader>
-    <ContentContainer>
-      {list.map((el) => (
-        <PopUpContent key={el.id} content={el.title} id={el.id} index={index} setIndex={setIndex} />
-      ))}
-    </ContentContainer>
-  </PopUpWrapper>
-);
-
-const PopUpContent = ({ content, id, index, setIndex }: { content: string; id: number; index: number; setIndex: Dispatch<number> }) => (
-  <ContentWrapper onClick={() => setIndex(id)}>
-    <ContentText>{content}</ContentText>
-    <RadioButton isChecked={id === index} />
-  </ContentWrapper>
-);
+const PopUpContent = ({ title, id }: { title: string; id: number }) => {
+  const [index, setIndex] = useRecoilState(filterIndexAtom);
+  return (
+    <ContentWrapper onClick={() => setIndex(id)}>
+      <ContentText>{title}</ContentText>
+      <RadioButton isChecked={id === index} />
+    </ContentWrapper>
+  );
+};
 
 const RadioButton = ({ isChecked }: { isChecked: boolean }) => (
   <RadioButtonWrapper>
@@ -38,7 +39,13 @@ const RadioButton = ({ isChecked }: { isChecked: boolean }) => (
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <path d="M11 6.33337L7.33337 10.0067L5.33337 8.00671" stroke="#14142B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M11 6.33337L7.33337 10.0067L5.33337 8.00671"
+          stroke="#14142B"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ) : (
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -61,7 +68,7 @@ const PopUpWrapper = styled.div`
 
   position: absolute;
   width: 240px;
-  height: 273px;
+  height: 227px;
   left: 0px;
   top: 48px;
   background: #d9dbe9;

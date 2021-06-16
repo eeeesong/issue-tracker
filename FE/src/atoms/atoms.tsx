@@ -22,7 +22,10 @@ export const issueListAtom = atom({
         { id: 2, name: "test", color_code: "#FF0000" },
       ],
       milestone: { title: "마스터즈 코스" },
-      assignee: [{ name: "Seong", image: "대충 src" },{ name: "Luke", image: "대충 src" }],
+      assignee: [
+        { name: "Seong", image: "대충 src" },
+        { name: "Luke", image: "대충 src" },
+      ],
       author: { name: "Seong", image: "대충 src" },
       date: "대충년월일",
       comments: [
@@ -165,4 +168,40 @@ export const milestoneCountSelector = selector({
 export const LoginState = atom({
   key: "isLogin",
   default: false,
+});
+
+const filter = [
+  {
+    id: 0,
+    body: "is:issue",
+  },
+  {
+    id: 1,
+    body: "is:issue author:@me",
+  },
+  {
+    id: 2,
+    body: "is:issue assignee:@me",
+  },
+  {
+    id: 3,
+    body: "is:issue comment:@me ",
+  },
+];
+
+export const openFilterAtom = atom({
+  key: "openFilter",
+  default: true,
+});
+
+export const filterIndexAtom = atom({
+  key: "filterIndex",
+  default: 0,
+});
+
+export const currentFilterSelector = selector({
+  key: "currentFilter",
+  get({ get }) {
+    return `is:${get(openFilterAtom) ? "open" : "close"} ${filter[get(filterIndexAtom)].body}`;
+  },
 });

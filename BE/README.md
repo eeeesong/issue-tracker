@@ -1,7 +1,7 @@
 # BE-README
 
 ## DB 설계
-![Untitled](https://user-images.githubusercontent.com/69128652/122521572-f36e0680-d04f-11eb-9b84-df8b3ed0e36b.png)
+![image](https://user-images.githubusercontent.com/69128652/122531869-e4408600-d05a-11eb-9280-aa4eaeb1a3a2.png)
 
 
 ## 구현 완료된 API

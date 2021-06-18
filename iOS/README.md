@@ -7,17 +7,19 @@
 - 로그인 실패 케이스 별 오류 메시지 표시
 
 
-<img src=https://user-images.githubusercontent.com/72188416/122525396-26b29480-d054-11eb-8229-3142ba72780a.png width=320 align = left>
-<img src=https://user-images.githubusercontent.com/52390975/122526241-0afbbe00-d055-11eb-9bd0-512f359a8c16.png width=320 align = center>
+
+
 
 
 
 
 ### Github 로그인
 ![gitLogin](https://user-images.githubusercontent.com/52390975/122518751-91f86880-d04c-11eb-917a-54d984abd848.gif)
+<img src=https://user-images.githubusercontent.com/52390975/122526241-0afbbe00-d055-11eb-9bd0-512f359a8c16.png width=320 align = right>
 - 백엔드 연동하여 jwt 통신으로 API 통신 가능 로그인/로그아웃 가능
 ### Apple 로그인
 ![apple login](https://user-images.githubusercontent.com/72188416/122516705-0e3d7c80-d04a-11eb-811e-77a3c14c8353.gif)
+<img src=https://user-images.githubusercontent.com/72188416/122525396-26b29480-d054-11eb-8229-3142ba72780a.png width=320 align = right>
 - 백엔드 연동 미구현으로 애플 로그인으로 서비스를 이용할 수는 없음
 
 ## 🏷 레이블

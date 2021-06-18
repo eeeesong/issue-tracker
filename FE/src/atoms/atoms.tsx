@@ -128,18 +128,40 @@ export const currentIssueIdAtom = atom({
 export const currentIssueSelector = selector({
   key: "currentIssue",
   get({ get }) {
-    return get(issueListAtom).filter(({ id }) => id === get(currentIssueIdAtom))[0];
+    return get(issueListAtom).filter(
+      ({ id }) => id === get(currentIssueIdAtom)
+    )[0];
   },
 });
 
 export const labelListAtom = atom({
   key: "labelList",
   default: [
-    { id: 1, name: "documentation", content: "문서 관련", color_code: "004de3" },
+    {
+      id: 1,
+      name: "documentation",
+      content: "문서 관련",
+      color_code: "004de3",
+    },
     { id: 2, name: "test", content: "색테스트", color_code: "FF0000" },
-    { id: 3, name: "test2", content: "글자색 반응 테스트", color_code: "AAAAAA" },
-    { id: 4, name: "test3", content: "글자색 반응 테스트", color_code: "999999" },
-    { id: 5, name: "test4", content: "글자색 반응 테스트", color_code: "EE99AA" },
+    {
+      id: 3,
+      name: "test2",
+      content: "글자색 반응 테스트",
+      color_code: "AAAAAA",
+    },
+    {
+      id: 4,
+      name: "test3",
+      content: "글자색 반응 테스트",
+      color_code: "999999",
+    },
+    {
+      id: 5,
+      name: "test4",
+      content: "글자색 반응 테스트",
+      color_code: "EE99AA",
+    },
   ],
 });
 
@@ -152,7 +174,26 @@ export const labelCountSelector = selector({
 
 export const milestoneListAtom = atom({
   key: "milestoneList",
-  default: [{ title: "마스터즈 코스" }],
+  default: [
+    {
+      id: 1,
+      title: "마일스톤 제목 1",
+      date: "6/10",
+      detail: "설명1",
+    },
+    {
+      id: 2,
+      title: "마일스톤 제목 2",
+      date: "6/11",
+      detail: "설명2",
+    },
+    {
+      id: 3,
+      title: "마일스톤 제목 3",
+      date: "6/12",
+      detail: "설명3",
+    },
+  ],
 });
 
 export const milestoneCountSelector = selector({

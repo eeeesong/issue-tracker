@@ -13,13 +13,21 @@ const LabelList = () => {
   // fetch("http://3.34.122.67/api/labels")
   //   .then((res) => res.json())
   //   .then((json) => console.log(json));
-  console.log(localStorage.getItem("token"))
+  console.log(localStorage.getItem("token"));
   return (
     <LabelListWrapper>
       <Tabs left={0} type="LABEL" />
       <AddButton text="추가" onClick={() => setAdding(true)} />
       {isAdding && (
-        <LabelModal label={{ id: labelCount + 1, name: "", content: "", color_code: "EFF0F6" }} type="ADD" />
+        <LabelModal
+          label={{
+            id: labelCount + 1,
+            name: "",
+            content: "",
+            color_code: "EFF0F6",
+          }}
+          type="ADD"
+        />
       )}
       <List isAdding={isAdding} />
     </LabelListWrapper>

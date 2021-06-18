@@ -11,6 +11,7 @@ import { useRecoilValue } from "recoil";
 import { LoginState } from "../atoms/atoms";
 import NotFound from "./Error/NotFound";
 import AuthRoute from "./Login/AuthRoute";
+import Milestonelist from "./Milestonelist/Milestonelist";
 
 const Root = () => {
   return (
@@ -28,10 +29,8 @@ const RouterComponent = () => {
       {/* 라우트 추가 부분 */}
       <Switch>
         <Route path="/" component={Login} exact />
-        <AuthRoute
-          path="/issuelist"
-          render={(props: any) => <IssueList {...props} />}
-        />
+        <AuthRoute path="/issuelist" render={IssueList} />
+        <AuthRoute path="/milestonelist" render={Milestonelist} />
         <Route path="/labellist" component={LabelList} />
         <Route path="/newissue" component={NewIssue} />
         <Route path="/detailissue" component={DetailIssue} />

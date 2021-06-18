@@ -6,7 +6,10 @@
 - 유저 로그인 정보 키체인 저장
 - 로그인 실패 케이스 별 오류 메시지 표시
 
-<img src=https://user-images.githubusercontent.com/72188416/122525396-26b29480-d054-11eb-8229-3142ba72780a.png width=320>
+
+<img src=https://user-images.githubusercontent.com/72188416/122525396-26b29480-d054-11eb-8229-3142ba72780a.png width=320 align = left>
+<img src=https://user-images.githubusercontent.com/52390975/122526241-0afbbe00-d055-11eb-9bd0-512f359a8c16.png width=320 align = center>
+
 
 
 

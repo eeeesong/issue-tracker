@@ -29,6 +29,9 @@
 
 ## 🗿마일스톤
 
-- 마일스톤 조회
+- 마일스톤 조회 및 추가 & 수정 & 삭제
 
-![Simulator Screen Recording - iPhone 12 - 2021-06-18 at 15 52 47](https://user-images.githubusercontent.com/52390975/122519298-45615d00-d04d-11eb-8677-4fdef11ebd35.gif)
+<img src=https://user-images.githubusercontent.com/52390975/122677172-2664f580-d21c-11eb-8c4a-e02b287c6ac8.gif width=240 align = left>
+<img src=https://user-images.githubusercontent.com/52390975/122677277-a4c19780-d21c-11eb-822c-09cb7081d892.gif width=240 align = left>
+<img src=https://user-images.githubusercontent.com/52390975/122677195-38df2f00-d21c-11eb-9c29-c603063ee1b2.gif width=240 align = left>
+

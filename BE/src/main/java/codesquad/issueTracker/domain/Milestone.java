@@ -2,11 +2,17 @@ package codesquad.issueTracker.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Getter
+@NoArgsConstructor
 public class Milestone {
 
     @Id
@@ -21,8 +27,8 @@ public class Milestone {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dueDate;
 
-    public Milestone() {
-    }
+    @OneToMany(mappedBy = "milestone")
+    private List<Issue> issues = new ArrayList<>();
 
     public Milestone(String title, String description, LocalDateTime dueDate) {
         this.title = title;
@@ -40,19 +46,4 @@ public class Milestone {
         deleted = true;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public LocalDateTime getDueDate() {
-        return dueDate;
-    }
 }

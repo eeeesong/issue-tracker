@@ -1,13 +1,16 @@
 package codesquad.issueTracker.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
 
-
 @Entity
 @ToString
+@Getter
+@NoArgsConstructor
 public class Label {
 
     @Id
@@ -21,9 +24,6 @@ public class Label {
     private String colorCode;
     private String content;
     private boolean deleted;
-
-    public Label() {
-    }
 
     public Label(String name, String colorCode, String content) {
         this.name = name;
@@ -39,21 +39,5 @@ public class Label {
 
     public void delete() {
         deleted = true;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getColorCode() {
-        return colorCode;
-    }
-
-    public String getContent() {
-        return content;
     }
 }

@@ -1,10 +1,11 @@
 package codesquad.issueTracker.service;
 
-import codesquad.issueTracker.Data;
 import codesquad.issueTracker.domain.Milestone;
 import codesquad.issueTracker.repository.MilestoneRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class MilestoneService {
@@ -14,8 +15,13 @@ public class MilestoneService {
         this.milestoneRepository = milestoneRepository;
     }
 
-    public Data getMilestones() {
-        return Data.ok(milestoneRepository.findByDeletedIsFalse(), "mileStone");
+    public List<Milestone> getMilestones() {
+        return milestoneRepository.findByDeletedIsFalse();
+    }
+
+    public Milestone getMilestone(Long id) {
+        return milestoneRepository.findByIdAndDeletedFalse(id)
+                .orElseThrow(NullPointerException::new);
     }
 
     public void createMilestone(Milestone milestone) {
@@ -24,7 +30,7 @@ public class MilestoneService {
 
     @Transactional
     public Milestone updateMilestone(Long id, Milestone updateMilestone) {
-        Milestone milestone = milestoneRepository.findById(id)
+        Milestone milestone = milestoneRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 마일스톤입니다"));
 
         milestone.updateMilestone(updateMilestone);
@@ -34,7 +40,7 @@ public class MilestoneService {
 
     @Transactional
     public void deleteMilestone(Long id) {
-        Milestone milestone = milestoneRepository.findById(id)
+        Milestone milestone = milestoneRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 마일스톤입니다"));
 
         milestone.delete();

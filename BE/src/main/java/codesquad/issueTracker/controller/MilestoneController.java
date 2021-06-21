@@ -1,13 +1,13 @@
 package codesquad.issueTracker.controller;
 
-import codesquad.issueTracker.Data;
+import codesquad.issueTracker.ApiResult;
 import codesquad.issueTracker.domain.Milestone;
 import codesquad.issueTracker.service.MilestoneService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/api/milestones")
 public class MilestoneController {
     private final MilestoneService milestoneService;
@@ -17,25 +17,25 @@ public class MilestoneController {
     }
 
     @GetMapping()
-    public ResponseEntity<Data> getMilestone() {
-        return ResponseEntity.ok().body(milestoneService.getMilestones());
+    public ApiResult<List<Milestone>> getMilestone() {
+        return ApiResult.success(milestoneService.getMilestones());
     }
 
     @PostMapping()
-    public ResponseEntity<String> createMilestone(@RequestBody Milestone milestone) {
+    public ApiResult createMilestone(@RequestBody Milestone milestone) {
         milestoneService.createMilestone(milestone);
-        return ResponseEntity.ok().body("마일스톤 생성 성공!");
+        return ApiResult.ok();
     }
 
     @PutMapping("/{milestoneId}")
-    public ResponseEntity<String> updateMilestone(@PathVariable Long milestoneId, @RequestBody Milestone updateMilestone) {
+    public ApiResult updateMilestone(@PathVariable Long milestoneId, @RequestBody Milestone updateMilestone) {
         milestoneService.updateMilestone(milestoneId, updateMilestone);
-        return ResponseEntity.ok().body("마일스톤 수정 성공!");
+        return ApiResult.ok();
     }
 
     @DeleteMapping("/{milestoneId}")
-    public ResponseEntity<String> deleteMilestone(@PathVariable Long milestoneId) {
+    public ApiResult deleteMilestone(@PathVariable Long milestoneId) {
         milestoneService.deleteMilestone(milestoneId);
-        return ResponseEntity.ok().body("마일스톤 삭제 성공!");
+        return ApiResult.ok();
     }
 }

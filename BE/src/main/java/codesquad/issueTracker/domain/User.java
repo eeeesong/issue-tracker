@@ -1,10 +1,16 @@
 package codesquad.issueTracker.domain;
 
 import codesquad.issueTracker.oauth.dto.OauthUser;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Getter
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -18,10 +24,8 @@ public class User {
     private String imageUrl;
     private String name;
 
-
-    public User() {
-
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Issue> issues = new ArrayList<>();
 
     private User(String loginId, String imageUrl, String name) {
         this.loginId = loginId;
@@ -29,27 +33,7 @@ public class User {
         this.name = name;
     }
 
-    public static User of (String loginId, String avatarUrl, String name) {
-        return new User(loginId, avatarUrl, name);
-    }
-
     public static User fromGitHubUser(OauthUser oauthUser) {
         return new User(oauthUser.getLoginId(), oauthUser.getAvatarUrl(), oauthUser.getName());
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getLoginId() {
-        return loginId;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public String getName() {
-        return name;
     }
 }

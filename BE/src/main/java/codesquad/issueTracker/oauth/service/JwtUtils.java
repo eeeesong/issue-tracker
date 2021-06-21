@@ -9,19 +9,17 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
 
-@Component
+@Service
 @PropertySource("classpath:oauth.properties")
 public class JwtUtils {
 
     private static final String ISSUER = "issue";
-    private static final String LOGIN_ID = "login_id";
-    private static final String IMAGE_URL = "image_url";
-    private static final String NAME = "name";
+    private static final String USER_ID = "userId";
 
     private final Algorithm ALGORITHM;
     private final JWTVerifier jwtVerifier;
@@ -34,16 +32,10 @@ public class JwtUtils {
                 .build();
     }
 
-    public JWTVerifier getJwtVerifier() {
-        return jwtVerifier;
-    }
-
     public OauthJwt getJwt(User user) {
         try {
             String token = JWT.create()
-                    .withClaim(LOGIN_ID, user.getLoginId())
-                    .withClaim(IMAGE_URL, user.getImageUrl())
-                    .withClaim(NAME, user.getName())
+                    .withClaim(USER_ID, user.getId())
                     .withIssuer(ISSUER)
                     .withExpiresAt(Date.valueOf(LocalDate.now().plusDays(2)))
                     .sign(ALGORITHM);
@@ -53,12 +45,8 @@ public class JwtUtils {
         }
     }
 
-    public User getUserFromJwt(DecodedJWT jwt) {
-        return User.of(
-                jwt.getClaim(LOGIN_ID).asString(),
-                jwt.getClaim(IMAGE_URL).asString(),
-                jwt.getClaim(NAME).asString()
-        );
+    public Long getUserIdFromJwt(DecodedJWT jwt) {
+        return jwt.getClaim(USER_ID).asLong();
     }
 
     public DecodedJWT verify(String token) {

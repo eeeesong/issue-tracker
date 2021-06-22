@@ -10,13 +10,20 @@ const Milestoneist = () => {
   return (
     <MilestoneistWrapper>
       <Tabs left={0} type="MILESTONE" />
-      <AddButton text="추가" onClick={() => setAdding(true)} />
+      <AddButton text="추가" onClick={() => setAdding(() => !isAdding)} />
       {isAdding && <MilestoneModal />}
       <List isAdding={isAdding} />
     </MilestoneistWrapper>
   );
 };
-
+const AddBox = styled.div`
+  position: absolute;
+  top: 60px;
+  margin-top: 50px;
+  width: 100%;
+  height: 300px;
+  border: 1px solid red;
+`;
 const MilestoneistWrapper = styled.div`
   position: relative;
   width: 1280px;

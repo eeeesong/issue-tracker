@@ -4,7 +4,7 @@ import Main from "./Main";
 import { useState } from "react";
 const List = ({ isAdding }: { isAdding: boolean }) => {
   return (
-    <ListWrapper>
+    <ListWrapper isAdding={isAdding}>
       <Header />
       <Main />
     </ListWrapper>
@@ -15,12 +15,12 @@ const ListWrapper = styled.div`
   border: 1px solid gray;
   border-radius: 20px;
   width: 100%;
-  /* height: 50vh; */
   position: absolute;
-  top: 60px;
-  /* &:nth-child(1) {
-    background-color: gray;
-  } */
+  top: ${({ isAdding }: { isAdding: boolean }) => {
+    if (isAdding) return "400px";
+    return "60px";
+  }};
+  /* top: 60px; */
 `;
 
 export default List;

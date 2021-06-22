@@ -12,6 +12,7 @@ import { LoginState } from "../atoms/atoms";
 import NotFound from "./Error/NotFound";
 import AuthRoute from "./Login/AuthRoute";
 import Milestonelist from "./Milestonelist/Milestonelist";
+import Abc from "./Abc";
 
 const Root = () => {
   return (
@@ -30,7 +31,10 @@ const RouterComponent = () => {
       <Switch>
         <Route path="/" component={Login} exact />
         <AuthRoute path="/issuelist" render={IssueList} />
-        <AuthRoute path="/milestonelist" render={Milestonelist} />
+        {/* <AuthRoute path="/labellist" render={LabelList} /> */}
+        {/* <AuthRoute path="/milestonelist" render={Milestonelist} /> */}
+        {/* <AuthRoute path="/abc" render={Abc} /> */}
+        <Route path="/milestonelist" component={Milestonelist} />
         <Route path="/labellist" component={LabelList} />
         <Route path="/newissue" component={NewIssue} />
         <Route path="/detailissue" component={DetailIssue} />

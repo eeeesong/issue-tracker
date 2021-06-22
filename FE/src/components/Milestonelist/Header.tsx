@@ -6,8 +6,6 @@ const Header = () => {
   const milestoneList = useRecoilValue(milestoneListAtom);
   const createMilestoneCount = () => {
     const newArr = [...milestoneList];
-    // console.log
-    console.log(newArr.length);
     return `${newArr.length}개의 레이블`;
   };
   return <HeaderWrapper>{createMilestoneCount()}</HeaderWrapper>;

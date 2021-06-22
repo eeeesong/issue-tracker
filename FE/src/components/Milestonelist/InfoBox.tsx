@@ -82,10 +82,12 @@ const DeleteIcon = () => (
 );
 const UpdateBtn = styled.div`
   color: #6e7191;
+  cursor: pointer;
 `;
 const DeleteBtn = styled.div`
   margin-left: 10px;
   color: #ff3b30;
+  cursor: pointer;
 `;
 const UDBox = styled.div`
   display: flex;

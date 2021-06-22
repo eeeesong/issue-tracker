@@ -3,7 +3,7 @@ import { Route, Redirect, RouteProps } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { LoginState } from "../../atoms/atoms";
 
-const AuthRoute = ({ render }: RouteProps) => {
+const AuthRoute = ({ path, render }: RouteProps) => {
   const [, setIsLogin] = useRecoilState(LoginState);
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -11,6 +11,7 @@ const AuthRoute = ({ render }: RouteProps) => {
   }, [token, setIsLogin]);
   return (
     <Route
+      path={path}
       render={(props) =>
         token ? (
           render && render(props)

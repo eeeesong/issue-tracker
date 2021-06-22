@@ -128,7 +128,9 @@ export const currentIssueIdAtom = atom({
 export const currentIssueSelector = selector({
   key: "currentIssue",
   get({ get }) {
-    return get(issueListAtom).filter(({ id }) => id === get(currentIssueIdAtom))[0];
+    return get(issueListAtom).filter(
+      ({ id }) => id === get(currentIssueIdAtom)
+    )[0];
   },
 });
 
@@ -152,7 +154,32 @@ export const labelCountSelector = selector({
 
 export const milestoneListAtom = atom({
   key: "milestoneList",
-  default: [{ title: "마스터즈 코스" }],
+  default: [
+    {
+      id: 1,
+      title: "마일스톤 제목 1",
+      due_date: "6/10",
+      description: "설명1",
+      completion: 1,
+      total: 3,
+    },
+    {
+      id: 2,
+      title: "마일스톤 제목 2",
+      due_date: "6/11",
+      description: "설명2",
+      completion: 2,
+      total: 3,
+    },
+    {
+      id: 3,
+      title: "마일스톤 제목 3",
+      due_date: "6/12",
+      description: "설명3",
+      completion: 3,
+      total: 3,
+    },
+  ],
 });
 
 export const milestoneCountSelector = selector({

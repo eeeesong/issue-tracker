@@ -20,6 +20,7 @@ const LabelList = () => {
       <Tabs left={0} type="LABEL" />
       <AddButton text="추가" onClick={() => setAdding(true)} />
       {isAdding && <LabelModal label={{ id: 0, name: "", content: "", color_code: "#EFF0F6" }} type="ADD" setAdding={setAdding} />}
+
       <List isAdding={isAdding} />
     </LabelListWrapper>
   );

@@ -2,7 +2,7 @@ package codesquad.issueTracker.controller;
 
 import codesquad.issueTracker.ApiResult;
 import codesquad.issueTracker.domain.Label;
-import codesquad.issueTracker.dto.LabelResponse;
+import codesquad.issueTracker.dto.response.LabelResponse;
 import codesquad.issueTracker.service.LabelService;
 import org.springframework.web.bind.annotation.*;
 

@@ -3,7 +3,7 @@ package codesquad.issueTracker.service;
 import codesquad.issueTracker.domain.Issue;
 import codesquad.issueTracker.domain.IssueHasLabel;
 import codesquad.issueTracker.domain.Label;
-import codesquad.issueTracker.dto.LabelResponse;
+import codesquad.issueTracker.dto.response.LabelResponse;
 import codesquad.issueTracker.dto.issue.request.IssueHasLabelIdsRequest;
 import codesquad.issueTracker.repository.IssueHasLabelRepository;
 import codesquad.issueTracker.repository.LabelRepository;

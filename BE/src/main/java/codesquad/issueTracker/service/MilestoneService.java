@@ -1,8 +1,8 @@
 package codesquad.issueTracker.service;
 
 import codesquad.issueTracker.domain.Milestone;
-import codesquad.issueTracker.dto.DetailMilestoneResponse;
-import codesquad.issueTracker.dto.MilestoneResponse;
+import codesquad.issueTracker.dto.response.DetailMilestoneResponse;
+import codesquad.issueTracker.dto.response.MilestoneResponse;
 import codesquad.issueTracker.repository.MilestoneRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

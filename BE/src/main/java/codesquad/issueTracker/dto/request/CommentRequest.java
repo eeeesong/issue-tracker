@@ -1,4 +1,4 @@
-package codesquad.issueTracker.dto;
+package codesquad.issueTracker.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

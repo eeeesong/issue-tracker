@@ -3,7 +3,7 @@ package codesquad.issueTracker.dto.issue.response;
 import codesquad.issueTracker.domain.Issue;
 import codesquad.issueTracker.domain.IssueAssignee;
 import codesquad.issueTracker.domain.IssueHasLabel;
-import codesquad.issueTracker.dto.UserResponse;
+import codesquad.issueTracker.dto.response.UserResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

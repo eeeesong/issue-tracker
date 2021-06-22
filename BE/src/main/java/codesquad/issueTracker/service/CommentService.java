@@ -3,7 +3,7 @@ package codesquad.issueTracker.service;
 import codesquad.issueTracker.domain.Comment;
 import codesquad.issueTracker.domain.Issue;
 import codesquad.issueTracker.domain.User;
-import codesquad.issueTracker.dto.CommentRequest;
+import codesquad.issueTracker.dto.request.CommentRequest;
 import codesquad.issueTracker.dto.issue.request.IssueRequest;
 import codesquad.issueTracker.repository.CommentRepository;
 import org.springframework.stereotype.Service;

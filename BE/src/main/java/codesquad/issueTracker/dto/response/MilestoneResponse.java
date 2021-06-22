@@ -1,4 +1,4 @@
-package codesquad.issueTracker.dto;
+package codesquad.issueTracker.dto.response;
 
 import codesquad.issueTracker.domain.Milestone;
 import com.fasterxml.jackson.annotation.JsonFormat;

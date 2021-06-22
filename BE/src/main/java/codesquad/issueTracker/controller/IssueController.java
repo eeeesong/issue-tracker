@@ -1,7 +1,7 @@
 package codesquad.issueTracker.controller;
 
 import codesquad.issueTracker.ApiResult;
-import codesquad.issueTracker.dto.CommentRequest;
+import codesquad.issueTracker.dto.request.CommentRequest;
 import codesquad.issueTracker.dto.issue.request.*;
 import codesquad.issueTracker.dto.issue.response.IssueDetailResponse;
 import codesquad.issueTracker.dto.issue.response.IssueResponse;

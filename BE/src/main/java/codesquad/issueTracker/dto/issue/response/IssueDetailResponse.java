@@ -2,9 +2,8 @@ package codesquad.issueTracker.dto.issue.response;
 
 import codesquad.issueTracker.domain.Issue;
 import codesquad.issueTracker.domain.Milestone;
-import codesquad.issueTracker.dto.CommentResponse;
+import codesquad.issueTracker.dto.response.CommentResponse;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;

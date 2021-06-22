@@ -2,9 +2,8 @@ package codesquad.issueTracker.controller;
 
 import codesquad.issueTracker.ApiResult;
 import codesquad.issueTracker.domain.Milestone;
-import codesquad.issueTracker.dto.DetailMilestoneResponse;
-import codesquad.issueTracker.dto.MilestoneResponse;
-import codesquad.issueTracker.dto.issue.response.IssueDetailMilestoneResponse;
+import codesquad.issueTracker.dto.response.DetailMilestoneResponse;
+import codesquad.issueTracker.dto.response.MilestoneResponse;
 import codesquad.issueTracker.service.MilestoneService;
 import org.springframework.web.bind.annotation.*;
 

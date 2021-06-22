@@ -1,7 +1,7 @@
 package codesquad.issueTracker.controller;
 
 import codesquad.issueTracker.ApiResult;
-import codesquad.issueTracker.dto.CommentRequest;
+import codesquad.issueTracker.dto.request.CommentRequest;
 import codesquad.issueTracker.service.CommentService;
 import org.springframework.web.bind.annotation.*;
 

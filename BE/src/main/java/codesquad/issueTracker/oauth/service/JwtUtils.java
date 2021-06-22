@@ -20,6 +20,9 @@ public class JwtUtils {
 
     private static final String ISSUER = "issue";
     private static final String USER_ID = "userId";
+    private static final String LOGIN_ID = "login_id";
+    private static final String IMAGE_URL = "image_url";
+    private static final String NAME = "name";
 
     private final Algorithm ALGORITHM;
     private final JWTVerifier jwtVerifier;
@@ -36,6 +39,9 @@ public class JwtUtils {
         try {
             String token = JWT.create()
                     .withClaim(USER_ID, user.getId())
+                    .withClaim(LOGIN_ID, user.getLoginId())
+                    .withClaim(IMAGE_URL, user.getImageUrl())
+                    .withClaim(NAME, user.getName())
                     .withIssuer(ISSUER)
                     .withExpiresAt(Date.valueOf(LocalDate.now().plusDays(2)))
                     .sign(ALGORITHM);

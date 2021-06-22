@@ -92,8 +92,7 @@ public class IssueService {
     public void issueDelete(Long id) {
         Issue issue = issueRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new RuntimeException("이슈 존재하지 않음"));
-        issue.delete();
-        issueRepository.save(issue);
+        issueRepository.delete(issue);
     }
 
     public void updateIssueTitle(Long id, IssueTitleRequest issueTitleRequest) {

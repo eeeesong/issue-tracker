@@ -69,6 +69,7 @@ const CloseIcon = () => (
 );
 
 const AddButtonWrapper = styled.div`
+  cursor: pointer;
   position: absolute;
   display: flex;
   justify-content: center;
@@ -77,11 +78,11 @@ const AddButtonWrapper = styled.div`
   height: 40px;
   right: 0px;
   top: ${({ text }: { text: string }) => {
-    if (text === "완료") return "200px";
+    if (text === "완료") return "220px";
     else return;
   }};
   left: ${({ text }: { text: string }) => {
-    if (text === "완료") return "1000px";
+    if (text === "완료") return "1108px";
     else return;
   }};
   background: #007aff;

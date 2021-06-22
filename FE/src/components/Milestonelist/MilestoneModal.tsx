@@ -23,7 +23,6 @@ const MilestoneModal = () => {
       ...milestoneInfo,
       due_date: time,
     });
-    // return;
     const responcePost = await fetch(`http://3.34.122.67/api/milestones`, {
       method: "POST",
       headers: {
@@ -48,7 +47,6 @@ const MilestoneModal = () => {
       description: "",
     });
     const { data, error } = await responceGet.json();
-    console.log(data);
     setMilestoneInfo(data);
   };
   return (
@@ -56,17 +54,18 @@ const MilestoneModal = () => {
       <Title>새로운 마일스톤 추가</Title>
       <Main>
         <NameBox>
-          <NameTitle>파일스톤 이름</NameTitle>
-          <InputName onChange={onChangeName} value={milestoneInfo.title} />
+          <NameTitle>제목</NameTitle>
+          <InputName placeholder="마일스톤 이름" onChange={onChangeName} value={milestoneInfo.title} />
         </NameBox>
         <DateBox>
           <DateTitle>완료일 선택</DateTitle>
-          <InputDate onChange={onChangeDate} value={milestoneInfo.due_date} />
+          <InputDate placeholder="완료일 선택" onChange={onChangeDate} value={milestoneInfo.due_date} />
         </DateBox>
       </Main>
       <DetailBox>
-        <DetailName>설명(선택)</DetailName>
+        <DetailTitle>설명(선택)</DetailTitle>
         <InputDetail
+          placeholder="설명(선택)"
           onChange={onChangeDetail}
           value={milestoneInfo.description}
         />
@@ -75,26 +74,52 @@ const MilestoneModal = () => {
     </MilestoneModalWrapper>
   );
 };
-const DetailName = styled.div``;
-const DetailBox = styled.div`
-  display: flex;
+const BoxStyle = styled.div`
+background-color: #EFF0F6;
+display: flex;
+flex: auto;
+text-align: center;
+border-radius: 11px;
+padding-left:20px;
 `;
-const DateBox = styled.div`
-  display: flex;
+const DetailBox = styled(BoxStyle)`
+flex:none;
+`;
+const DateBox = styled(BoxStyle)`
   margin-left: 10px;
 `;
-const DateTitle = styled.div``;
-const NameBox = styled.div`
-  display: flex;
+const NameBox = styled(BoxStyle)`
 `;
-const NameTitle = styled.div``;
+const TitleStyle = styled.div`
+display: flex;
+align-items: center;
+width: 80px;
+/* margin-left:20px; */
+`;
+
+const DateTitle = styled(TitleStyle)`
+`;
+const NameTitle = styled(TitleStyle)`
+`;
+const DetailTitle = styled(TitleStyle)``;
 const Main = styled.div`
+width: 100%;
   display: flex;
   margin-bottom: 20px;
 `;
-const InputName = styled.input``;
-const InputDate = styled.input``;
-const InputDetail = styled.input``;
+const inputStyle = styled.input`
+height: 40px;
+background:transparent;
+outline: none;
+border: none;
+font-size: 16px;
+`;
+const InputName = styled(inputStyle)`
+`;
+const InputDate = styled(inputStyle)`
+`;
+const InputDetail = styled(inputStyle)`
+`;
 const Title = styled.div`
   font-size: 30px;
   margin-bottom: 20px;

@@ -1,6 +1,7 @@
 export interface IUser {
-  loginId: string;
-  profileUrl: string;
+  id: number;
+  name: string;
+  imageUrl: string;
 }
 
 export interface ILabel {
@@ -12,23 +13,23 @@ export interface ILabel {
 export interface IComment {
   id: number;
   author: IUser;
-  body: string;
-  time: string;
+  description: string;
+  created_date: string;
 }
 
 export interface IMilestone {
+  id:number;
   title: string;
-} // 순환참조 문제 해결필요
+}
 
 export interface IIssue {
-  id: number;
+  issueNumber: number;
   title: string;
-  body: string;
-  label: Array<ILabel>;
-  milestone: IMilestone|null;
-  assignee: Array<IUser>;
+  labels: Array<ILabel>;
+  milestone: IMilestone | null;
+  assignees: Array<IUser>;
   author: IUser;
-  date: string;
-  comments: Array<IComment>;
+  created_date: string;
+  comment: Array<IComment>;
   status: boolean;
 }

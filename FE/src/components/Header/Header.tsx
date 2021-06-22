@@ -17,13 +17,14 @@ const Header = () => {
     if (userID === null) return;
     if (profile)
       setUserInfo({
-        profileUrl: profile,
-        loginId: userID,
+        id:0,
+        imageUrl: profile,
+        name: userID,
       });
   }, [isLogin, setUserInfo]);
   const createImg = () => {
     let newObj = { ...userInfo };
-    return newObj.profileUrl;
+    return newObj.imageUrl;
   };
   return (
     <HeaderWrapper>

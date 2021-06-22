@@ -7,21 +7,20 @@ import Comment from "./Comment";
 import CommentModal from "./CommentModal";
 
 const DetailIssue = () => {
-  const { author, body, date, comments, status } = useRecoilValue(currentIssueSelector);
+  const { author, comment, status } = useRecoilValue(currentIssueSelector);
   return (
     <DetailIssueWrapper>
       <Header />
       <Line />
       <Content>
         <SideBar isDetail />
-        <Comment comment={{id:0, body: body, author: author, time: date }} issueAuthor={author} />
-        {comments.map((comment) => (
+        {comment.map((comment) => (
           <Comment key={comment.id} issueAuthor={author} comment={comment} />
         ))}
         {!status && (
           <Comment
             close
-            comment={{id:comments.length+1, body: "이슈가 닫혔습니다", author: author, time: "대충닫힌시간" }}
+            comment={{id:comment.length+1, description: "이슈가 닫혔습니다", author: author, created_date: "" }}
             issueAuthor={author}
           />
         )}

@@ -6,7 +6,7 @@ import Label from "components/common/Label";
 import styled from "styled-components";
 
 const SideBar = ({ isDetail }: { isDetail?: boolean }) => {
-  const { assignee, label } = useRecoilValue(currentIssueSelector);
+  const { assignees, labels } = useRecoilValue(currentIssueSelector);
   const [currentAssignees, setAssignees] = useState<Array<IUser>>([]);
   const [currentLabels, setLabels] = useState<Array<ILabel>>([]);
   // const [newMilestone, setNewMilestone] = useState({});
@@ -21,9 +21,9 @@ const SideBar = ({ isDetail }: { isDetail?: boolean }) => {
   }, []);
 
   useEffect(() => {
-    setAssignees(isDetail ? assignee : []);
-    setLabels(isDetail ? label : []);
-  }, [isDetail, assignee, label]);
+    setAssignees(isDetail ? assignees : []);
+    setLabels(isDetail ? labels : []);
+  }, [isDetail, assignees, labels]);
   return (
     <SideBarWrapper>
       <SideBarContent>
@@ -32,7 +32,7 @@ const SideBar = ({ isDetail }: { isDetail?: boolean }) => {
           <TitleButton />
         </ContentTitle>
         {currentAssignees.map((assignee) => (
-          <User key={assignee.loginId} {...assignee} />
+          <User key={assignee.id} {...assignee} />
         ))}
       </SideBarContent>
       <SideBarContent ref={labelDOM} onClick={() => setLabelOn(true)}>
@@ -57,7 +57,7 @@ const SideBar = ({ isDetail }: { isDetail?: boolean }) => {
   );
 };
 
-const User = ({ loginId, profileUrl }: { loginId: string; profileUrl: string }) => <UserWrapper>{loginId}</UserWrapper>;
+const User = ({ name, imageUrl }: { name: string; imageUrl: string }) => <UserWrapper>{name}</UserWrapper>;
 
 const TitleButton = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

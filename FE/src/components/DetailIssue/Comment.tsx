@@ -10,24 +10,24 @@ interface ICommentComp {
 }
 
 const Comment = ({ close, comment, issueAuthor }: ICommentComp) => {
-  const { author, time, body } = comment;
+  const { author, created_date, description } = comment;
   const [isEdit, setEdit] = useState(false);
   return isEdit ? (
     <>
-      <CommentModal setEdit={setEdit} body={body} />
+      <CommentModal setEdit={setEdit} body={description} />
     </>
   ) : (
     <CommentWrapper isClose={Boolean(close)}>
       <Title isClose={Boolean(close)}>
         <TitleText>
-          <TitleTextAuthor>{author.loginId}</TitleTextAuthor>
-          <TitleTextTime>{time}</TitleTextTime>
+          <TitleTextAuthor>{author.name}</TitleTextAuthor>
+          <TitleTextTime>{created_date}</TitleTextTime>
         </TitleText>
-        {issueAuthor.loginId === author.loginId && <AuthorBadge />}
+        {issueAuthor.name === author.name && <AuthorBadge />}
         {!close && <EditButton onClick={() => setEdit(true)} />}
         <EmojiIcon />
       </Title>
-      <Body>{body}</Body>
+      <Body>{description}</Body>
     </CommentWrapper>
   );
 };

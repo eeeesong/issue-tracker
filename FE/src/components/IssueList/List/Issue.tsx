@@ -12,8 +12,8 @@ interface IIssue {
 }
 
 const Issue = ({ id, checkedIndex, setCheckedIndex }: IIssue) => {
-  const { title, label, milestone, author, status } = useRecoilValue(issueListAtom).filter(
-    (issue) => issue.id === id
+  const { title, labels, milestone, author, status } = useRecoilValue(issueListAtom).filter(
+    (issue) => issue.issueNumber === id
   )[0];
   const check = () =>
     setCheckedIndex((arr) =>
@@ -33,7 +33,7 @@ const Issue = ({ id, checkedIndex, setCheckedIndex }: IIssue) => {
         <IssueTitle>
           <OpenIcon status={status}/>
           <TitleText>{title}</TitleText>
-          {label.map(({ id, name, color_code }) => (
+          {labels.map(({ id, name, color_code }) => (
             <LabelWrapper key={id}>
               <Label key={id} name={name} color_code={color_code} />
             </LabelWrapper>
@@ -42,7 +42,7 @@ const Issue = ({ id, checkedIndex, setCheckedIndex }: IIssue) => {
         <IssueInfo>
           <InfoText>#{id}</InfoText>
           <InfoText>
-            이 이슈가 {"대충시간처리로직"} 전, {author.loginId}님에 의해 작성되었습니다
+            이 이슈가 {"대충시간처리로직"} 전, {author.name}님에 의해 작성되었습니다
           </InfoText>
           {milestone && (
             <InfoText>

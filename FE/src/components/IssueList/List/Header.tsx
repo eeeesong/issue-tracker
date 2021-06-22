@@ -30,7 +30,7 @@ const Header = ({ count, filteredIndex, checkedIndex, setCheckedIndex }: IHeader
     return () => document.removeEventListener("click", blur);
   }, []);
   const assigneeList = Array.from(
-    new Set(issues.reduce((acc: Array<IUser>, cur) => [...acc, ...cur.assignee], []).map((el) => JSON.stringify(el)))
+    new Set(issues.reduce((acc: Array<IUser>, cur) => [...acc, ...cur.assignees], []).map((el) => JSON.stringify(el)))
   ).map((el) => JSON.parse(el));
 
   const labelDOM = useRef<HTMLDivElement>(null);
@@ -41,7 +41,7 @@ const Header = ({ count, filteredIndex, checkedIndex, setCheckedIndex }: IHeader
     return () => document.removeEventListener("click", blur);
   }, []);
   const labelList = Array.from(
-    new Set(issues.reduce((acc: Array<ILabel>, cur) => [...acc, ...cur.label], []).map((el) => JSON.stringify(el)))
+    new Set(issues.reduce((acc: Array<ILabel>, cur) => [...acc, ...cur.labels], []).map((el) => JSON.stringify(el)))
   ).map((el) => JSON.parse(el));
 
   const milestoneDOM = useRef<HTMLDivElement>(null);
@@ -206,9 +206,9 @@ const AssigneeFilterModal = ({ content }: { content: Array<IUser> }) => {
           담당자가 없는 이슈
           <ModalRadioIcon />
         </ModalContent>
-        {content.map(({ loginId }: IUser) => (
-          <ModalContent key={loginId}>
-            {loginId}
+        {content.map(({ id, name }: IUser) => (
+          <ModalContent key={id}>
+            {name}
             <ModalRadioIcon />
           </ModalContent>
         ))}
@@ -272,9 +272,9 @@ const AuthorFilterModal = ({ content }: { content: Array<IUser> }) => {
           작성자가 없는 이슈
           <ModalRadioIcon />
         </ModalContent>
-        {content.map(({ loginId }: IUser) => (
-          <ModalContent key={loginId}>
-            {loginId}
+        {content.map(({ id, name }: IUser) => (
+          <ModalContent key={id}>
+            {name}
             <ModalRadioIcon />
           </ModalContent>
         ))}

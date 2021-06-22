@@ -21,7 +21,6 @@ public class IssueHasLabel {
     @ManyToOne
     @JoinColumn(name = "label_id")
     private Label label;
-
 }
 
 

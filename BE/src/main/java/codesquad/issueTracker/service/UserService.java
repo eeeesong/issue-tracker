@@ -3,7 +3,7 @@ package codesquad.issueTracker.service;
 import codesquad.issueTracker.domain.Issue;
 import codesquad.issueTracker.domain.IssueAssignee;
 import codesquad.issueTracker.domain.User;
-import codesquad.issueTracker.dto.IssueAssigneeIdsRequest;
+import codesquad.issueTracker.dto.issue.request.IssueAssigneeIdsRequest;
 import codesquad.issueTracker.repository.IssueAssigneeRepository;
 import codesquad.issueTracker.repository.UserRepository;
 import org.springframework.stereotype.Service;

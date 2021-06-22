@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Content from "./Content";
 
@@ -6,6 +7,7 @@ const NewIssue = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const content = { title, setTitle, body, setBody };
+  const history = useHistory();
   return (
     <NewIssueWrapper>
       <Header>새로운 이슈 작성</Header>
@@ -14,7 +16,7 @@ const NewIssue = () => {
       <Line />
       <Buttons>
         <AddButton isActivated={title.length > 0}>완료</AddButton>
-        <CancelButton>
+        <CancelButton onClick={() => history.push("/issuelist")}>
           <CancelIcon />
           <CancelText>작성 취소</CancelText>
         </CancelButton>
@@ -24,13 +26,7 @@ const NewIssue = () => {
 };
 
 const CancelIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M11.2999 4.70026L4.70025 11.2999M4.7002 4.7002L11.2999 11.2999"
       stroke="#6E7191"

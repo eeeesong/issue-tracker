@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { labelCountSelector } from "atoms/atoms";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { labelListAtom } from "atoms/atoms";
 import styled from "styled-components";
 import Tabs from "components/common/Tabs";
 import AddButton from "components/common/AddButton";
@@ -9,26 +9,18 @@ import LabelModal from "./LabelModal";
 
 const LabelList = () => {
   const [isAdding, setAdding] = useState(false);
-  const labelCount = useRecoilValue(labelCountSelector);
-  // fetch("http://3.34.122.67/api/labels")
-  //   .then((res) => res.json())
-  //   .then((json) => console.log(json));
-  console.log(localStorage.getItem("token"));
+  const [, setLabelList] = useRecoilState(labelListAtom);
+  useEffect(() => {
+    fetch(`http://3.34.122.67/api/labels`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
+      .then((res) => res.json())
+      .then((json) => setLabelList(json.data));
+  }, [setLabelList]);
   return (
     <LabelListWrapper>
       <Tabs left={0} type="LABEL" />
       <AddButton text="추가" onClick={() => setAdding(true)} />
-      {isAdding && (
-        <LabelModal
-          label={{
-            id: labelCount + 1,
-            name: "",
-            content: "",
-            color_code: "EFF0F6",
-          }}
-          type="ADD"
-        />
-      )}
+      {isAdding && <LabelModal label={{ id: 0, name: "", content: "", color_code: "#EFF0F6" }} type="ADD" setAdding={setAdding} />}
+
       <List isAdding={isAdding} />
     </LabelListWrapper>
   );

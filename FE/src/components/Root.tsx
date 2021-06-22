@@ -48,6 +48,10 @@ const RouterComponent = () => {
   );
 };
 
-const RootWrapper = styled.div``;
+const RootWrapper = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+`;
 
 export default Root;

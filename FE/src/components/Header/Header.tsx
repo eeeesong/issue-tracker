@@ -8,19 +8,18 @@ import { useRecoilValue } from "recoil";
 import { LoginState } from "../../atoms/atoms";
 
 const Header = () => {
-  const { ref, isComponentVisible, setIsComponentVisible } =
-    useComponentVisible(true);
+  const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(true);
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const isLogin = useRecoilValue(LoginState);
   useEffect(() => {
     const profile = localStorage.getItem("profileUrl");
-    const userID: string | null = localStorage.getItem("loginID");
+    const userID = localStorage.getItem("loginId");
+    if (userID === null) return;
     if (profile)
-      setUserInfo((userInfo) => ({
-        ...userInfo,
+      setUserInfo({
         profileUrl: profile,
-        loginID: userID,
-      }));
+        loginId: userID,
+      });
   }, [isLogin, setUserInfo]);
   const createImg = () => {
     let newObj = { ...userInfo };
@@ -29,13 +28,8 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <Title>Issue Tracker</Title>
-      <LoginInfo
-        ref={ref}
-        onClick={() => setIsComponentVisible(!isComponentVisible)}
-      >
-        <ProfileIMG src={createImg()}>
-          {/* <img src={profileImg}></img> */}
-        </ProfileIMG>
+      <LoginInfo ref={ref} onClick={() => setIsComponentVisible(!isComponentVisible)}>
+        <ProfileIMG src={createImg()}>{/* <img src={profileImg}></img> */}</ProfileIMG>
         {!isComponentVisible && <HeaderModal />}
       </LoginInfo>
     </HeaderWrapper>
@@ -53,6 +47,7 @@ const Title = styled.div`
 const LoginInfo = styled.div``;
 const HeaderWrapper = styled.div`
   display: flex;
+  width: 1280px;
   justify-content: space-between;
   padding: 40px 80px;
 `;

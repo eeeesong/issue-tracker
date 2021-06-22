@@ -1,9 +1,9 @@
-import { currentFilterSelector } from "atoms/atoms";
+import { currentFilterBodySelector } from "atoms/atoms";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 const FilterInput = () => {
-  const input = useRecoilValue(currentFilterSelector)
+  const input = useRecoilValue(currentFilterBodySelector)
   return (
     <InputWrapper>
       <GlassIcon />

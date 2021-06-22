@@ -1,4 +1,4 @@
-import { issueListAtom, openFilterAtom } from "atoms/atoms";
+import { currentFilterSelector, openFilterAtom } from "atoms/atoms";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -8,16 +8,7 @@ import Issue from "./Issue";
 const List = () => {
   const isOpen = useRecoilValue(openFilterAtom);
   const [checkedIndex, setCheckedIndex] = useState<Array<number>>([]);
-
-  // const filterLogic = [
-  //   (el: IIssue) => el,
-  //   (el) => el.author === "username",
-  //   (el) => el.assignee.filter(({ name }) => name === "username").length !== 0,
-  //   (el) => el.comment.filter(({ author }) => author === "username").length !== 0,
-  // ];
-
-  const issues = useRecoilValue(issueListAtom);
-  // .filterLogic(useRecoilValue(currentIssueIdAtom))
+  const issues = useRecoilValue(currentFilterSelector);
   
   const filteredIssue = issues.filter(({ status }) => status === isOpen);
   return (

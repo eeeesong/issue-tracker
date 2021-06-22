@@ -9,12 +9,12 @@ const HeaderModal = () => {
   const userInfo = useRecoilValue(userInfoAtom);
   const createID = () => {
     let newObj = { ...userInfo };
-    return newObj.loginID;
+    return newObj.loginId;
   };
   const removeUserInfo = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("profileUrl");
-    localStorage.removeItem("loginID");
+    localStorage.removeItem("loginId");
     setIsLogin((v) => false);
   };
   return (

@@ -1,6 +1,6 @@
 export interface IUser {
-  name: string;
-  image: string;
+  loginId: string;
+  profileUrl: string;
 }
 
 export interface ILabel {
@@ -25,7 +25,7 @@ export interface IIssue {
   title: string;
   body: string;
   label: Array<ILabel>;
-  milestone: IMilestone;
+  milestone: IMilestone|null;
   assignee: Array<IUser>;
   author: IUser;
   date: string;

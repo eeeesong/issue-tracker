@@ -1,16 +1,13 @@
+import { IIssue, IUser } from "config/interface";
 import { atom, selector } from "recoil";
 
-interface IuserinfoAtom {
-  profileUrl: string;
-  loginID: string | null;
-}
 
-export const userInfoAtom = atom<IuserinfoAtom>({
+export const userInfoAtom = atom<IUser>({
   key: "userInfo",
-  default: { profileUrl: "", loginID: "" },
+  default: { profileUrl: "", loginId: "" },
 });
 
-export const issueListAtom = atom({
+export const issueListAtom = atom<Array<IIssue>>({
   key: "issueList",
   default: [
     {
@@ -23,21 +20,21 @@ export const issueListAtom = atom({
       ],
       milestone: { title: "마스터즈 코스" },
       assignee: [
-        { name: "Seong", image: "대충 src" },
-        { name: "Luke", image: "대충 src" },
+        { loginId: "GleamingStar", profileUrl: "대충 src" },
+        { loginId: "Luke", profileUrl: "대충 src" },
       ],
-      author: { name: "Seong", image: "대충 src" },
+      author: { loginId: "GleamingStar", profileUrl: "대충 src" },
       date: "대충년월일",
       comments: [
         {
           id: 1,
-          author: { name: "Seong", image: "대충 src" },
+          author: { loginId: "GleamingStar", profileUrl: "대충 src" },
           body: "대충 아무내용",
           time: "대충년원일",
         },
         {
           id: 2,
-          author: { name: "Luke", image: "대충 src" },
+          author: { loginId: "Luke", profileUrl: "대충 src" },
           body: "아무내용",
           time: "대충년원일",
         },
@@ -50,8 +47,8 @@ export const issueListAtom = atom({
       body: "398749382",
       label: [{ id: 2, name: "test", color_code: "#FF0000" }],
       milestone: { title: "마스터즈 코스" },
-      assignee: [{ name: "Seong", image: "대충 src" }],
-      author: { name: "Seong", image: "대충 src" },
+      assignee: [{ loginId: "GleamingStar", profileUrl: "대충 src" }],
+      author: { loginId: "GleamingStar", profileUrl: "대충 src" },
       date: "대충년월일",
       comments: [],
       status: true,
@@ -66,8 +63,8 @@ export const issueListAtom = atom({
         { id: 5, name: "test4", color_code: "#EE99AA" },
       ],
       milestone: null,
-      assignee: [{ name: "Seong", image: "대충 src" }],
-      author: { name: "Seong", image: "대충 src" },
+      assignee: [{ loginId: "GleamingStar", profileUrl: "대충 src" }],
+      author: { loginId: "GleamingStar", profileUrl: "대충 src" },
       date: "대충년월일",
       comments: [],
       status: true,
@@ -78,8 +75,8 @@ export const issueListAtom = atom({
       body: "87493",
       label: [],
       milestone: null,
-      assignee: [{ name: "Seong", image: "대충 src" }],
-      author: { name: "Seong", image: "대충 src" },
+      assignee: [{ loginId: "GleamingStar", profileUrl: "대충 src" }],
+      author: { loginId: "GleamingStar", profileUrl: "대충 src" },
       date: "대충년월일",
       comments: [],
       status: false,
@@ -90,8 +87,8 @@ export const issueListAtom = atom({
       body: "382",
       label: [],
       milestone: null,
-      assignee: [{ name: "Seong", image: "대충 src" }],
-      author: { name: "Seong", image: "대충 src" },
+      assignee: [{ loginId: "GleamingStar", profileUrl: "대충 src" }],
+      author: { loginId: "GleamingStar", profileUrl: "대충 src" },
       date: "대충년월일",
       comments: [],
       status: false,
@@ -102,8 +99,8 @@ export const issueListAtom = atom({
       body: "382",
       label: [],
       milestone: null,
-      assignee: [{ name: "Seong", image: "대충 src" }],
-      author: { name: "Luke", image: "대충 src" },
+      assignee: [{ loginId: "GleamingStar", profileUrl: "대충 src" }],
+      author: { loginId: "Luke", profileUrl: "대충 src" },
       date: "대충년월일",
       comments: [],
       status: true,
@@ -114,8 +111,8 @@ export const issueListAtom = atom({
       body: "382",
       label: [{ id: 2, name: "test", color_code: "#FF0000" }],
       milestone: { title: "마스터즈 코스" },
-      assignee: [{ name: "Seong", image: "대충 src" }],
-      author: { name: "Luke", image: "대충 src" },
+      assignee: [{ loginId: "GleamingStar", profileUrl: "대충 src" }],
+      author: { loginId: "Luke", profileUrl: "대충 src" },
       date: "대충년월일",
       comments: [],
       status: false,
@@ -174,18 +171,24 @@ const filter = [
   {
     id: 0,
     body: "is:issue",
+    logic: (arr: Array<IIssue>, user: IUser) => arr,
   },
   {
     id: 1,
     body: "is:issue author:@me",
+    logic: (arr: Array<IIssue>, user: IUser) => arr.filter(({ author }) => author.loginId === user.loginId),
   },
   {
     id: 2,
     body: "is:issue assignee:@me",
+    logic: (arr: Array<IIssue>, user: IUser) =>
+      arr.filter(({ assignee }) => assignee.filter(({ loginId }) => loginId === user.loginId).length !== 0),
   },
   {
     id: 3,
     body: "is:issue comment:@me ",
+    logic: (arr: Array<IIssue>, user: IUser) =>
+      arr.filter(({ comments }) => comments.filter(({ author }) => author.loginId === user.loginId).length !== 0),
   },
 ];
 
@@ -201,6 +204,13 @@ export const filterIndexAtom = atom({
 
 export const currentFilterSelector = selector({
   key: "currentFilter",
+  get({ get }) {
+    return filter[get(filterIndexAtom)].logic(get(issueListAtom),get(userInfoAtom));
+  },
+});
+
+export const currentFilterBodySelector = selector({
+  key: "currentFilterBody",
   get({ get }) {
     return `is:${get(openFilterAtom) ? "open" : "close"} ${filter[get(filterIndexAtom)].body}`;
   },

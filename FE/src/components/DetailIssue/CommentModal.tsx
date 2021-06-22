@@ -1,4 +1,4 @@
-import { Dispatch, MouseEventHandler, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, MouseEventHandler, SetStateAction, useState } from "react";
 import styled from "styled-components";
 
 interface ICommentModal {
@@ -8,12 +8,18 @@ interface ICommentModal {
 
 const CommentModal = ({ setEdit, body }: ICommentModal) => {
   const [newBody, setBody] = useState(body || "");
+
+  const foo = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const file = target.files
+    console.log(file && file[0])
+    setBody(body=>body+"[대충 파일이 담긴 마크다운]")
+  };
   return (
     <CommentModalWrapper>
       <InBody placeholder="코멘트를 입력하세요" value={newBody} onChange={({ target }) => setBody(target.value)} />
       <Line />
       <Add>
-        <AddInput type="file" />
+        <AddInput type="file" onChange={foo} />
         <AttachIcon />
         <AddText>파일 첨부하기</AddText>
       </Add>

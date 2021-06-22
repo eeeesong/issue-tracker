@@ -1,24 +1,15 @@
+import { IComment, IUser } from "config/interface";
 import { MouseEventHandler, useState } from "react";
 import styled from "styled-components";
 import CommentModal from "./CommentModal";
 
-interface IComment {
-  comment: {
-    author: {
-      name: string;
-      image: string;
-    };
-    time: string;
-    body: string;
-  };
-  issueAuthor: {
-    name: string;
-    image: string;
-  };
+interface ICommentComp {
+  comment: IComment
+  issueAuthor: IUser;
   close?: boolean;
 }
 
-const Comment = ({ close, comment, issueAuthor }: IComment) => {
+const Comment = ({ close, comment, issueAuthor }: ICommentComp) => {
   const { author, time, body } = comment;
   const [isEdit, setEdit] = useState(false);
   return isEdit ? (
@@ -29,10 +20,10 @@ const Comment = ({ close, comment, issueAuthor }: IComment) => {
     <CommentWrapper isClose={Boolean(close)}>
       <Title isClose={Boolean(close)}>
         <TitleText>
-          <TitleTextAuthor>{author.name}</TitleTextAuthor>
+          <TitleTextAuthor>{author.loginId}</TitleTextAuthor>
           <TitleTextTime>{time}</TitleTextTime>
         </TitleText>
-        {issueAuthor.name === author.name && <AuthorBadge />}
+        {issueAuthor.loginId === author.loginId && <AuthorBadge />}
         {!close && <EditButton onClick={() => setEdit(true)} />}
         <EmojiIcon />
       </Title>

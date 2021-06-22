@@ -34,7 +34,7 @@ const Issue = ({ id, checkedIndex, setCheckedIndex }: IIssue) => {
           <OpenIcon status={status}/>
           <TitleText>{title}</TitleText>
           {label.map(({ id, name, color_code }) => (
-            <LabelWrapper>
+            <LabelWrapper key={id}>
               <Label key={id} name={name} color_code={color_code} />
             </LabelWrapper>
           ))}
@@ -42,7 +42,7 @@ const Issue = ({ id, checkedIndex, setCheckedIndex }: IIssue) => {
         <IssueInfo>
           <InfoText>#{id}</InfoText>
           <InfoText>
-            이 이슈가 {"대충시간처리로직"} 전, {author.name}님에 의해 작성되었습니다
+            이 이슈가 {"대충시간처리로직"} 전, {author.loginId}님에 의해 작성되었습니다
           </InfoText>
           {milestone && (
             <InfoText>
@@ -79,7 +79,7 @@ const OpenIcon = ({ status }: { status: boolean }) =>
     </svg>
   ) : (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clip-path="url(#clip0)">
+      <g clipPath="url(#clip0)">
         <path d="M14 5.33325V13.9999H2V5.33325" fill="#CCD4FF" />
         <path
           d="M14 5.33325V13.9999H2V5.33325"

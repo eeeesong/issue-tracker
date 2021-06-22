@@ -32,7 +32,7 @@ const SideBar = ({ isDetail }: { isDetail?: boolean }) => {
           <TitleButton />
         </ContentTitle>
         {currentAssignees.map((assignee) => (
-          <User key={assignee.name} {...assignee} />
+          <User key={assignee.loginId} {...assignee} />
         ))}
       </SideBarContent>
       <SideBarContent ref={labelDOM} onClick={() => setLabelOn(true)}>
@@ -57,7 +57,7 @@ const SideBar = ({ isDetail }: { isDetail?: boolean }) => {
   );
 };
 
-const User = ({ name, image }: { name: string; image: string }) => <UserWrapper>{name}</UserWrapper>;
+const User = ({ loginId, profileUrl }: { loginId: string; profileUrl: string }) => <UserWrapper>{loginId}</UserWrapper>;
 
 const TitleButton = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

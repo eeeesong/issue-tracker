@@ -43,7 +43,7 @@ const Header = () => {
         <IssueIcon status={newStatus} />
         <IssueLabelText>{newStatus ? "열린 이슈" : "닫힌 이슈"}</IssueLabelText>
       </IssueLabel>
-      <Description>{`이 이슈가 ${date}에 ${author.name}님에 의해 열렸습니다 ∙ 코멘트 ${comments.length}개`}</Description>
+      <Description>{`이 이슈가 ${date}에 ${author.loginId}님에 의해 열렸습니다 ∙ 코멘트 ${comments.length}개`}</Description>
       <EditButton onClick={isEdit ? editCancelEvent : () => setEdit(true)}>
         {isEdit ? <CancelIcon /> : <EditIcon />}
         <ButtonText>{isEdit ? "편집 취소" : "제목 편집"}</ButtonText>

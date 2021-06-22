@@ -1,11 +1,14 @@
 package codesquad.issueTracker.service;
 
 import codesquad.issueTracker.domain.Milestone;
+import codesquad.issueTracker.dto.DetailMilestoneResponse;
+import codesquad.issueTracker.dto.MilestoneResponse;
 import codesquad.issueTracker.repository.MilestoneRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MilestoneService {
@@ -15,8 +18,10 @@ public class MilestoneService {
         this.milestoneRepository = milestoneRepository;
     }
 
-    public List<Milestone> getMilestones() {
-        return milestoneRepository.findByDeletedIsFalse();
+    public List<MilestoneResponse> getMilestones() {
+        return milestoneRepository.findByDeletedIsFalse().stream()
+                .map(MilestoneResponse::new)
+                .collect(Collectors.toList());
     }
 
     public Milestone getMilestone(Long id) {
@@ -43,7 +48,12 @@ public class MilestoneService {
         Milestone milestone = milestoneRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 마일스톤입니다"));
 
-        milestone.delete();
-        milestoneRepository.save(milestone);
+        milestoneRepository.delete(milestone);
+    }
+
+    public DetailMilestoneResponse getMilestoneDetail(Long milestoneId) {
+        Milestone milestone = milestoneRepository.findByIdAndDeletedFalse(milestoneId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 마일스톤입니다"));
+        return new DetailMilestoneResponse(milestone);
     }
 }

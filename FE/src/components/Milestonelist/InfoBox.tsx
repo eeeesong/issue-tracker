@@ -1,6 +1,32 @@
+import { milestoneListAtom } from "atoms/atoms";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import ChartBox from "./ChartBox";
-const InfoBox = () => {
+const InfoBox = ({ infoIndex }: { infoIndex: number }) => {
+  const [milestoneInfo, setMilestoneInfo] = useRecoilState(milestoneListAtom);
+  const deleteElement = async () => {
+    // console.log(infoIndex);
+    const responceDel = await fetch(
+      `http://3.34.122.67/api/milestones/${infoIndex}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const responceGet = await fetch(`http://3.34.122.67/api/milestones`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const { data, error } = await responceGet.json();
+    console.log(data);
+    setMilestoneInfo(data);
+  };
   return (
     <InfoBoxWrapper>
       <UDBox>
@@ -8,7 +34,7 @@ const InfoBox = () => {
           <EditIcon />
           편집
         </UpdateBtn>
-        <DeleteBtn>
+        <DeleteBtn onClick={deleteElement}>
           <DeleteIcon />
           삭제
         </DeleteBtn>

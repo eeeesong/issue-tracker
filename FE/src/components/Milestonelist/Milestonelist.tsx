@@ -6,13 +6,21 @@ import MilestoneModal from "./MilestoneModal";
 import List from "./List";
 
 const Milestoneist = () => {
-  const [isAdding, setAdding] = useState(false);
+  const [isOpen, setOpen] = useState(false);
+  const createBtnText = () => {
+    if (isOpen) return "닫기";
+    else return "추가";
+  };
   return (
     <MilestoneistWrapper>
       <Tabs left={0} type="MILESTONE" />
-      <AddButton text="추가" onClick={() => setAdding(() => !isAdding)} />
-      {isAdding && <MilestoneModal />}
-      <List isAdding={isAdding} />
+      <AddButton
+        isOpen={isOpen}
+        text={createBtnText()}
+        onClick={() => setOpen(() => !isOpen)}
+      />
+      {isOpen && <MilestoneModal />}
+      <List isOpen={isOpen} />
     </MilestoneistWrapper>
   );
 };
@@ -22,7 +30,7 @@ const AddBox = styled.div`
   margin-top: 50px;
   width: 100%;
   height: 300px;
-  border: 1px solid red;
+  border: 1px solid gray;
 `;
 const MilestoneistWrapper = styled.div`
   position: relative;

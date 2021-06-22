@@ -1,21 +1,39 @@
 import styled from "styled-components";
 import InfoBox from "./InfoBox";
 import { milestoneListAtom } from "atoms/atoms";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
+import { useEffect } from "react";
+
 const Main = () => {
-  const milestoneList = useRecoilValue(milestoneListAtom);
+  const [milestoneList, setMilestoneList] = useRecoilState(milestoneListAtom);
+  // console.log(MilestoneList);
+  // const milestoneList = useRecoilValue(milestoneListAtom);
   const list = milestoneList.map((e) => (
-    <MilestoneList key={e.id}>
+    <MilestoneList key={e.id} data-index={e.id}>
       <MainBox>
         <MainInfo>
           <Title>{e.title}</Title>
-          <Date>{e.date}</Date>
+          <Date>{e.due_date}</Date>
         </MainInfo>
-        <DetailInfo>{e.detail}</DetailInfo>
+        <DetailInfo>{e.description}</DetailInfo>
       </MainBox>
-      <InfoBox />
+      <InfoBox key={e.id} infoIndex={e.id} />
     </MilestoneList>
   ));
+  useEffect(() => {
+    const getData = async () => {
+      const responceGet = await fetch(`http://3.34.122.67/api/milestones`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const { data, error } = await responceGet.json();
+      setMilestoneList(data);
+    };
+    getData();
+  }, [milestoneList]);
   return <MainWrapper>{list}</MainWrapper>;
 };
 const Title = styled.div`

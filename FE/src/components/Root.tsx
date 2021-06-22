@@ -30,11 +30,14 @@ const RouterComponent = () => {
       {/* 라우트 추가 부분 */}
       <Switch>
         <Route path="/" component={Login} exact />
-        <AuthRoute path="/issuelist" render={IssueList} />
-        {/* <AuthRoute path="/labellist" render={LabelList} /> */}
-        {/* <AuthRoute path="/milestonelist" render={Milestonelist} /> */}
-        {/* <AuthRoute path="/abc" render={Abc} /> */}
-        <Route path="/milestonelist" component={Milestonelist} />
+        <AuthRoute
+          path="/issuelist"
+          render={(props: any) => <IssueList {...props} />}
+        />
+        <AuthRoute
+          path="/milestonelist"
+          render={(props: any) => <Milestonelist {...props} />}
+        />
         <Route path="/labellist" component={LabelList} />
         <Route path="/newissue" component={NewIssue} />
         <Route path="/detailissue" component={DetailIssue} />

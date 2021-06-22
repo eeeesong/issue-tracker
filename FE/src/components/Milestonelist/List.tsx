@@ -12,7 +12,7 @@ const List = ({ isOpen }: { isOpen: boolean }) => {
 };
 
 const ListWrapper = styled.div`
-  border: 1px solid gray;
+  border: 1px solid #d9dbe9;
   border-radius: 20px;
   width: 100%;
   position: absolute;

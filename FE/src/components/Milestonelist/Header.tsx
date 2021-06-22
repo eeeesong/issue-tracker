@@ -14,7 +14,7 @@ const Header = () => {
 const HeaderWrapper = styled.div`
   padding: 25px;
   border-radius: 20px 20px 0 0;
-  background-color: gray;
+  background-color: #f7f7fc;
 `;
 
 export default Header;

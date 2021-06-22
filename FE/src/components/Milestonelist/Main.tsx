@@ -54,7 +54,7 @@ const MilestoneList = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 25px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #d9dbe9;
   &:nth-last-child(1) {
     border-bottom: none;
   }

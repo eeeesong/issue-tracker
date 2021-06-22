@@ -1,8 +1,15 @@
-import { currentFilterSelector, openFilterAtom } from "atoms/atoms";
-import { ILabel, IMilestone, IUser } from "config/interface";
-import { Dispatch, useState, useRef, useEffect } from "react";
+import { checkedIssueIdAtom, currentFilterSelector, openFilterAtom } from "atoms/atoms";
+import { ILabel, IUser } from "config/interface";
+import { useState, useRef, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
+import {
+  AssigneeFilterModal,
+  LabelFilterModal,
+  MilestoneFilterModal,
+  AuthorFilterModal,
+  StateEditModal,
+} from "./Modal";
 
 interface IHeader {
   count: {
@@ -10,11 +17,10 @@ interface IHeader {
     close: number;
   };
   filteredIndex: Array<number>;
-  checkedIndex: Array<number>;
-  setCheckedIndex: Dispatch<Array<number>>;
 }
 
-const Header = ({ count, filteredIndex, checkedIndex, setCheckedIndex }: IHeader) => {
+const Header = ({ count, filteredIndex }: IHeader) => {
+  const [checkedIndex, setCheckedIndex] = useRecoilState(checkedIssueIdAtom);
   const isCheckedAll = filteredIndex.length !== 0 && checkedIndex.length === filteredIndex.length;
   const checkAllEvent = () => setCheckedIndex(isCheckedAll ? [] : [...filteredIndex]);
   const [isOpen, setOpen] = useRecoilState(openFilterAtom);
@@ -72,6 +78,15 @@ const Header = ({ count, filteredIndex, checkedIndex, setCheckedIndex }: IHeader
   const authorList = Array.from(new Set(issues.map(({ author }) => author).map((el) => JSON.stringify(el)))).map((el) =>
     JSON.parse(el)
   );
+
+  const editDOM = useRef<HTMLDivElement>(null);
+  const [isEditOn, setEditOn] = useState(false);
+  useEffect(() => {
+    const blur = ({ target }: MouseEvent) => !editDOM.current?.contains(target as HTMLDivElement) && setEditOn(false);
+    document.addEventListener("click", blur);
+    return () => document.removeEventListener("click", blur);
+  }, []);
+
   return (
     <HeaderWrapper>
       <CheckBox type="checkbox" checked={isCheckedAll} onClick={checkAllEvent} readOnly />
@@ -109,9 +124,10 @@ const Header = ({ count, filteredIndex, checkedIndex, setCheckedIndex }: IHeader
       ) : (
         <>
           <CheckedCount>{checkedIndex.length}개 이슈 선택</CheckedCount>
-          <EditState>
+          <EditState ref={editDOM} onClick={() => setEditOn(true)}>
             <FilterText>상태 수정</FilterText>
             <FilterIcon />
+            {isEditOn && <StateEditModal />}
           </EditState>
         </>
       )}
@@ -195,106 +211,6 @@ const FilterIcon = () => (
       <path d="M4 6L8 10L12 6" stroke="#6E7191" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   </FilterIconWrapper>
-);
-
-const AssigneeFilterModal = ({ content }: { content: Array<IUser> }) => {
-  return (
-    <HeaderFilterModalWrapper>
-      <ModalHeader>담당자 필터</ModalHeader>
-      <ModalContentWrapper>
-        <ModalContent>
-          담당자가 없는 이슈
-          <ModalRadioIcon />
-        </ModalContent>
-        {content.map(({ id, name }: IUser) => (
-          <ModalContent key={id}>
-            {name}
-            <ModalRadioIcon />
-          </ModalContent>
-        ))}
-      </ModalContentWrapper>
-    </HeaderFilterModalWrapper>
-  );
-};
-
-const LabelFilterModal = ({ content }: { content: Array<ILabel> }) => {
-  return (
-    <HeaderFilterModalWrapper>
-      <ModalHeader>레이블 필터</ModalHeader>
-      <ModalContentWrapper>
-        <ModalContent>
-          레이블이 없는 이슈
-          <ModalRadioIcon />
-        </ModalContent>
-        {content.map(({ id, name, color_code }: ILabel) => (
-          <ModalContent key={id}>
-            <LabelCircle color_code={color_code} />
-            &nbsp;{name}
-            <ModalRadioIcon />
-          </ModalContent>
-        ))}
-      </ModalContentWrapper>
-    </HeaderFilterModalWrapper>
-  );
-};
-const LabelCircle = ({ color_code }: { color_code: string }) => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="10" cy="10" r="9.5" fill={color_code} stroke="#D9DBE9" />
-  </svg>
-);
-
-const MilestoneFilterModal = ({ content }: { content: Array<IMilestone | null> }) => {
-  return (
-    <HeaderFilterModalWrapper>
-      <ModalHeader>마일스톤 필터</ModalHeader>
-      <ModalContentWrapper>
-        <ModalContent>
-          마일스톤이 없는 이슈
-          <ModalRadioIcon />
-        </ModalContent>
-        {content.map((milestone: IMilestone | null) => (
-          <ModalContent key={milestone?.title}>
-            {milestone?.title}
-            <ModalRadioIcon />
-          </ModalContent>
-        ))}
-      </ModalContentWrapper>
-    </HeaderFilterModalWrapper>
-  );
-};
-
-const AuthorFilterModal = ({ content }: { content: Array<IUser> }) => {
-  return (
-    <HeaderFilterModalWrapper>
-      <ModalHeader>작성자 필터</ModalHeader>
-      <ModalContentWrapper>
-        <ModalContent>
-          작성자가 없는 이슈
-          <ModalRadioIcon />
-        </ModalContent>
-        {content.map(({ id, name }: IUser) => (
-          <ModalContent key={id}>
-            {name}
-            <ModalRadioIcon />
-          </ModalContent>
-        ))}
-      </ModalContentWrapper>
-    </HeaderFilterModalWrapper>
-  );
-};
-
-const ModalRadioIcon = () => (
-  <ModalIconWrapper>
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M8.00016 14.6667C11.6821 14.6667 14.6668 11.6819 14.6668 8.00004C14.6668 4.31814 11.6821 1.33337 8.00016 1.33337C4.31826 1.33337 1.3335 4.31814 1.3335 8.00004C1.3335 11.6819 4.31826 14.6667 8.00016 14.6667Z"
-        stroke="#4E4B66"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  </ModalIconWrapper>
 );
 
 const HeaderWrapper = styled.div`
@@ -401,61 +317,6 @@ const CheckedCount = styled.div`
   font-size: 16px;
   line-height: 28px;
   color: #6e7191;
-`;
-const HeaderFilterModalWrapper = styled.div`
-  position: absolute;
-  width: 240px;
-  left: -140px;
-  top: 10px;
-  background: #d9dbe9;
-  border: 1px solid #d9dbe9;
-  border-radius: 16px;
-  z-index: 2;
-`;
-const ModalHeader = styled.div`
-  position: relative;
-  width: 224px;
-  height: 48px;
-  padding-left: 16px;
-  background: #f7f7fc;
-  border-radius: 16px 16px 0px 0px;
-
-  font-size: 18px;
-  line-height: 32px;
-
-  display: flex;
-  align-items: center;
-  color: #14142b;
-`;
-const ModalContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-const ModalContent = styled.div`
-  position: relative;
-  width: 224px;
-  height: 44px;
-  background: #fefefe;
-  margin-top: 1px;
-  padding-left: 16px;
-  font-size: 18px;
-  line-height: 28px;
-  display: flex;
-  align-items: center;
-  color: #4e4b66;
-  &:last-child {
-    border-radius: 0px 0px 16px 16px;
-  }
-`;
-const ModalIconWrapper = styled.div`
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  left: 208px;
-  top: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export default Header;

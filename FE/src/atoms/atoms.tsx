@@ -1,10 +1,9 @@
 import { IIssue, IUser } from "config/interface";
 import { atom, selector } from "recoil";
 
-
 export const userInfoAtom = atom<IUser>({
   key: "userInfo",
-  default: { id:0, imageUrl: "", name: "" },
+  default: { id: 0, imageUrl: "", name: "" },
 });
 
 export const issueListAtom = atom<Array<IIssue>>({
@@ -22,6 +21,11 @@ export const currentIssueSelector = selector({
   get({ get }) {
     return get(issueListAtom).filter(({ issueNumber }) => issueNumber === get(currentIssueIdAtom))[0];
   },
+});
+
+export const checkedIssueIdAtom = atom<Array<number>>({
+  key: "checkedIssueId",
+  default: [],
 });
 
 export const labelListAtom = atom({
@@ -97,7 +101,7 @@ export const filterIndexAtom = atom({
 export const currentFilterSelector = selector({
   key: "currentFilter",
   get({ get }) {
-    return filter[get(filterIndexAtom)].logic(get(issueListAtom),get(userInfoAtom));
+    return filter[get(filterIndexAtom)].logic(get(issueListAtom), get(userInfoAtom));
   },
 });
 

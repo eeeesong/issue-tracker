@@ -1,5 +1,5 @@
 import { currentFilterSelector, issueListAtom, openFilterAtom } from "atoms/atoms";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import Header from "./Header";
@@ -7,12 +7,13 @@ import Issue from "./Issue";
 
 const List = () => {
   const isOpen = useRecoilValue(openFilterAtom);
-  const [checkedIndex, setCheckedIndex] = useState<Array<number>>([]);
   const issues = useRecoilValue(currentFilterSelector);
-  
-  const [, setIssueList] = useRecoilState(issueListAtom)
+
+  const [, setIssueList] = useRecoilState(issueListAtom);
   useEffect(() => {
-    fetch(`http://3.34.122.67/api/issues/all`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
+    fetch(`http://3.34.122.67/api/issues/all`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    })
       .then((res) => res.json())
       .then((json) => setIssueList(json.data));
   }, [setIssueList]);
@@ -26,11 +27,9 @@ const List = () => {
           close: issues.filter(({ status }) => !status).length,
         }}
         filteredIndex={filteredIssue.map(({ issueNumber }) => issueNumber)}
-        checkedIndex={checkedIndex}
-        setCheckedIndex={setCheckedIndex}
       />
       {filteredIssue.map(({ issueNumber }) => (
-        <Issue key={issueNumber} id={issueNumber} checkedIndex={checkedIndex} setCheckedIndex={setCheckedIndex} />
+        <Issue key={issueNumber} id={issueNumber} />
       ))}
     </ListWrapper>
   );

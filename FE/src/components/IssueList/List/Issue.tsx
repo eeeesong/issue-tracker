@@ -1,19 +1,13 @@
-import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import Label from "components/common/Label";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { currentIssueIdAtom, issueListAtom } from "atoms/atoms";
+import { checkedIssueIdAtom, currentIssueIdAtom, issueListAtom } from "atoms/atoms";
 import { useHistory } from "react-router-dom";
 
-interface IIssue {
-  id: number;
-  checkedIndex: Array<number>;
-  setCheckedIndex: Dispatch<SetStateAction<Array<number>>>;
-}
-
-const Issue = ({ id, checkedIndex, setCheckedIndex }: IIssue) => {
+const Issue = ({ id }: { id: number }) => {
+  const [checkedIndex, setCheckedIndex] = useRecoilState(checkedIssueIdAtom);
   const { title, labels, milestone, author, status } = useRecoilValue(issueListAtom).filter(
-    (issue) => issue.issueNumber === id
+    ({ issueNumber }) => issueNumber === id
   )[0];
   const check = () =>
     setCheckedIndex((arr) =>
@@ -31,7 +25,7 @@ const Issue = ({ id, checkedIndex, setCheckedIndex }: IIssue) => {
       <CheckBox type="checkbox" checked={checkedIndex.includes(id)} onClick={check} readOnly />
       <div onClick={moveDetailEvent}>
         <IssueTitle>
-          <OpenIcon status={status}/>
+          <OpenIcon status={status} />
           <TitleText>{title}</TitleText>
           {labels.map(({ id, name, color_code }) => (
             <LabelWrapper key={id}>
@@ -95,13 +89,7 @@ const OpenIcon = ({ status }: { status: boolean }) =>
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <path
-          d="M6.6665 8H9.33317"
-          stroke="#0025E7"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M6.6665 8H9.33317" stroke="#0025E7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
       </g>
       <defs>
         <clipPath id="clip0">

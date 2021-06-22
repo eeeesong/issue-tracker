@@ -1,13 +1,14 @@
 package codesquad.issueTracker.controller;
 
-import codesquad.issueTracker.Data;
+import codesquad.issueTracker.ApiResult;
 import codesquad.issueTracker.domain.Label;
+import codesquad.issueTracker.dto.response.LabelResponse;
 import codesquad.issueTracker.service.LabelService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/api/labels")
 public class LabelController {
     private final LabelService labelService;
@@ -17,25 +18,25 @@ public class LabelController {
     }
 
     @GetMapping
-    public ResponseEntity<Data> getLabels() {
-        return ResponseEntity.ok(labelService.findAll());
+    public ApiResult<List<LabelResponse>> getLabels() {
+        return ApiResult.success(labelService.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<String> creatLabel(@RequestBody Label label) {
+    public ApiResult<String> creatLabel(@RequestBody Label label) {
         labelService.creatLabel(label);
-        return ResponseEntity.ok().body("데이터 저장 성공!");
+        return ApiResult.ok();
     }
 
     @PutMapping("/{labelId}")
-    public ResponseEntity<String> updateLabel(@PathVariable Long labelId, @RequestBody Label label) {
+    public ApiResult<String> updateLabel(@PathVariable Long labelId, @RequestBody Label label) {
         labelService.updateLabel(labelId, label);
-        return ResponseEntity.ok().body("데이터 편집 완료!");
+        return ApiResult.ok();
     }
 
     @DeleteMapping("/{labelId}")
-    public ResponseEntity<String> deleteLabel(@PathVariable Long labelId) {
+    public ApiResult<String> deleteLabel(@PathVariable Long labelId) {
         labelService.deleteLabel(labelId);
-        return ResponseEntity.ok().body("데이터 삭제 완료!");
+        return ApiResult.ok();
     }
 }

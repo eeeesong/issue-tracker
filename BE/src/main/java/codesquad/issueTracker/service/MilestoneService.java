@@ -1,10 +1,14 @@
 package codesquad.issueTracker.service;
 
-import codesquad.issueTracker.Data;
 import codesquad.issueTracker.domain.Milestone;
+import codesquad.issueTracker.dto.response.DetailMilestoneResponse;
+import codesquad.issueTracker.dto.response.MilestoneResponse;
 import codesquad.issueTracker.repository.MilestoneRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MilestoneService {
@@ -14,8 +18,15 @@ public class MilestoneService {
         this.milestoneRepository = milestoneRepository;
     }
 
-    public Data getMilestones() {
-        return Data.ok(milestoneRepository.findByDeletedIsFalse(), "mileStone");
+    public List<MilestoneResponse> getMilestones() {
+        return milestoneRepository.findByDeletedIsFalse().stream()
+                .map(MilestoneResponse::new)
+                .collect(Collectors.toList());
+    }
+
+    public Milestone getMilestone(Long id) {
+        return milestoneRepository.findByIdAndDeletedFalse(id)
+                .orElseThrow(NullPointerException::new);
     }
 
     public void createMilestone(Milestone milestone) {
@@ -24,7 +35,7 @@ public class MilestoneService {
 
     @Transactional
     public Milestone updateMilestone(Long id, Milestone updateMilestone) {
-        Milestone milestone = milestoneRepository.findById(id)
+        Milestone milestone = milestoneRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 마일스톤입니다"));
 
         milestone.updateMilestone(updateMilestone);
@@ -34,10 +45,15 @@ public class MilestoneService {
 
     @Transactional
     public void deleteMilestone(Long id) {
-        Milestone milestone = milestoneRepository.findById(id)
+        Milestone milestone = milestoneRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 마일스톤입니다"));
 
-        milestone.delete();
-        milestoneRepository.save(milestone);
+        milestoneRepository.delete(milestone);
+    }
+
+    public DetailMilestoneResponse getMilestoneDetail(Long milestoneId) {
+        Milestone milestone = milestoneRepository.findByIdAndDeletedFalse(milestoneId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 마일스톤입니다"));
+        return new DetailMilestoneResponse(milestone);
     }
 }

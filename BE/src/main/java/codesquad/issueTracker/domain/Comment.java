@@ -46,5 +46,12 @@ public class Comment {
     public void addIssue(Issue issue) {
         this.issue = issue;
     }
-    
+
+    public void updateDescription(String description) {
+        this.description = description;
+    }
+
+    public void deleted() {
+        this.deleted = true;
+    }
 }

@@ -3,6 +3,8 @@ package codesquad.issueTracker.service;
 import codesquad.issueTracker.domain.Issue;
 import codesquad.issueTracker.domain.IssueHasLabel;
 import codesquad.issueTracker.domain.Label;
+import codesquad.issueTracker.dto.LabelResponse;
+import codesquad.issueTracker.dto.issue.request.IssueHasLabelIdsRequest;
 import codesquad.issueTracker.repository.IssueHasLabelRepository;
 import codesquad.issueTracker.repository.LabelRepository;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LabelService {
@@ -21,8 +24,10 @@ public class LabelService {
         this.issueHasLabelRepository = issueHasLabelRepository;
     }
 
-    public List<Label> findAll() {
-        return labelRepository.findByDeletedIsFalse();
+    public List<LabelResponse> findAll() {
+        return labelRepository.findByDeletedIsFalse().stream()
+                .map(LabelResponse::new)
+                .collect(Collectors.toList());
     }
 
     public void creatLabel(Label label) {
@@ -55,5 +60,19 @@ public class LabelService {
         });
 
         return issueHasLabelRepository.saveAll(issueLabels);
+    }
+
+    public List<IssueHasLabel> modifyIssueLabels(Issue issue, IssueHasLabelIdsRequest issueHasLabelIdsRequest) {
+        deleteIssueLabels(issue);
+        if(issueHasLabelIdsRequest.getLabelIds().isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<IssueHasLabel> issueLabels = makeIssueLabels(issue, issueHasLabelIdsRequest.getLabelIds());
+        return issueHasLabelRepository.saveAll(issueLabels);
+    }
+
+    public void deleteIssueLabels(Issue issue) {
+        List<IssueHasLabel> issueLabels = issueHasLabelRepository.findByIssueId(issue.getId());
+        issueHasLabelRepository.deleteAll(issueLabels);
     }
 }

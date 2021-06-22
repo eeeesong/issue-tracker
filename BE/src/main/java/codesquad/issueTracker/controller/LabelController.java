@@ -2,6 +2,7 @@ package codesquad.issueTracker.controller;
 
 import codesquad.issueTracker.ApiResult;
 import codesquad.issueTracker.domain.Label;
+import codesquad.issueTracker.dto.LabelResponse;
 import codesquad.issueTracker.service.LabelService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,24 +18,24 @@ public class LabelController {
     }
 
     @GetMapping
-    public ApiResult<List<Label>> getLabels() {
+    public ApiResult<List<LabelResponse>> getLabels() {
         return ApiResult.success(labelService.findAll());
     }
 
     @PostMapping
-    public ApiResult creatLabel(@RequestBody Label label) {
+    public ApiResult<String> creatLabel(@RequestBody Label label) {
         labelService.creatLabel(label);
         return ApiResult.ok();
     }
 
     @PutMapping("/{labelId}")
-    public ApiResult updateLabel(@PathVariable Long labelId, @RequestBody Label label) {
+    public ApiResult<String> updateLabel(@PathVariable Long labelId, @RequestBody Label label) {
         labelService.updateLabel(labelId, label);
         return ApiResult.ok();
     }
 
     @DeleteMapping("/{labelId}")
-    public ApiResult deleteLabel(@PathVariable Long labelId) {
+    public ApiResult<String> deleteLabel(@PathVariable Long labelId) {
         labelService.deleteLabel(labelId);
         return ApiResult.ok();
     }

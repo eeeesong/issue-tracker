@@ -166,7 +166,7 @@ public class IssueService {
         Issue issue = makeIssue(issueRequest, writer, milestone);
         commentService.makeComment(issueRequest, writer, issue);
 
-        if (issueRequest.getMilestoneId() != null) {
+        if (issueRequest.getLabelIds() != null) {
             labelService.makeIssueLabels(issue, issueRequest.getLabelIds());
         }
         if (issueRequest.getAssigneeIds() != null) {

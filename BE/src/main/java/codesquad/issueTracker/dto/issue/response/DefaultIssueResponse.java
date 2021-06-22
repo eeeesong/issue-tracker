@@ -22,7 +22,7 @@ public class DefaultIssueResponse {
     private final LocalDateTime createdTime;
 
     private final Boolean status;
-    private final UserResponse writer;
+    private final UserResponse author;
     private final List<UserResponse> assignees;
     private final List<IssueLabelResponse> labels;
 
@@ -31,7 +31,7 @@ public class DefaultIssueResponse {
         title = issue.getTitle();
         createdTime = issue.getCreatedDate();
         status = issue.isStatus();
-        writer = new UserResponse(issue.getUser());
+        author = new UserResponse(issue.getUser());
         assignees = toAssigneeResponses(issue.getIssueAssignees());
         labels = toLabelResponses(issue.getIssueLabels());
     }

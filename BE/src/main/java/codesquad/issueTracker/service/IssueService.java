@@ -1,10 +1,11 @@
 package codesquad.issueTracker.service;
 
 import codesquad.issueTracker.domain.*;
-import codesquad.issueTracker.dto.request.CommentRequest;
 import codesquad.issueTracker.dto.issue.request.*;
+import codesquad.issueTracker.dto.issue.response.AllIssueDetailResponse;
 import codesquad.issueTracker.dto.issue.response.IssueDetailResponse;
 import codesquad.issueTracker.dto.issue.response.IssueResponse;
+import codesquad.issueTracker.dto.request.CommentRequest;
 import codesquad.issueTracker.repository.IssueRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,13 @@ public class IssueService {
                 .map(IssueResponse::new)
                 .collect(Collectors.toList());
     }
+
+    public List<AllIssueDetailResponse> findAllDetail() {
+        return issueRepository.findByDeletedFalse().stream()
+                .map(AllIssueDetailResponse::new)
+                .collect(Collectors.toList());
+    }
+
 
     public List<IssueResponse> findByStatusIsOpen() {
         return issueRepository.findByStatusTrue().stream()
@@ -182,4 +190,5 @@ public class IssueService {
 
         commentService.makeComment(commentRequest, writer, issue);
     }
+
 }

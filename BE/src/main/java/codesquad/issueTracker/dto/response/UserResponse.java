@@ -9,7 +9,7 @@ public class UserResponse {
     private final String name;
     private final String imageUrl;
 
-    public UserResponse (User user) {
+    public UserResponse(User user) {
         id = user.getId();
         name = user.getName();
         imageUrl = user.getImageUrl();

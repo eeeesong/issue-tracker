@@ -9,7 +9,9 @@ import javax.persistence.*;
 
 @IdClass(IssueHasLabelId.class)
 @Entity
-@Getter @NoArgsConstructor @AllArgsConstructor
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class IssueHasLabel {
 
     @Id

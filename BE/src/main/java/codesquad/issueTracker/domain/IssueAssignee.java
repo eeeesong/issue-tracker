@@ -9,7 +9,9 @@ import javax.persistence.*;
 
 @IdClass(IssueAssigneeId.class)
 @Entity
-@Getter @NoArgsConstructor @AllArgsConstructor
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class IssueAssignee {
 
     @Id

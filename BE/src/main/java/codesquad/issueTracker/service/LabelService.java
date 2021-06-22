@@ -64,7 +64,7 @@ public class LabelService {
 
     public List<IssueHasLabel> modifyIssueLabels(Issue issue, IssueHasLabelIdsRequest issueHasLabelIdsRequest) {
         deleteIssueLabels(issue);
-        if(issueHasLabelIdsRequest.getLabelIds().isEmpty()) {
+        if (issueHasLabelIdsRequest.getLabelIds().isEmpty()) {
             return new ArrayList<>();
         }
         List<IssueHasLabel> issueLabels = makeIssueLabels(issue, issueHasLabelIdsRequest.getLabelIds());

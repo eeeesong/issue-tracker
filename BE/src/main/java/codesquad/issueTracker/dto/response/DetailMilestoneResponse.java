@@ -1,10 +1,8 @@
 package codesquad.issueTracker.dto.response;
 
 import codesquad.issueTracker.domain.Issue;
-import codesquad.issueTracker.domain.IssueAssignee;
 import codesquad.issueTracker.domain.Milestone;
 import codesquad.issueTracker.dto.issue.response.DefaultIssueResponse;
-import codesquad.issueTracker.dto.issue.response.IssueResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

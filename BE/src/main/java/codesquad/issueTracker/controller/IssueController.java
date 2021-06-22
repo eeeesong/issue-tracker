@@ -1,10 +1,11 @@
 package codesquad.issueTracker.controller;
 
 import codesquad.issueTracker.ApiResult;
-import codesquad.issueTracker.dto.request.CommentRequest;
 import codesquad.issueTracker.dto.issue.request.*;
+import codesquad.issueTracker.dto.issue.response.AllIssueDetailResponse;
 import codesquad.issueTracker.dto.issue.response.IssueDetailResponse;
 import codesquad.issueTracker.dto.issue.response.IssueResponse;
+import codesquad.issueTracker.dto.request.CommentRequest;
 import codesquad.issueTracker.oauth.annotation.LoginRequired;
 import codesquad.issueTracker.oauth.annotation.UserId;
 import codesquad.issueTracker.service.IssueService;
@@ -25,6 +26,11 @@ public class IssueController {
     @GetMapping()
     public ApiResult<List<IssueResponse>> getAllIssues() {
         return ApiResult.success(issueService.findAll());
+    }
+
+    @GetMapping("/all")
+    public ApiResult<List<AllIssueDetailResponse>> getAllIssuesDetail() {
+        return ApiResult.success(issueService.findAllDetail());
     }
 
     @GetMapping("/{issueId}")
@@ -105,7 +111,7 @@ public class IssueController {
     @LoginRequired
     @PostMapping("/{issueId}")
     public ApiResult<String> createComment(@PathVariable Long issueId, @RequestBody CommentRequest commentRequest,
-                                            @UserId Long userId) {
+                                           @UserId Long userId) {
         issueService.createComment(issueId, commentRequest, userId);
         return ApiResult.ok();
     }

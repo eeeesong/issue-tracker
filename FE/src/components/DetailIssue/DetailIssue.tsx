@@ -13,15 +13,15 @@ const DetailIssue = () => {
       <Header />
       <Line />
       <Content>
-        <SideBar />
-        <Comment comment={{ body: body, author: author, time: date }} issueAuthor={author} />
+        <SideBar isDetail />
+        <Comment comment={{id:0, body: body, author: author, time: date }} issueAuthor={author} />
         {comments.map((comment) => (
           <Comment key={comment.id} issueAuthor={author} comment={comment} />
         ))}
         {!status && (
           <Comment
             close
-            comment={{ body: "이슈가 닫혔습니다", author: author, time: "대충닫힌시간" }}
+            comment={{id:comments.length+1, body: "이슈가 닫혔습니다", author: author, time: "대충닫힌시간" }}
             issueAuthor={author}
           />
         )}

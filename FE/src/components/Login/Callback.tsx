@@ -12,9 +12,10 @@ const Callback = ({ history }: ICallback) => {
       const code = params.get("code");
       const res = await fetch(`http://3.34.122.67/api/login/web?code=${code}`);
       const json = await res.json();
+      console.log(json)
       localStorage.setItem("token", json.jwt.jwt);
       localStorage.setItem("profileUrl", json.avatarUrl);
-      localStorage.setItem("loginID", json.loginId);
+      localStorage.setItem("loginId", json.loginId);
       history.push("/issuelist");
     };
     getData();

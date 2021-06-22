@@ -1,4 +1,4 @@
-import { issueListAtom } from "atoms/atoms";
+import { currentFilterSelector, openFilterAtom } from "atoms/atoms";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -6,21 +6,23 @@ import Header from "./Header";
 import Issue from "./Issue";
 
 const List = () => {
-  const [isOpen, setOpen] = useState(true);
+  const isOpen = useRecoilValue(openFilterAtom);
   const [checkedIndex, setCheckedIndex] = useState<Array<number>>([]);
-  const issues = useRecoilValue(issueListAtom)
+  const issues = useRecoilValue(currentFilterSelector);
+  
   const filteredIssue = issues.filter(({ status }) => status === isOpen);
   return (
     <ListWrapper>
       <Header
-        isOpen={isOpen}
-        setOpen={setOpen}
-        count={{ open: issues.filter(({ status }) => status).length, close: issues.filter(({ status }) => !status).length }}
+        count={{
+          open: issues.filter(({ status }) => status).length,
+          close: issues.filter(({ status }) => !status).length,
+        }}
         filteredIndex={filteredIssue.map(({ id }) => id)}
         checkedIndex={checkedIndex}
         setCheckedIndex={setCheckedIndex}
       />
-      {filteredIssue.map(({id}) => (
+      {filteredIssue.map(({ id }) => (
         <Issue key={id} id={id} checkedIndex={checkedIndex} setCheckedIndex={setCheckedIndex} />
       ))}
     </ListWrapper>

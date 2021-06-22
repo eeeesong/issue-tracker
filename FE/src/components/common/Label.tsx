@@ -14,7 +14,6 @@ const Label = ({ name, color_code }: { name: string; color_code: string }) => (
 );
 
 const LabelWrapper = styled.div<{ color: string }>`
-  margin-left: 8px;
   padding: 4px 16px;
   background: ${({ color }) => color };
   border-radius: 30px;

@@ -13,6 +13,11 @@ const Content = (props: IContent) => {
   const { title, body, setTitle, setBody } = props;
   const titleChangeHandler = ({ target }: ChangeEvent<HTMLInputElement>) => setTitle(target.value);
   const bodyChangeHandler = ({ target }: ChangeEvent<HTMLTextAreaElement>) => setBody(target.value);
+  const addFile = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const file = target.files
+    console.log(file && file[0])
+    setBody(body=>body+"[대충 파일이 담긴 마크다운]")
+  };
   return (
     <ContentWrapper>
       <Title placeholder="제목" value={title} onChange={titleChangeHandler} />
@@ -20,7 +25,7 @@ const Content = (props: IContent) => {
         <InBody placeholder="코멘트를 입력하세요" value={body} onChange={bodyChangeHandler} />
         <Line />
         <Add>
-          <AddInput type="file" />
+          <AddInput type="file" onChange={addFile} />
           <AddIcon />
           <AddText>파일 첨부하기</AddText>
         </Add>

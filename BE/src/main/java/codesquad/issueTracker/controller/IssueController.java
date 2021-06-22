@@ -1,14 +1,13 @@
 package codesquad.issueTracker.controller;
 
 import codesquad.issueTracker.ApiResult;
-import codesquad.issueTracker.domain.Issue;
-import codesquad.issueTracker.domain.Milestone;
-import codesquad.issueTracker.domain.User;
-import codesquad.issueTracker.dto.IssueIdsRequest;
-import codesquad.issueTracker.dto.IssueRequest;
+import codesquad.issueTracker.dto.CommentRequest;
+import codesquad.issueTracker.dto.issue.request.*;
+import codesquad.issueTracker.dto.issue.response.IssueDetailResponse;
+import codesquad.issueTracker.dto.issue.response.IssueResponse;
 import codesquad.issueTracker.oauth.annotation.LoginRequired;
 import codesquad.issueTracker.oauth.annotation.UserId;
-import codesquad.issueTracker.service.*;
+import codesquad.issueTracker.service.IssueService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,23 +17,19 @@ import java.util.List;
 public class IssueController {
 
     private final IssueService issueService;
-    private final UserService userService;
-    private final LabelService labelService;
-    private final MilestoneService milestoneService;
-    private final CommentService commentService;
 
-    public IssueController(IssueService issueService, UserService userService, LabelService labelService,
-                           MilestoneService milestoneService, CommentService commentService) {
+    public IssueController(IssueService issueService) {
         this.issueService = issueService;
-        this.userService = userService;
-        this.labelService = labelService;
-        this.milestoneService = milestoneService;
-        this.commentService = commentService;
     }
 
     @GetMapping()
-    public ApiResult<List<Issue>> getAllIssues() {
+    public ApiResult<List<IssueResponse>> getAllIssues() {
         return ApiResult.success(issueService.findAll());
+    }
+
+    @GetMapping("/{issueId}")
+    public ApiResult<IssueDetailResponse> getIssue(@PathVariable Long issueId) {
+        return ApiResult.success(issueService.getIssueDetail(issueId));
     }
 
     @PutMapping("/close")
@@ -49,30 +44,69 @@ public class IssueController {
         return ApiResult.ok();
     }
 
+    @PutMapping("/{issueId}/title")
+    public ApiResult<String> updateIssueTitle(@PathVariable Long issueId, @RequestBody IssueTitleRequest issueTitleRequest) {
+        issueService.updateIssueTitle(issueId, issueTitleRequest);
+        return ApiResult.ok();
+    }
+
+    @PutMapping("/{issueId}/assignee")
+    public ApiResult<String> updateIssueAssignee(@PathVariable Long issueId,
+                                                 @RequestBody IssueAssigneeIdsRequest issueAssigneeIdsRequest) {
+        issueService.updateIssueAssignee(issueId, issueAssigneeIdsRequest);
+        return ApiResult.ok();
+    }
+
+    @PutMapping("/{issueId}/label")
+    public ApiResult<String> updateIssueLabel(@PathVariable Long issueId,
+                                              @RequestBody IssueHasLabelIdsRequest issueHasLabelIdsRequest) {
+        issueService.updateIssueHasLabel(issueId, issueHasLabelIdsRequest);
+        return ApiResult.ok();
+    }
+
+    @PutMapping("/{issueId}/milestone")
+    public ApiResult<String> updateIssueMilestone(@PathVariable Long issueId,
+                                                  @RequestBody IssueMilestoneRequest issueMilestoneRequest) {
+        issueService.updateMilestone(issueId, issueMilestoneRequest);
+        return ApiResult.ok();
+    }
+
     @DeleteMapping("/{issueId}")
     public ApiResult<String> issueDelete(@PathVariable Long issueId) {
         issueService.issueDelete(issueId);
         return ApiResult.ok();
     }
 
-    @PutMapping("/{issueId}/title")
-    public ApiResult<String> updateIssueTitle(@PathVariable Long issueId, @RequestBody String title) {
-        issueService.updateIssueTitle(issueId, title);
+    @DeleteMapping("/{issueId}/assignee")
+    public ApiResult<String> deleteIssueAssignee(@PathVariable Long issueId) {
+        issueService.deleteAssignee(issueId);
+        return ApiResult.ok();
+    }
+
+    @DeleteMapping("/{issueId}/label")
+    public ApiResult<String> deleteIssueLabel(@PathVariable Long issueId) {
+        issueService.deleteLabel(issueId);
+        return ApiResult.ok();
+    }
+
+    @DeleteMapping("/{issueId}/milestone")
+    public ApiResult<String> deleteIssueMilestone(@PathVariable Long issueId) {
+        issueService.deleteMilestone(issueId);
         return ApiResult.ok();
     }
 
     @LoginRequired
     @PostMapping
     public ApiResult<String> createIssue(@RequestBody IssueRequest issueRequest, @UserId Long userId) {
-        System.out.println(userId);
-        User writer = userService.findOne(userId);
-
-        Milestone milestone = milestoneService.getMilestone(issueRequest.getMilestoneId());
-        Issue issue = issueService.makeIssue(issueRequest, writer, milestone);
-        commentService.makeComment(issueRequest, writer, issue);
-        labelService.makeIssueLabels(issue, issueRequest.getLabelIds());
-        userService.makeIssueAssignees(issue, issueRequest.getAssigneeIds());
+        issueService.createIssue(issueRequest, userId);
         return ApiResult.ok();
     }
 
+    @LoginRequired
+    @PostMapping("/{issueId}")
+    public ApiResult<String> createComment(@PathVariable Long issueId, @RequestBody CommentRequest commentRequest,
+                                            @UserId Long userId) {
+        issueService.createComment(issueId, commentRequest, userId);
+        return ApiResult.ok();
+    }
 }

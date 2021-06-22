@@ -14,4 +14,10 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
     List<Issue> findByStatusTrue();
 
     List<Issue> findByStatusFalse();
+
+    Long countIssueByDeletedFalse();
+
+    Long countIssueByStatusTrueAndDeletedFalse();
+
+    Long countIssueByStatusFalseAndDeletedFalse();
 }

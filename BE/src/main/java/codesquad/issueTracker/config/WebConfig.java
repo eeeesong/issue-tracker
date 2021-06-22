@@ -32,7 +32,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(oauthInterceptor)
                 .addPathPatterns("/api/labels/**")
                 .addPathPatterns("/api/milestones/**")
-                .addPathPatterns("/api/issues/**");
+                .addPathPatterns("/api/issues/**")
+                .addPathPatterns("/api/comments/**");
     }
 
     @Override

@@ -1,4 +1,4 @@
-package codesquad.issueTracker.dto;
+package codesquad.issueTracker.dto.issue.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +10,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class IssueAssigneeIdsRequest {
-    List<Long> assigneeIds = new ArrayList<>();
+public class IssueIdsRequest {
+    List<Long> issueId = new ArrayList<>();
 }

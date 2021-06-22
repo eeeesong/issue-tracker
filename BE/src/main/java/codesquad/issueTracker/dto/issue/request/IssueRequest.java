@@ -1,4 +1,4 @@
-package codesquad.issueTracker.dto;
+package codesquad.issueTracker.dto.issue.request;
 
 import codesquad.issueTracker.domain.Comment;
 import codesquad.issueTracker.domain.Issue;

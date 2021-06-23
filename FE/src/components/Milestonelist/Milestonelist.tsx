@@ -24,14 +24,7 @@ const Milestoneist = () => {
     </MilestoneistWrapper>
   );
 };
-const AddBox = styled.div`
-  position: absolute;
-  top: 60px;
-  margin-top: 50px;
-  width: 100%;
-  height: 300px;
-  border: 1px solid gray;
-`;
+
 const MilestoneistWrapper = styled.div`
   position: relative;
   width: 1280px;

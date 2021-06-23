@@ -5,7 +5,6 @@ import { useRecoilState } from "recoil";
 import { milestoneListAtom } from "atoms/atoms";
 const MilestoneModal = () => {
   const [, setMilestoneList] = useRecoilState(milestoneListAtom);
-  const [isAdding, setAdding] = useState(false);
   const [milestoneInfo, setMilestoneInfo] = useState({
     title: "",
     due_date: "",
@@ -19,12 +18,7 @@ const MilestoneModal = () => {
     setMilestoneInfo((info) => ({ ...info, description: target.value }));
   const createMilestone = async () => {
     const time = milestoneInfo.due_date + " 00:00";
-    console.log({
-      ...milestoneInfo,
-      due_date: time,
-    });
-    // return;
-    const responcePost = await fetch(`http://3.34.122.67/api/milestones`, {
+    await fetch(`http://3.34.122.67/api/milestones`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,9 +41,8 @@ const MilestoneModal = () => {
       due_date: "",
       description: "",
     });
-    const { data, error } = await responceGet.json();
-    console.log(data);
-    setMilestoneInfo(data);
+    const { data} = await responceGet.json();
+    setMilestoneList(data);
   };
   return (
     <MilestoneModalWrapper>
@@ -71,7 +64,7 @@ const MilestoneModal = () => {
           value={milestoneInfo.description}
         />
       </DetailBox>
-      <AddButton text={"완료"} isAdding={isAdding} onClick={createMilestone} />
+      <AddButton text={"완료"} onClick={createMilestone} />
     </MilestoneModalWrapper>
   );
 };

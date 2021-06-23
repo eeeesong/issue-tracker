@@ -1,7 +1,6 @@
 import Header from "./Header";
 import styled from "styled-components";
 import Main from "./Main";
-import { useState } from "react";
 const List = ({ isOpen }: { isOpen: boolean }) => {
   return (
     <ListWrapper isOpen={isOpen}>

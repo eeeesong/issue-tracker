@@ -3,10 +3,9 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import ChartBox from "./ChartBox";
 const InfoBox = ({ infoIndex }: { infoIndex: number }) => {
-  const [milestoneInfo, setMilestoneInfo] = useRecoilState(milestoneListAtom);
+  const [, setMilestoneInfo] = useRecoilState(milestoneListAtom);
   const deleteElement = async () => {
-    // console.log(infoIndex);
-    const responceDel = await fetch(
+    await fetch(
       `http://3.34.122.67/api/milestones/${infoIndex}`,
       {
         method: "DELETE",
@@ -23,7 +22,7 @@ const InfoBox = ({ infoIndex }: { infoIndex: number }) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    const { data, error } = await responceGet.json();
+    const { data} = await responceGet.json();
     console.log(data);
     setMilestoneInfo(data);
   };

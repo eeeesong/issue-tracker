@@ -18,10 +18,6 @@ const MilestoneModal = () => {
     setMilestoneInfo((info) => ({ ...info, description: target.value }));
   const createMilestone = async () => {
     const time = milestoneInfo.due_date + " 00:00";
-    console.log({
-      ...milestoneInfo,
-      due_date: time,
-    });
     await fetch(`http://3.34.122.67/api/milestones`, {
       method: "POST",
       headers: {
@@ -53,16 +49,16 @@ const MilestoneModal = () => {
       <Title>새로운 마일스톤 추가</Title>
       <Main>
         <NameBox>
-          <NameTitle>제목</NameTitle>
+          {milestoneInfo.title && <NameTitle>제목</NameTitle>}
           <InputName placeholder="마일스톤 이름" onChange={onChangeName} value={milestoneInfo.title} />
         </NameBox>
         <DateBox>
-          <DateTitle>완료일 선택</DateTitle>
+          {milestoneInfo.due_date && <DateTitle>완료일 선택</DateTitle>}
           <InputDate placeholder="완료일 선택" onChange={onChangeDate} value={milestoneInfo.due_date} />
         </DateBox>
       </Main>
       <DetailBox>
-        <DetailTitle>설명(선택)</DetailTitle>
+        {milestoneInfo.description && <DetailTitle>설명(선택)</DetailTitle>}
         <InputDetail
           placeholder="설명(선택)"
           onChange={onChangeDetail}
@@ -112,15 +108,21 @@ background:transparent;
 outline: none;
 border: none;
 font-size: 16px;
+flex: auto;
 `;
 const InputName = styled(inputStyle)`
 `;
 const InputDate = styled(inputStyle)`
 `;
 const InputDetail = styled(inputStyle)`
+
 `;
 const Title = styled.div`
-  font-size: 30px;
+font-family: Noto Sans KR;
+font-style: normal;
+font-weight: normal;
+font-size: 24px;
+line-height: 40px;
   margin-bottom: 20px;
 `;
 const MilestoneModalWrapper = styled.div`

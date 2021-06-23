@@ -12,17 +12,21 @@ class IssueTableViewDelegate: NSObject, UITableViewDelegate {
     typealias CellActionHandler = (Int, CellAction) -> Void
     private var cellActionHandler: CellActionHandler
     private var cellHeight: CGFloat
-    private(set) var issues = [Issue]()
     
-    func update(issues: [Issue]) {
-        self.issues = issues
-    }
     
-    init(cellActionHandler: @escaping CellActionHandler, cellHeight: CGFloat) {
+    //선택한 index = Int, DataSource에서 해당 index의 Issue Number를 찾고 IssueTableViewController에서 네비게이션뷰컨을 통해서 해당 issueNum을 넘긴다.
+    
+//    typealias CellSelectHandler = (Int) -> Void
+//    private var cellSelectHandler: CellSelectHandler
+    
+    init(cellActionHandler: @escaping CellActionHandler,  cellHeight: CGFloat) {
         self.cellActionHandler = cellActionHandler
         self.cellHeight = cellHeight
     }
-    
+        
+    func setCellSelectionHandler(_ handler: @escaping CellActionHandler) {
+        self.cellActionHandler = handler
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.cellHeight
@@ -45,7 +49,10 @@ class IssueTableViewDelegate: NSObject, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("clicked: ", issues[indexPath.row])
+        //close는 아무것도아님. 일단 지정.
+        self.cellActionHandler(indexPath.row
+                               , .close)
+//        print("clicked: ", issues[indexPath.row])
         //navigation
     }
 }

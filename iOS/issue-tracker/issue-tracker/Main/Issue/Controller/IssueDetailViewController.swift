@@ -17,11 +17,23 @@ class IssueDetailViewController: UIViewController {
         return button
     }()
     
+//    private var saveOperation: ((Int) -> Void)? //
+    private var issueNumber: Int?
+//    issueNumber를 가져와서 여기서 load할듯.
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("안녕? 내 issuenumber는? =",self.issueNumber)
     }
     
     @objc func backToIssuesTouched(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    func setIssuNumber(_ issueNumber: Int) {
+        self.issueNumber = issueNumber
+    }
+//    func setSaveOperation(_ operation: @escaping (Int) -> Void) {
+//        self.saveOperation = operation
+//    }
 }

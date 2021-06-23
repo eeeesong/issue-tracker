@@ -91,12 +91,20 @@ final class IssueViewController: UIViewController {
     private func setTableViewSupporters() {
         issueTableDatasource = IssueTableViewDataSource()
         issueTableDelegate = IssueTableViewDelegate(cellActionHandler: swipeActionHandler, cellHeight: 198)
+        issueTableDelegate?.setCellSelectionHandler(goToTargetedDetailIssue)
         
         issueTableView.delegate = issueTableDelegate
         issueTableView.dataSource = issueTableDatasource
     }
 
-    
+    private func goToTargetedDetailIssue(index: Int, _ : CellAction) {
+        guard let targetIssue = issueTableDatasource?.issues[index] else { return }
+        
+        let issueDetailViewController = IssueDetailViewController()
+        issueDetailViewController.setIssuNumber(targetIssue.issueNumber)
+        navigationController?.pushViewController(issueDetailViewController, animated: true)
+    }
+        
     private func setNetworkManager() {
         let loginInfo = LoginInfo.shared
         guard let jwt = loginInfo.jwt else { return }
@@ -108,7 +116,7 @@ final class IssueViewController: UIViewController {
         DispatchQueue.main.async {
             self.issueTableView.reloadData()
         }
-    }
+    }    
     
     private func swipeActionHandler(_ index: Int, _ action: CellAction) {
         guard let targetIssue = issueTableDatasource?.issues[index] else { return }
@@ -147,7 +155,6 @@ extension IssueViewController {
             case .success(let result):
                 guard let issues = result.data else { return }
                 self?.issueTableDatasource?.update(issues: issues)
-                self?.issueTableDelegate?.update(issues: issues)
                 self?.reloadTableView()
             case .failure(let error):
                 self?.presentAlert(with: error.description)

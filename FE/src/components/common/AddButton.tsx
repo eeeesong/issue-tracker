@@ -60,9 +60,9 @@ const CloseIcon = () => (
       <path
         d="M8.29991 1.70023L1.70025 8.29989M1.7002 1.70016L8.29986 8.29983"
         stroke="#FEFEFE"
-        stroke-width="1.6"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   </IconWrapper>

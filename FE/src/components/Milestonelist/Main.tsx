@@ -6,8 +6,6 @@ import { useEffect } from "react";
 
 const Main = () => {
   const [milestoneList, setMilestoneList] = useRecoilState(milestoneListAtom);
-  // console.log(MilestoneList);
-  // const milestoneList = useRecoilValue(milestoneListAtom);
   const list = milestoneList.map((e) => (
     <MilestoneList key={e.id} data-index={e.id}>
       <MainBox>
@@ -29,11 +27,11 @@ const Main = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      const { data, error } = await responceGet.json();
+      const { data} = await responceGet.json();
       setMilestoneList(data);
     };
     getData();
-  }, [milestoneList]);
+  }, [milestoneList, setMilestoneList]);
   return <MainWrapper>{list}</MainWrapper>;
 };
 const Title = styled.div`

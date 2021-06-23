@@ -22,8 +22,7 @@ const InfoBox = ({ infoIndex }: { infoIndex: number }) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    const { data} = await responceGet.json();
-    console.log(data);
+    const { data } = await responceGet.json();
     setMilestoneInfo(data);
   };
   return (

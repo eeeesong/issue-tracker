@@ -11,21 +11,16 @@ class IssueTableViewDelegate: NSObject, UITableViewDelegate {
     
     typealias CellActionHandler = (Int, CellAction) -> Void
     private var cellActionHandler: CellActionHandler
+    typealias CellSelectHandler = (Int) -> Void
+    private var cellSelectHandler: CellSelectHandler
     private var cellHeight: CGFloat
     
-    
-    //선택한 index = Int, DataSource에서 해당 index의 Issue Number를 찾고 IssueTableViewController에서 네비게이션뷰컨을 통해서 해당 issueNum을 넘긴다.
-    
-//    typealias CellSelectHandler = (Int) -> Void
-//    private var cellSelectHandler: CellSelectHandler
-    
-    init(cellActionHandler: @escaping CellActionHandler,  cellHeight: CGFloat) {
+    init(cellActionHandler: @escaping CellActionHandler,
+        cellSelectHandler: @escaping CellSelectHandler,
+        cellHeight: CGFloat) {
         self.cellActionHandler = cellActionHandler
+        self.cellSelectHandler = cellSelectHandler
         self.cellHeight = cellHeight
-    }
-        
-    func setCellSelectionHandler(_ handler: @escaping CellActionHandler) {
-        self.cellActionHandler = handler
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -40,19 +35,15 @@ class IssueTableViewDelegate: NSObject, UITableViewDelegate {
         deleteAction.image = UIImage(systemName: "trash")
         
         let closeAction = UIContextualAction(style: .normal,
-                                            title: CellAction.close.buttonTitle()) { [weak self] _, _, _ in
+                                             title: CellAction.close.buttonTitle()) { [weak self] _, _, _ in
             self?.cellActionHandler(indexPath.row, .close)
         }
         closeAction.image = UIImage(systemName: "archivebox")
-
+        
         return UISwipeActionsConfiguration(actions: [closeAction, deleteAction])
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //close는 아무것도아님. 일단 지정.
-        self.cellActionHandler(indexPath.row
-                               , .close)
-//        print("clicked: ", issues[indexPath.row])
-        //navigation
+        self.cellSelectHandler(indexPath.row)        
     }
 }

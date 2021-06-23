@@ -100,7 +100,7 @@ class IssueTableViewCell: UITableViewCell {
         if labels.isEmpty {
             labelsStackView.isHidden = true
         }else {
-            labelsStackView.isHidden = false            
+            labelsStackView.isHidden = false
             labelsStackView.subviews.forEach { $0.removeFromSuperview() }
             
             labels.forEach { label in

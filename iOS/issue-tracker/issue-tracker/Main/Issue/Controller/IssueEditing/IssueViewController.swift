@@ -90,14 +90,13 @@ final class IssueViewController: UIViewController {
     
     private func setTableViewSupporters() {
         issueTableDatasource = IssueTableViewDataSource()
-        issueTableDelegate = IssueTableViewDelegate(cellActionHandler: swipeActionHandler, cellHeight: 198)
-        issueTableDelegate?.setCellSelectionHandler(goToTargetedDetailIssue)
-        
+        issueTableDelegate = IssueTableViewDelegate(cellActionHandler: swipeActionHandler, cellSelectHandler: goToTargetedDetailIssue, cellHeight: 198)
+
         issueTableView.delegate = issueTableDelegate
         issueTableView.dataSource = issueTableDatasource
     }
 
-    private func goToTargetedDetailIssue(index: Int, _ : CellAction) {
+    private func goToTargetedDetailIssue(index: Int) {
         guard let targetIssue = issueTableDatasource?.issues[index] else { return }
         
         let issueDetailViewController = IssueDetailViewController()

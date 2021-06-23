@@ -10,19 +10,21 @@ import UIKit
 
 class IssueDetailViewController: UIViewController {
     
-    private lazy var backButton: ImageBarButton = {
+    private lazy var backToIssuesButton: ImageBarButton = {
         let button = ImageBarButton()
         button.configure(with: "chevron.backward", "목록")
+        button.moveImageToLeft()
         button.addTarget(self, action: #selector(backToIssuesTouched), for: .touchUpInside)
         return button
     }()
+
     
-//    private var saveOperation: ((Int) -> Void)? //
     private var issueNumber: Int?
-//    issueNumber를 가져와서 여기서 load할듯.
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addNavigationItems()
+        view.backgroundColor = UIColor.white
         print("안녕? 내 issuenumber는? =",self.issueNumber)
     }
     
@@ -33,7 +35,10 @@ class IssueDetailViewController: UIViewController {
     func setIssuNumber(_ issueNumber: Int) {
         self.issueNumber = issueNumber
     }
-//    func setSaveOperation(_ operation: @escaping (Int) -> Void) {
-//        self.saveOperation = operation
-//    }
+
+    private func addNavigationItems() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backToIssuesButton)        
+//        navigationItem.titleView = issues.get 통신의 issueTitle
+    }
 }
+

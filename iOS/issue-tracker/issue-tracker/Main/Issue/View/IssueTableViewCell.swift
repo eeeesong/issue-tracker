@@ -65,6 +65,7 @@ class IssueTableViewCell: UITableViewCell {
         addIssueStackView()
         addIssueTitleView()
         addMileStoneLabel()
+        resetLabelStackView()
     }
     
     func addIssueStackView() {
@@ -85,34 +86,38 @@ class IssueTableViewCell: UITableViewCell {
         issueStackView.addArrangedSubview(mileStoneLabel)
     }
     
-    func clearLabelStackView() {
-        labelsStackView.subviews.forEach { $0.removeFromSuperview() }
-    }
-    
-    func addlabelsStackView(_ labels: [Label]) {
+    func resetLabelStackView() {
         issueStackView.addArrangedSubview(labelsStackView)
         labelsStackView.spacing = 4
-        
         NSLayoutConstraint.activate([
             labelsStackView.leadingAnchor.constraint(equalTo: issueStackView.leadingAnchor),
             labelsStackView.trailingAnchor.constraint(equalTo: issueStackView.trailingAnchor)
         ])
+    }
+    
+    func addlabelsStackView(_ labels: [Label]) {
         
-        labels.forEach { label in
-            let labelView = LabelView()
-            let colorText = label.hexColorCode
-            let hex = HexColorCode(from: colorText)
-            let titleText = label.title
-            labelView.configure(with: hex, titleText)
-            labelView.translatesAutoresizingMaskIntoConstraints = false
-            labelsStackView.addArrangedSubview(labelView)
+        if labels.isEmpty {
+            labelsStackView.isHidden = true
+        }else {
+            labelsStackView.isHidden = false            
+            labelsStackView.subviews.forEach { $0.removeFromSuperview() }
+            
+            labels.forEach { label in
+                let labelView = LabelView()
+                let colorText = label.hexColorCode
+                let hex = HexColorCode(from: colorText)
+                let titleText = label.title
+                labelView.configure(with: hex, titleText)
+                labelView.translatesAutoresizingMaskIntoConstraints = false
+                labelsStackView.addArrangedSubview(labelView)
+            }
         }
     }
     
     func configure(title: String, mileStoneName: String, labels: [Label]) {
         titleLabel.text = title
         mileStoneTitleConfigure(mileStoneName: mileStoneName)
-        clearLabelStackView()
         addlabelsStackView(labels)
     }
     

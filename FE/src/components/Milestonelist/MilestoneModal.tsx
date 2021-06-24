@@ -1,15 +1,11 @@
 import AddButton from "components/common/AddButton";
 import styled from "styled-components";
-import { ChangeEvent, useState } from "react";
 import { useRecoilState } from "recoil";
-import { milestoneListAtom } from "atoms/atoms";
+import { milestoneInputAtom, milestoneListAtom } from "atoms/atoms";
+import MilestoneInputContainer from "components/common/MilestoneInputContainer";
 const MilestoneModal = () => {
   const [, setMilestoneList] = useRecoilState(milestoneListAtom);
-  const [milestoneInfo, setMilestoneInfo] = useState({
-    title: "",
-    due_date: "",
-    description: "",
-  });
+  const [milestoneInfo, setMilestoneInfo] = useRecoilState(milestoneInputAtom);
   const onChangeName = ({ target }: ChangeEvent<HTMLInputElement>) =>
     setMilestoneInfo((info) => ({ ...info, title: target.value }));
   const onChangeDate = ({ target }: ChangeEvent<HTMLInputElement>) =>
@@ -41,12 +37,14 @@ const MilestoneModal = () => {
       due_date: "",
       description: "",
     });
-    const { data} = await responceGet.json();
+    const { data } = await responceGet.json();
+
     setMilestoneList(data);
   };
   return (
     <MilestoneModalWrapper>
       <Title>새로운 마일스톤 추가</Title>
+      <MilestoneInputContainer />
       <Main>
         <NameBox>
           <NameTitle>파일스톤 이름</NameTitle>
@@ -68,28 +66,13 @@ const MilestoneModal = () => {
     </MilestoneModalWrapper>
   );
 };
-const DetailName = styled.div``;
-const DetailBox = styled.div`
-  display: flex;
-`;
-const DateBox = styled.div`
-  display: flex;
-  margin-left: 10px;
-`;
-const DateTitle = styled.div``;
-const NameBox = styled.div`
-  display: flex;
-`;
-const NameTitle = styled.div``;
-const Main = styled.div`
-  display: flex;
-  margin-bottom: 20px;
-`;
-const InputName = styled.input``;
-const InputDate = styled.input``;
-const InputDetail = styled.input``;
+
 const Title = styled.div`
-  font-size: 30px;
+  font-family: Noto Sans KR;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 40px;
   margin-bottom: 20px;
 `;
 const MilestoneModalWrapper = styled.div`

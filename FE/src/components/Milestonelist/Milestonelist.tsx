@@ -24,7 +24,6 @@ const Milestoneist = () => {
     </MilestoneistWrapper>
   );
 };
-
 const MilestoneistWrapper = styled.div`
   position: relative;
   width: 1280px;

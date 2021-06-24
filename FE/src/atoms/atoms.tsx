@@ -1,7 +1,6 @@
 import { IIssue, IUser } from "config/interface";
 import { atom, selector } from "recoil";
 
-
 export const userInfoAtom = atom<IUser>({
   key: "userInfo",
   default: { profileUrl: "", loginId: "" },
@@ -137,11 +136,31 @@ export const currentIssueSelector = selector({
 export const labelListAtom = atom({
   key: "labelList",
   default: [
-    { id: 1, name: "documentation", content: "문서 관련", color_code: "#004de3" },
+    {
+      id: 1,
+      name: "documentation",
+      content: "문서 관련",
+      color_code: "#004de3",
+    },
     { id: 2, name: "test", content: "색테스트", color_code: "#FF0000" },
-    { id: 3, name: "test2", content: "글자색 반응 테스트", color_code: "#AAAAAA" },
-    { id: 4, name: "test3", content: "글자색 반응 테스트", color_code: "#999999" },
-    { id: 5, name: "test4", content: "글자색 반응 테스트", color_code: "#EE99AA" },
+    {
+      id: 3,
+      name: "test2",
+      content: "글자색 반응 테스트",
+      color_code: "#AAAAAA",
+    },
+    {
+      id: 4,
+      name: "test3",
+      content: "글자색 반응 테스트",
+      color_code: "#999999",
+    },
+    {
+      id: 5,
+      name: "test4",
+      content: "글자색 반응 테스트",
+      color_code: "#EE99AA",
+    },
   ],
 });
 
@@ -157,29 +176,22 @@ export const milestoneListAtom = atom({
   default: [
     {
       id: 1,
-      title: "마일스톤 제목 1",
-      due_date: "6/10",
-      description: "설명1",
-      completion: 1,
-      total: 3,
-    },
-    {
-      id: 2,
-      title: "마일스톤 제목 2",
-      due_date: "6/11",
-      description: "설명2",
-      completion: 2,
-      total: 3,
-    },
-    {
-      id: 3,
-      title: "마일스톤 제목 3",
-      due_date: "6/12",
-      description: "설명3",
-      completion: 3,
-      total: 3,
+      title: "",
+      due_date: "",
+      description: "",
+      completion: "",
+      total: "",
     },
   ],
+});
+
+export const milestoneInputAtom = atom({
+  key: "milestoneInput",
+  default: {
+    title: "",
+    due_date: "",
+    description: "",
+  },
 });
 
 export const milestoneCountSelector = selector({
@@ -203,19 +215,28 @@ const filter = [
   {
     id: 1,
     body: "is:issue author:@me",
-    logic: (arr: Array<IIssue>, user: IUser) => arr.filter(({ author }) => author.loginId === user.loginId),
+    logic: (arr: Array<IIssue>, user: IUser) =>
+      arr.filter(({ author }) => author.loginId === user.loginId),
   },
   {
     id: 2,
     body: "is:issue assignee:@me",
     logic: (arr: Array<IIssue>, user: IUser) =>
-      arr.filter(({ assignee }) => assignee.filter(({ loginId }) => loginId === user.loginId).length !== 0),
+      arr.filter(
+        ({ assignee }) =>
+          assignee.filter(({ loginId }) => loginId === user.loginId).length !==
+          0
+      ),
   },
   {
     id: 3,
     body: "is:issue comment:@me ",
     logic: (arr: Array<IIssue>, user: IUser) =>
-      arr.filter(({ comments }) => comments.filter(({ author }) => author.loginId === user.loginId).length !== 0),
+      arr.filter(
+        ({ comments }) =>
+          comments.filter(({ author }) => author.loginId === user.loginId)
+            .length !== 0
+      ),
   },
 ];
 
@@ -232,13 +253,18 @@ export const filterIndexAtom = atom({
 export const currentFilterSelector = selector({
   key: "currentFilter",
   get({ get }) {
-    return filter[get(filterIndexAtom)].logic(get(issueListAtom),get(userInfoAtom));
+    return filter[get(filterIndexAtom)].logic(
+      get(issueListAtom),
+      get(userInfoAtom)
+    );
   },
 });
 
 export const currentFilterBodySelector = selector({
   key: "currentFilterBody",
   get({ get }) {
-    return `is:${get(openFilterAtom) ? "open" : "close"} ${filter[get(filterIndexAtom)].body}`;
+    return `is:${get(openFilterAtom) ? "open" : "close"} ${
+      filter[get(filterIndexAtom)].body
+    }`;
   },
 });

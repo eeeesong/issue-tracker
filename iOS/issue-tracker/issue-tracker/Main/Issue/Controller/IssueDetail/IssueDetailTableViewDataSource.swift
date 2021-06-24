@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 final class IssueDetailTableViewDataSource: NSObject, UITableViewDataSource {
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         5
     }

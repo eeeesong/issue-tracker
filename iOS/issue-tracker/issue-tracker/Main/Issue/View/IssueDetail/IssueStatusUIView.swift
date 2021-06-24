@@ -12,18 +12,8 @@ final class IssueStatusUIView: UIView {
     var status: Bool?
     
     private lazy var labelTitle: UILabel = {
-        let label = UILabel()
-        guard let status = self.status else { return UILabel() }
-        let attributedString = NSMutableAttributedString(string: "")
-        let imageAttachment = NSTextAttachment()
-        let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : status == true ? Colors.openMileStoneTint : Colors.closeMileStoneTint]
-        let issueCountString = NSMutableAttributedString(string: status == true ? "열림" : "닫힘" , attributes:attrs)
-        imageAttachment.image = UIImage(systemName: status == true ? "exclamationmark.circle" : "archivebox")
-        attributedString.append(NSAttributedString(attachment: imageAttachment))
-        attributedString.append(issueCountString)
-        label.attributedText = attributedString
+        let label = UILabel()    
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
@@ -48,23 +38,40 @@ final class IssueStatusUIView: UIView {
         self.status = status
         configure()
     }
-
+    
     private func configure() {
-        print("init status = ",self.status)
         layer.cornerRadius = labelHeight * 0.5
         translatesAutoresizingMaskIntoConstraints = false
         addLabelTitle()
-        backgroundColor = status == true ? Colors.openMileStoneBG : Colors.closeMileStoneBG
     }
-
+    
+    func setStatus(status: Bool) {
+        self.status = status
+//        print("now status = ",self.status)
+        
+        guard let status = self.status else { return }
+        
+        backgroundColor = status == true ? Colors.openMileStoneBG : Colors.closeMileStoneBG
+        
+        let attributedString = NSMutableAttributedString(string: "")
+        let imageAttachment = NSTextAttachment()
+        let attrs = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 13), NSAttributedString.Key.foregroundColor : status == true ? Colors.openMileStoneTint : Colors.closeMileStoneTint]
+        let issueCountString = NSMutableAttributedString(string: status == true ? "열림" : "닫힘" , attributes:attrs)
+        imageAttachment.image = UIImage(systemName: status == true ? "exclamationmark.circle" : "archivebox")
+        attributedString.append(NSAttributedString(attachment: imageAttachment))
+        attributedString.append(issueCountString)
+        labelTitle.attributedText = attributedString
+        
+    }
+    
     private func addLabelTitle() {
         addSubview(labelTitle)
+        
         NSLayoutConstraint.activate([
             labelTitle.centerXAnchor.constraint(equalTo: centerXAnchor),
             labelTitle.centerYAnchor.constraint(equalTo: centerYAnchor),
-            widthAnchor.constraint(equalTo: widthAnchor),
+            widthAnchor.constraint(equalTo: labelTitle.widthAnchor, constant: spacing * 1.5),
             heightAnchor.constraint(equalToConstant: labelHeight)
         ])
     }
-    
 }

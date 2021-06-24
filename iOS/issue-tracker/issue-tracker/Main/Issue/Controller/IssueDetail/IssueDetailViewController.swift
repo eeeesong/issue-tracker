@@ -36,6 +36,7 @@ class IssueDetailViewController: UIViewController {
     
     private lazy var issueDetailTableHeaderView: IssueDetailTableHeaderView = {
         let headerView = IssueDetailTableHeaderView()
+        headerView.setNeedsLayout()
         headerView.translatesAutoresizingMaskIntoConstraints = false
         return headerView
     }()
@@ -50,21 +51,20 @@ class IssueDetailViewController: UIViewController {
         view.backgroundColor = UIColor.white
         addNavigationItems()
         addTableView()
+        setHeaderView()
         setTableViewSupporters()
         setNetworkManager()
-        setHeaderView()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         guard let number = self.issueNumber else { return }
         loadDetailIssue(for: number)
     }
         
     private func addTableView() {
         view.addSubview(issueDetailTableView)
+        
         NSLayoutConstraint.activate([
             issueDetailTableView.topAnchor.constraint(equalTo: view.topAnchor),
             issueDetailTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -78,12 +78,9 @@ class IssueDetailViewController: UIViewController {
         issueDetailTableViewDelegate = IssueDetailTableViewDelegate()
         issueDetailTableView.delegate = issueDetailTableViewDelegate
         issueDetailTableView.dataSource = issueDetailTableViewDataSource
-
     }
     
     private func setHeaderView() {
-//        let headerView = IssueDetailTableHeaderView()
-//        headerView.translatesAutoresizingMaskIntoConstraints = false
         issueDetailTableView.tableHeaderView = issueDetailTableHeaderView
         
         NSLayoutConstraint.activate([
@@ -94,7 +91,7 @@ class IssueDetailViewController: UIViewController {
         ])
         
         issueDetailTableHeaderView.backgroundColor = UIColor.white
-        issueDetailTableHeaderView.setNeedsLayout()
+        
         
     }
     
@@ -110,9 +107,6 @@ class IssueDetailViewController: UIViewController {
     private func addNavigationItems() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backToIssuesButton)
         navigationController?.navigationBar.prefersLargeTitles = false
-        //        navigationItem.rightBarButtonItem =
-        //            UIBarButtonItem(customView: editIssueButton)
-        //        navigationItem.titleView = issues.get 통신의 issueTitle
     }
     
     private func setNetworkManager() {
@@ -128,7 +122,6 @@ class IssueDetailViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
-    
 }
 
 
@@ -141,11 +134,10 @@ extension IssueDetailViewController {
             switch result {
             case .success(let result):
                 guard let issueDetail = result.data else { return }
-                print("issueDetail = ",issueDetail)
-            
+
                 DispatchQueue.main.async {
                     self?.issueDetailTableHeaderView.configure(title: issueDetail.title, issueNumber: issueDetail.issueNumber, status: issueDetail.status, createTime: issueDetail.createdDate, aurthor: issueDetail.author.name)
-                    self?.issueDetailTableHeaderView.setNeedsLayout()
+                    self?.issueDetailTableView.reloadData()
                 }
             case .failure(let error):
                 self?.presentAlert(with: error.description)
@@ -153,4 +145,3 @@ extension IssueDetailViewController {
         })
     }
 }
-    

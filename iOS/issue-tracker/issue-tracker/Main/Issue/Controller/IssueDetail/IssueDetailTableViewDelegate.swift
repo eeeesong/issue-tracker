@@ -9,5 +9,4 @@ import Foundation
 import UIKit
 
 final class IssueDetailTableViewDelegate: NSObject, UITableViewDelegate {
-    
 }

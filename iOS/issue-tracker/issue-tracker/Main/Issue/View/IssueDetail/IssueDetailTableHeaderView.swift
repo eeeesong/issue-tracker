@@ -54,7 +54,8 @@ class IssueDetailTableHeaderView: UIView {
     private func setSubView() {
         addIssueTitleTextLabel()
         addIssueTitleNumberLabel()
-        
+        addIssueStatusUIView()
+        addIssueCreatedInfoLabel()
     }
     
     private func addIssueTitleTextLabel() {
@@ -75,27 +76,23 @@ class IssueDetailTableHeaderView: UIView {
         ])
     }
     
-    private func addIssueStatusUIView(_ status: Bool) {
-        let issueStatusUIView = IssueStatusUIView(status: status)
+    private func addIssueStatusUIView() {
         self.addSubview(issueStatusUIView)
         
         issueStatusUIView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             issueStatusUIView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             issueStatusUIView.topAnchor.constraint(equalTo: issueTitleTextLabel.bottomAnchor, constant: 16),
-            issueStatusUIView.widthAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.widthAnchor, multiplier: 0.176),
-            issueStatusUIView.heightAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.heightAnchor, multiplier: 0.26)
+            issueStatusUIView.widthAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.widthAnchor, multiplier: 0.176),
+            issueStatusUIView.heightAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.heightAnchor, multiplier: 0.26)
         ])
     }
     
-    private func addIssueCreatedInfoLabel(_ createTime: String, _ aurthor: String) {
-//        issueCreatedInfoLabel.text = "\(createTime) 전, \(aurthor)님이 작성했습니다."
-        issueCreatedInfoLabel.text = "1분 전, \(aurthor)님이 작성했습니다."
+    private func addIssueCreatedInfoLabel() {
         self.addSubview(issueCreatedInfoLabel)
         
         NSLayoutConstraint.activate([
-//            issueCreatedInfoLabel.trailingAnchor.constraint(greaterThanOrEqualTo: trailingAnchor, constant: -40),
-            issueCreatedInfoLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 100),
+            issueCreatedInfoLabel.leadingAnchor.constraint(equalTo: issueStatusUIView.trailingAnchor, constant: 8),
             issueCreatedInfoLabel.topAnchor.constraint(equalTo: issueTitleTextLabel.bottomAnchor, constant: 20)
         ])
     }
@@ -103,11 +100,8 @@ class IssueDetailTableHeaderView: UIView {
     func configure(title: String, issueNumber: Int, status: Bool, createTime: String, aurthor: String) {
         issueTitleTextLabel.text = title
         issueTitleNumberLabel.text = "#"+String(issueNumber)
+        issueStatusUIView.setStatus(status: status)
+        issueCreatedInfoLabel.text = "1분 전, \(aurthor)님이 작성했습니다."
         
-        addIssueStatusUIView(status)
-        addIssueCreatedInfoLabel(createTime,aurthor)
-        
-//        issueStatusUIView.refresh(status)
-//        issueCreatedInfoLabel.text = "\(createTime) 전, \(aurthor)님이 작성했습니다."
     }
 }

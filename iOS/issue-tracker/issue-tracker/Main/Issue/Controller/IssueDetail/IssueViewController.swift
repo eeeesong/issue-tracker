@@ -10,11 +10,11 @@ import UIKit
 final class IssueViewController: UIViewController {
     
     private lazy var issueTableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         let cellID = IssueTableViewCell.reuseID
         tableView.register(IssueTableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.backgroundColor = Colors.background
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false        
         return tableView
     }()
     

@@ -6,6 +6,12 @@ import MilestoneInputContainer from "components/common/MilestoneInputContainer";
 const MilestoneModal = () => {
   const [, setMilestoneList] = useRecoilState(milestoneListAtom);
   const [milestoneInfo, setMilestoneInfo] = useRecoilState(milestoneInputAtom);
+  const onChangeName = ({ target }: ChangeEvent<HTMLInputElement>) =>
+    setMilestoneInfo((info) => ({ ...info, title: target.value }));
+  const onChangeDate = ({ target }: ChangeEvent<HTMLInputElement>) =>
+    setMilestoneInfo((info) => ({ ...info, due_date: target.value }));
+  const onChangeDetail = ({ target }: ChangeEvent<HTMLInputElement>) =>
+    setMilestoneInfo((info) => ({ ...info, description: target.value }));
   const createMilestone = async () => {
     const time = milestoneInfo.due_date + " 00:00";
     await fetch(`http://3.34.122.67/api/milestones`, {
@@ -32,12 +38,30 @@ const MilestoneModal = () => {
       description: "",
     });
     const { data } = await responceGet.json();
+
     setMilestoneList(data);
   };
   return (
     <MilestoneModalWrapper>
       <Title>새로운 마일스톤 추가</Title>
       <MilestoneInputContainer />
+      <Main>
+        <NameBox>
+          <NameTitle>파일스톤 이름</NameTitle>
+          <InputName onChange={onChangeName} value={milestoneInfo.title} />
+        </NameBox>
+        <DateBox>
+          <DateTitle>완료일 선택</DateTitle>
+          <InputDate onChange={onChangeDate} value={milestoneInfo.due_date} />
+        </DateBox>
+      </Main>
+      <DetailBox>
+        <DetailName>설명(선택)</DetailName>
+        <InputDetail
+          onChange={onChangeDetail}
+          value={milestoneInfo.description}
+        />
+      </DetailBox>
       <AddButton text={"완료"} onClick={createMilestone} />
     </MilestoneModalWrapper>
   );

@@ -12,10 +12,13 @@ class IssueDetailViewController: UIViewController {
     
     private lazy var issueDetailTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        //        let cellID = IssueTableViewCell.reuseID
-        //        tableView.register(IssueTableViewCell.self, forCellReuseIdentifier: cellID)
+        let cellID = IssueDetailTableViewCell.reuseID
+
+        tableView.register(IssueDetailTableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.backgroundColor = Colors.background
         tableView.translatesAutoresizingMaskIntoConstraints = false
+//        tableView.rowHeight = UITableView.automaticDimension
+//        tableView.estimatedRowHeight = 120
         return tableView
     }()
     
@@ -74,8 +77,9 @@ class IssueDetailViewController: UIViewController {
     }
     
     private func setTableViewSupporters() {
-        issueDetailTableViewDataSource = IssueDetailTableViewDataSource()
         issueDetailTableViewDelegate = IssueDetailTableViewDelegate()
+        issueDetailTableViewDataSource = IssueDetailTableViewDataSource()
+        
         issueDetailTableView.delegate = issueDetailTableViewDelegate
         issueDetailTableView.dataSource = issueDetailTableViewDataSource
     }
@@ -137,6 +141,8 @@ extension IssueDetailViewController {
 
                 DispatchQueue.main.async {
                     self?.issueDetailTableHeaderView.configure(title: issueDetail.title, issueNumber: issueDetail.issueNumber, status: issueDetail.status, createdDate: issueDetail.createdDate, aurthor: issueDetail.author.name)
+                    guard let comments = issueDetail.comments else { return }
+                    self?.issueDetailTableViewDataSource?.update(comments: comments)
                     self?.issueDetailTableView.reloadData()
                 }
             case .failure(let error):

@@ -89,6 +89,7 @@
 		FAF927BD268382AE0017F8DE /* IssueDetailTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927BC268382AE0017F8DE /* IssueDetailTableViewDelegate.swift */; };
 		FAF927BF26844F810017F8DE /* IssueDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927BE26844F810017F8DE /* IssueDetail.swift */; };
 		FAF927C12684BAA80017F8DE /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927C02684BAA80017F8DE /* Date.swift */; };
+		FAF927C32684C8360017F8DE /* IssueDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927C22684C8360017F8DE /* IssueDetailTableViewCell.swift */; };
 		FAFD11B1268078F80064AED4 /* CommonTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFD11B0268078F80064AED4 /* CommonTableDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -175,6 +176,7 @@
 		FAF927BC268382AE0017F8DE /* IssueDetailTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailTableViewDelegate.swift; sourceTree = "<group>"; };
 		FAF927BE26844F810017F8DE /* IssueDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetail.swift; sourceTree = "<group>"; };
 		FAF927C02684BAA80017F8DE /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		FAF927C22684C8360017F8DE /* IssueDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailTableViewCell.swift; sourceTree = "<group>"; };
 		FAFD11B0268078F80064AED4 /* CommonTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTableDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -530,6 +532,7 @@
 			children = (
 				FAF927B5268373150017F8DE /* IssueDetailTableHeaderView.swift */,
 				FAF927B826837B6F0017F8DE /* IssueStatusUIView.swift */,
+				FAF927C22684C8360017F8DE /* IssueDetailTableViewCell.swift */,
 			);
 			path = IssueDetail;
 			sourceTree = "<group>";
@@ -668,6 +671,7 @@
 				FAB2C36C2679F6CC009F879C /* MileStoneLabelView.swift in Sources */,
 				E426DAC72671F6A00069E77D /* LoginError.swift in Sources */,
 				E43912D626789812003CD344 /* RequestManager.swift in Sources */,
+				FAF927C32684C8360017F8DE /* IssueDetailTableViewCell.swift in Sources */,
 				E426DAC42671D95D0069E77D /* LoginService.swift in Sources */,
 				E42AD120267093430071B436 /* LabelViewController.swift in Sources */,
 				E43912D826789A83003CD344 /* EndPoint.swift in Sources */,

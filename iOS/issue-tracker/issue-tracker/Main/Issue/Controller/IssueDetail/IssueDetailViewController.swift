@@ -10,12 +10,6 @@ import UIKit
 
 class IssueDetailViewController: UIViewController {
     
-    private lazy var issueDetailHeaderView: IssueDetailTableHeaderView = {
-        let headerView = IssueDetailTableHeaderView()
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        return headerView
-    }()
-    
     private lazy var issueDetailTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         //        let cellID = IssueTableViewCell.reuseID
@@ -40,9 +34,16 @@ class IssueDetailViewController: UIViewController {
         return button
     }()
     
+    private lazy var issueDetailTableHeaderView: IssueDetailTableHeaderView = {
+        let headerView = IssueDetailTableHeaderView()
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        return headerView
+    }()
+    
     private var issueNumber: Int?
     private var issueDetailTableViewDelegate: IssueDetailTableViewDelegate?
     private var issueDetailTableViewDataSource: IssueDetailTableViewDataSource?
+    private var networkManager: NetworkManagerOperations?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,10 +51,16 @@ class IssueDetailViewController: UIViewController {
         addNavigationItems()
         addTableView()
         setTableViewSupporters()
-        //issueDetailHeaderView.configure(title: "테스트트트", issueNumber: 3, status: true, createTime: "몰라")
+        setNetworkManager()
+        setHeaderView()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         guard let number = self.issueNumber else { return }
-        print("안녕? 내 issuenumber는? =",number)
+        loadDetailIssue(for: number)
     }
         
     private func addTableView() {
@@ -71,22 +78,23 @@ class IssueDetailViewController: UIViewController {
         issueDetailTableViewDelegate = IssueDetailTableViewDelegate()
         issueDetailTableView.delegate = issueDetailTableViewDelegate
         issueDetailTableView.dataSource = issueDetailTableViewDataSource
-        
-        let headerView = IssueDetailTableHeaderView()
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        issueDetailTableView.tableHeaderView = headerView
+
+    }
+    
+    private func setHeaderView() {
+//        let headerView = IssueDetailTableHeaderView()
+//        headerView.translatesAutoresizingMaskIntoConstraints = false
+        issueDetailTableView.tableHeaderView = issueDetailTableHeaderView
         
         NSLayoutConstraint.activate([
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.topAnchor.constraint(equalTo: issueDetailTableView.topAnchor),
-            headerView.heightAnchor.constraint(equalTo: issueDetailTableView.heightAnchor, multiplier: 0.1416)
+            issueDetailTableHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            issueDetailTableHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            issueDetailTableHeaderView.topAnchor.constraint(equalTo: issueDetailTableView.topAnchor),
+            issueDetailTableHeaderView.heightAnchor.constraint(equalTo: issueDetailTableView.heightAnchor, multiplier: 0.1416)
         ])
         
-        headerView.backgroundColor = UIColor.white
-        headerView.configure(title: "테테테", issueNumber: 3, status: true, createTime: "2021-06-01", aurthor: "잭슨")
-        
-        headerView.layoutIfNeeded()
+        issueDetailTableHeaderView.backgroundColor = UIColor.white
+        issueDetailTableHeaderView.setNeedsLayout()
         
     }
     
@@ -107,6 +115,42 @@ class IssueDetailViewController: UIViewController {
         //        navigationItem.titleView = issues.get 통신의 issueTitle
     }
     
+    private func setNetworkManager() {
+        let loginInfo = LoginInfo.shared
+        guard let jwt = loginInfo.jwt else { return }
+        let headers = [Header.authorization.key(): jwt.description]
+        networkManager = NetworkManager(baseAddress: EndPoint.baseAddress, headers: headers)
+    }
+    
+    private func presentAlert(with errorMessage: String) {
+        DispatchQueue.main.async {
+            let alert = AlertFactory.create(body: errorMessage)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
     
 }
 
+
+//MARK: - Network Methods
+extension IssueDetailViewController {
+    private func loadDetailIssue(for id: Int) {
+        let issueListEndpoint = EndPoint.issue.path(with: id)
+        networkManager?.get(endpoint: issueListEndpoint, queryParameters: nil,
+                            completion: { [weak self] (result: Result<IssueDetailDTO, NetworkError>) in
+            switch result {
+            case .success(let result):
+                guard let issueDetail = result.data else { return }
+                print("issueDetail = ",issueDetail)
+            
+                DispatchQueue.main.async {
+                    self?.issueDetailTableHeaderView.configure(title: issueDetail.title, issueNumber: issueDetail.issueNumber, status: issueDetail.status, createTime: issueDetail.createdDate, aurthor: issueDetail.author.name)
+                    self?.issueDetailTableHeaderView.setNeedsLayout()
+                }
+            case .failure(let error):
+                self?.presentAlert(with: error.description)
+            }
+        })
+    }
+}
+    

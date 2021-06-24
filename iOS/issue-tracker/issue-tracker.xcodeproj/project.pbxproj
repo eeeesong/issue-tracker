@@ -87,6 +87,7 @@
 		FAF927B926837B6F0017F8DE /* IssueStatusUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927B826837B6F0017F8DE /* IssueStatusUIView.swift */; };
 		FAF927BB2683826A0017F8DE /* IssueDetailTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927BA2683826A0017F8DE /* IssueDetailTableViewDataSource.swift */; };
 		FAF927BD268382AE0017F8DE /* IssueDetailTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927BC268382AE0017F8DE /* IssueDetailTableViewDelegate.swift */; };
+		FAF927BF26844F810017F8DE /* IssueDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927BE26844F810017F8DE /* IssueDetail.swift */; };
 		FAFD11B1268078F80064AED4 /* CommonTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFD11B0268078F80064AED4 /* CommonTableDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -171,6 +172,7 @@
 		FAF927B826837B6F0017F8DE /* IssueStatusUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatusUIView.swift; sourceTree = "<group>"; };
 		FAF927BA2683826A0017F8DE /* IssueDetailTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailTableViewDataSource.swift; sourceTree = "<group>"; };
 		FAF927BC268382AE0017F8DE /* IssueDetailTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailTableViewDelegate.swift; sourceTree = "<group>"; };
+		FAF927BE26844F810017F8DE /* IssueDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetail.swift; sourceTree = "<group>"; };
 		FAFD11B0268078F80064AED4 /* CommonTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTableDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -493,6 +495,7 @@
 				FAF927AE2681DA810017F8DE /* Issue.swift */,
 				E496959826832B5A001AEB89 /* NewIssue.swift */,
 				E496958F268317C1001AEB89 /* User.swift */,
+				FAF927BE26844F810017F8DE /* IssueDetail.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -655,6 +658,7 @@
 				FAF927B926837B6F0017F8DE /* IssueStatusUIView.swift in Sources */,
 				E426DAC22671B1C60069E77D /* LoginKeyChainManager.swift in Sources */,
 				E43912D426788CC3003CD344 /* ImageBarButton.swift in Sources */,
+				FAF927BF26844F810017F8DE /* IssueDetail.swift in Sources */,
 				E43912D2267878F4003CD344 /* HexColorCode.swift in Sources */,
 				FA431FFD267F61150010EA91 /* String.swift in Sources */,
 				FAB2C36C2679F6CC009F879C /* MileStoneLabelView.swift in Sources */,

@@ -149,7 +149,7 @@ extension IssueViewController {
     private func loadIssues() {
         let issueListEndpoint = EndPoint.issue.path()
         networkManager?.get(endpoint: issueListEndpoint, queryParameters: nil,
-                            completion: { [weak self] (result: Result<IssueDTO, NetworkError>) in
+                            completion: { [weak self] (result: Result<CommonDTO<Issue>, NetworkError>) in
             switch result {
             case .success(let result):
                 guard let issues = result.data else { return }

@@ -48,8 +48,9 @@ final class IssueStatusUIView: UIView {
         self.status = status
         configure()
     }
-    
+
     private func configure() {
+        print("init status = ",self.status)
         layer.cornerRadius = labelHeight * 0.5
         translatesAutoresizingMaskIntoConstraints = false
         addLabelTitle()
@@ -65,4 +66,5 @@ final class IssueStatusUIView: UIView {
             heightAnchor.constraint(equalToConstant: labelHeight)
         ])
     }
+    
 }

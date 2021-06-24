@@ -11,3 +11,4 @@ struct CommonDTO<T: Decodable>: Decodable {
     let data: [T]?
     let error: String?
 }
+

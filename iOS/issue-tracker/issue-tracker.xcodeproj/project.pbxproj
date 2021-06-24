@@ -88,6 +88,7 @@
 		FAF927BB2683826A0017F8DE /* IssueDetailTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927BA2683826A0017F8DE /* IssueDetailTableViewDataSource.swift */; };
 		FAF927BD268382AE0017F8DE /* IssueDetailTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927BC268382AE0017F8DE /* IssueDetailTableViewDelegate.swift */; };
 		FAF927BF26844F810017F8DE /* IssueDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927BE26844F810017F8DE /* IssueDetail.swift */; };
+		FAF927C12684BAA80017F8DE /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927C02684BAA80017F8DE /* Date.swift */; };
 		FAFD11B1268078F80064AED4 /* CommonTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFD11B0268078F80064AED4 /* CommonTableDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -173,6 +174,7 @@
 		FAF927BA2683826A0017F8DE /* IssueDetailTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailTableViewDataSource.swift; sourceTree = "<group>"; };
 		FAF927BC268382AE0017F8DE /* IssueDetailTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailTableViewDelegate.swift; sourceTree = "<group>"; };
 		FAF927BE26844F810017F8DE /* IssueDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetail.swift; sourceTree = "<group>"; };
+		FAF927C02684BAA80017F8DE /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		FAFD11B0268078F80064AED4 /* CommonTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTableDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -264,6 +266,7 @@
 				E43912F3267CAA8D003CD344 /* UITextFieldExtension.swift */,
 				FA431FFC267F61150010EA91 /* String.swift */,
 				E49695792682CB33001AEB89 /* UITableCellExtension.swift */,
+				FAF927C02684BAA80017F8DE /* Date.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -656,6 +659,7 @@
 				E4F7E8EC26733A9700CE51C2 /* IssueTrackerTabBarCreator.swift in Sources */,
 				E43912EC267B1A4E003CD344 /* LoginInfoDTO.swift in Sources */,
 				FAF927B926837B6F0017F8DE /* IssueStatusUIView.swift in Sources */,
+				FAF927C12684BAA80017F8DE /* Date.swift in Sources */,
 				E426DAC22671B1C60069E77D /* LoginKeyChainManager.swift in Sources */,
 				E43912D426788CC3003CD344 /* ImageBarButton.swift in Sources */,
 				FAF927BF26844F810017F8DE /* IssueDetail.swift in Sources */,

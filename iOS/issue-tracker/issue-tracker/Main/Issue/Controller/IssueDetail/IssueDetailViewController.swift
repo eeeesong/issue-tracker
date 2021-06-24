@@ -136,7 +136,7 @@ extension IssueDetailViewController {
                 guard let issueDetail = result.data else { return }
 
                 DispatchQueue.main.async {
-                    self?.issueDetailTableHeaderView.configure(title: issueDetail.title, issueNumber: issueDetail.issueNumber, status: issueDetail.status, createTime: issueDetail.createdDate, aurthor: issueDetail.author.name)
+                    self?.issueDetailTableHeaderView.configure(title: issueDetail.title, issueNumber: issueDetail.issueNumber, status: issueDetail.status, createdDate: issueDetail.createdDate, aurthor: issueDetail.author.name)
                     self?.issueDetailTableView.reloadData()
                 }
             case .failure(let error):

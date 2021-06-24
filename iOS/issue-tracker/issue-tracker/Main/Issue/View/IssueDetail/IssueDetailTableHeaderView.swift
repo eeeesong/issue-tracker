@@ -97,11 +97,31 @@ class IssueDetailTableHeaderView: UIView {
         ])
     }
     
-    func configure(title: String, issueNumber: Int, status: Bool, createTime: String, aurthor: String) {
+    func configure(title: String, issueNumber: Int, status: Bool, createdDate: String, aurthor: String) {
         issueTitleTextLabel.text = title
         issueTitleNumberLabel.text = "#"+String(issueNumber)
         issueStatusUIView.setStatus(status: status)
-        issueCreatedInfoLabel.text = "1분 전, \(aurthor)님이 작성했습니다."
+        issueCreatedInfoLabel.text = "\(calculateDateTime(createdDate: createdDate)) 전, \(aurthor)님이 작성했습니다."
+    }
+    
+    private func calculateDateTime(createdDate: String) -> String {
+                
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier:"ko_KR")
+        dateFormatter.dateFormat = "yyyy-MM-dd hh:mm"
+        guard let startDate = dateFormatter.date(from: createdDate) else { return "방금"}
+        let interval = Date() - startDate
         
+        if interval.month! != 0 {
+            return "\(interval.month!)달"
+        } else if interval.day! != 0 {
+            return "\(interval.day!)일"
+        } else if interval.hour! != 0 {
+            return "\(interval.hour!)시간"
+        } else if interval.minute! != 0 {
+            return "\(interval.minute!)분"
+        } else {
+            return "\(interval.second!)초"
+        }
     }
 }

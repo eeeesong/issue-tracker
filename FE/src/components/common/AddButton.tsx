@@ -6,16 +6,18 @@ const AddButton = ({
   onClick,
   isOpen,
   isAdding,
+  openEdit,
 }: {
   text: string;
   onClick?: MouseEventHandler;
   isOpen?: boolean;
   isAdding?: boolean | undefined;
+  openEdit?: boolean;
 }) => {
   return (
-    <AddButtonWrapper text={text} onClick={onClick}>
-      {!isOpen && <PlusIcon />}
-      {isOpen && <CloseIcon />}
+    <AddButtonWrapper openEdit={openEdit} text={text} onClick={onClick}>
+      {!openEdit && !isOpen && <PlusIcon />}
+      {!openEdit && isOpen && <CloseIcon />}
       <ButtonText>{text}</ButtonText>
     </AddButtonWrapper>
   );
@@ -77,12 +79,15 @@ const AddButtonWrapper = styled.div`
   width: 120px;
   height: 40px;
   right: 0px;
-  top: ${({ text }: { text: string }) => {
-    if (text === "완료") return "220px";
+  top: ${({ text, openEdit }: { text: string; openEdit?: boolean }) => {
+    if (!openEdit && text === "완료") return "220px";
+    // if (text === "에1") return "300px";
     else return;
   }};
-  left: ${({ text }: { text: string }) => {
-    if (text === "완료") return "1108px";
+  left: ${({ text, openEdit }: { text: string; openEdit?: boolean }) => {
+    if (!openEdit && text === "완료") return "1108px";
+    if (text === "취소") return "950px";
+    if (openEdit && text === "완료") return "1130px";
     else return;
   }};
   background: #007aff;

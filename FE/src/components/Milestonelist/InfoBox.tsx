@@ -2,19 +2,23 @@ import { milestoneListAtom } from "atoms/atoms";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import ChartBox from "./ChartBox";
-const InfoBox = ({ infoIndex }: { infoIndex: number }) => {
+import { Dispatch } from "react";
+
+interface IInfoBox {
+  infoIndex: number;
+  setEditIndex: Dispatch<number | null>;
+  setOpenEdit: Dispatch<boolean>;
+}
+const InfoBox = ({ infoIndex, setEditIndex, setOpenEdit }: IInfoBox) => {
   const [, setMilestoneInfo] = useRecoilState(milestoneListAtom);
   const deleteElement = async () => {
-  await fetch(
-      `http://3.34.122.67/api/milestones/${infoIndex}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    await fetch(`http://3.34.122.67/api/milestones/${infoIndex}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     const responceGet = await fetch(`http://3.34.122.67/api/milestones`, {
       method: "GET",
       headers: {
@@ -25,10 +29,14 @@ const InfoBox = ({ infoIndex }: { infoIndex: number }) => {
     const { data } = await responceGet.json();
     setMilestoneInfo(data);
   };
+  const findIndex = () => {
+    setEditIndex(infoIndex);
+    setOpenEdit(true);
+  };
   return (
     <InfoBoxWrapper>
       <UDBox>
-        <UpdateBtn>
+        <UpdateBtn onClick={findIndex}>
           <EditIcon />
           편집
         </UpdateBtn>

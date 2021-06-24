@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import MilestoneBar from "components/common/MilestoneBar";
 const ChartBox = () => {
   return (
     <ChartBoxWrapper>
-      <Chart></Chart>
+      <MilestoneBar />
       <IssueInfo>
         <OpenIssue>열린이슈</OpenIssue>
         <CloseIssue>닫힌이슈</CloseIssue>
@@ -11,13 +12,6 @@ const ChartBox = () => {
   );
 };
 const ChartBoxWrapper = styled.div``;
-const Chart = styled.div`
-  margin: 10px 0;
-  width: 300px;
-  height: 10px;
-  border-radius: 10px;
-  border: 1px solid black;
-`;
 const IssueInfo = styled.div`
   display: flex;
   justify-content: flex-end;

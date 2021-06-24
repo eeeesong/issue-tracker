@@ -1,6 +1,7 @@
 import AddButton from "components/common/AddButton";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
+import { ChangeEvent } from "react";
 import { milestoneInputAtom, milestoneListAtom } from "atoms/atoms";
 import MilestoneInputContainer from "components/common/MilestoneInputContainer";
 const MilestoneModal = () => {

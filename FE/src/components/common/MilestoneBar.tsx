@@ -1,6 +1,9 @@
 import styled from "styled-components";
-
+import { useRecoilState } from "recoil";
+import { IssueDetailAtom } from "atoms/atoms";
 const MilestoneBar = () => {
+  const [detailIssue, setDetailIssue] = useRecoilState(IssueDetailAtom);
+  //   console.log(detailIssue);
   return <MilestoneBarWrapper></MilestoneBarWrapper>;
 };
 const Two = styled.div`
@@ -13,7 +16,7 @@ const One = styled.div`
 `;
 const MilestoneBarWrapper = styled.div`
   margin: 10px 0;
-  width: 300px;
+  width: 100%;
   height: 10px;
   border-radius: 10px;
   background-color: #eff0f6;

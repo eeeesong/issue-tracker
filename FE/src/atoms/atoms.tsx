@@ -171,18 +171,9 @@ export const labelCountSelector = selector({
   },
 });
 
-export const milestoneListAtom = atom({
+export const milestoneListAtom = atom<Array<IMilestone>>({
   key: "milestoneList",
-  default: [
-    {
-      id: 1,
-      title: "",
-      due_date: "",
-      description: "",
-      completion: "",
-      total: "",
-    },
-  ],
+  default: [],
 });
 
 export const milestoneInputAtom = atom({
@@ -191,6 +182,46 @@ export const milestoneInputAtom = atom({
     title: "",
     due_date: "",
     description: "",
+  },
+});
+
+export const IssueDetailAtom = atom({
+  key: "IssueDetail",
+  default: {
+    data: {
+      id: 4,
+      title: "코드스쿼드 과정",
+      description: "얼마 안남았다 ㅜㅜ",
+      issueResponses: [
+        {
+          issueNumber: 2,
+          title: "[BE] Issue 등록",
+          status: false,
+          author: {
+            id: 5,
+            name: "Starve",
+            imageUrl: "https://avatars.githubusercontent.com/u/69128652?v=4",
+          },
+          assignees: [
+            {
+              id: 1,
+              name: "JINSEO PARK",
+              imageUrl: "https://avatars.githubusercontent.com/u/52390975?v=4",
+            },
+          ],
+          labels: [
+            {
+              id: 1,
+              name: "documentation",
+              color_code: "#84e6b1",
+            },
+          ],
+          created_date: "2021-06-22 07:21",
+        },
+      ],
+      due_date: "2021-06-25 18:00",
+    },
+    error: null,
   },
 });
 

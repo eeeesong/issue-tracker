@@ -17,8 +17,11 @@ export interface IComment {
 }
 
 export interface IMilestone {
-  title: string;
-} // 순환참조 문제 해결필요
+  id: number,
+  title: string,
+  due_date: string,
+  description: string,
+} 
 
 export interface IIssue {
   id: number;

@@ -45,7 +45,7 @@ const InfoBox = ({ infoIndex, setEditIndex, setOpenEdit }: IInfoBox) => {
           삭제
         </DeleteBtn>
       </UDBox>
-      <ChartBox />
+      <ChartBox infoIndex={infoIndex} />
     </InfoBoxWrapper>
   );
 };

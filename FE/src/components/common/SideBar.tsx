@@ -4,12 +4,15 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { IUser, ILabel } from "config/interface";
 import Label from "components/common/Label";
 import styled from "styled-components";
-import { milestoneListAtom } from "atoms/atoms";
+import { milestoneListAtom, IssueDetailAtom } from "atoms/atoms";
 import MilestoneModal from "./MilestoneModal";
+import MilestoneBar from "./MilestoneBar";
 import useComponentVisible from "./Modal";
 const SideBar = ({ isDetail }: { isDetail?: boolean }) => {
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(true);
+
+  const [detailIssue, setDetailIssue] = useRecoilState(IssueDetailAtom);
   const [, setMilestoneList] = useRecoilState(milestoneListAtom);
   const { assignee, label } = useRecoilValue(currentIssueSelector);
   const [currentAssignees, setAssignees] = useState<Array<IUser>>([]);
@@ -30,6 +33,20 @@ const SideBar = ({ isDetail }: { isDetail?: boolean }) => {
     setAssignees(isDetail ? assignee : []);
     setLabels(isDetail ? label : []);
   }, [isDetail, assignee, label]);
+  useEffect(() => {
+    const getData = async () => {
+      const responceGet = await fetch(`http://3.34.122.67/api/issues/28`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const { data } = await responceGet.json();
+      setDetailIssue(data);
+    };
+    getData();
+  }, [detailIssue, setDetailIssue]);
   const getMilestoneList = async () => {
     const responceGet = await fetch(`http://3.34.122.67/api/milestones`, {
       method: "GET",
@@ -75,13 +92,17 @@ const SideBar = ({ isDetail }: { isDetail?: boolean }) => {
             <TitleText>마일스톤</TitleText>
             <TitleButton />
           </ContentTitle>
+          {detailIssue && <MilestoneBar />}
           {!isComponentVisible && <MilestoneModal />}
         </MilestoneBox>
       </SideBarContent>
     </SideBarWrapper>
   );
 };
-const MilestoneBox = styled.div``;
+const MilestoneBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 const User = ({
   loginId,
   profileUrl,
@@ -220,6 +241,7 @@ const SideBarWrapper = styled.div`
   background: #d9dbe9;
   border: 1px solid #d9dbe9;
   border-radius: 16px;
+  /* height: 900px; */
 `;
 const SideBarContent = styled.div`
   position: relative;
@@ -236,6 +258,7 @@ const SideBarContent = styled.div`
   }
   &:last-child {
     border-radius: 0px 0px 16px 16px;
+    /* border: 1px solid red; */
   }
 `;
 const LabelWrapper = styled.div`
@@ -247,6 +270,7 @@ const ContentTitle = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 244px;
+  border: 1px solid red;
 `;
 const TitleText = styled.div`
   font-weight: bold;

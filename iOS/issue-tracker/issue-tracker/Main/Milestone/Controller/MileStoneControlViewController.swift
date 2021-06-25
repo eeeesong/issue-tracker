@@ -161,10 +161,11 @@ class MileStoneControlViewController: UIViewController {
     
     @objc func saveButtonTouched(_ sender: UIBarButtonItem) {
         guard let mileStoneTitle = titleTextfield.text,
-              let completeDtae = completeDateTextField.text,
+              let completeDate = completeDateTextField.text,
               let saveOperation = saveOperation else { return }
         
-        let mileStone = MileStone(id: currentMileStone?.id ?? -1, title: mileStoneTitle, description: descriptionTextfield.text ?? "", dueDate: completeDtae)
+        let mileStone = MileStone(id: currentMileStone?.id ?? -1, title: mileStoneTitle, description: descriptionTextfield.text ?? "", dueDate: completeDate)
+        
         saveOperation(mileStone)
         dismiss(animated: true, completion: nil)
     }

@@ -26,7 +26,7 @@ final class NetworkManager: NetworkManagerOperations {
 
     func get<T: Decodable>(endpoint: String, queryParameters: [String: Any]?, completion: @escaping (Result<T, NetworkError>) -> Void) {
         let request = requestManager.create(endpoint: endpoint, method: .get, queryParameters: queryParameters)
-        
+    
         request.responseDecodable(of: T.self) { [weak self] response in
                 switch response.result {
                 case .success(let data):

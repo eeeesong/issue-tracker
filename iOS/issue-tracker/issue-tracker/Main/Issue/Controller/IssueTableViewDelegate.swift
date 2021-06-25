@@ -11,18 +11,17 @@ class IssueTableViewDelegate: NSObject, UITableViewDelegate {
     
     typealias CellActionHandler = (Int, CellAction) -> Void
     private var cellActionHandler: CellActionHandler
+    typealias CellSelectHandler = (Int) -> Void
+    private var cellSelectHandler: CellSelectHandler
     private var cellHeight: CGFloat
-    private(set) var issues = [Issue]()
     
-    func update(issues: [Issue]) {
-        self.issues = issues
-    }
-    
-    init(cellActionHandler: @escaping CellActionHandler, cellHeight: CGFloat) {
+    init(cellActionHandler: @escaping CellActionHandler,
+        cellSelectHandler: @escaping CellSelectHandler,
+        cellHeight: CGFloat) {
         self.cellActionHandler = cellActionHandler
+        self.cellSelectHandler = cellSelectHandler
         self.cellHeight = cellHeight
     }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.cellHeight
@@ -36,16 +35,15 @@ class IssueTableViewDelegate: NSObject, UITableViewDelegate {
         deleteAction.image = UIImage(systemName: "trash")
         
         let closeAction = UIContextualAction(style: .normal,
-                                            title: CellAction.close.buttonTitle()) { [weak self] _, _, _ in
+                                             title: CellAction.close.buttonTitle()) { [weak self] _, _, _ in
             self?.cellActionHandler(indexPath.row, .close)
         }
         closeAction.image = UIImage(systemName: "archivebox")
-
+        
         return UISwipeActionsConfiguration(actions: [closeAction, deleteAction])
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("clicked: ", issues[indexPath.row])
-        //navigation
+        self.cellSelectHandler(indexPath.row)        
     }
 }

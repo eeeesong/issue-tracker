@@ -10,11 +10,11 @@ import UIKit
 final class IssueViewController: UIViewController {
     
     private lazy var issueTableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         let cellID = IssueTableViewCell.reuseID
         tableView.register(IssueTableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.backgroundColor = Colors.background
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false        
         return tableView
     }()
     
@@ -90,13 +90,20 @@ final class IssueViewController: UIViewController {
     
     private func setTableViewSupporters() {
         issueTableDatasource = IssueTableViewDataSource()
-        issueTableDelegate = IssueTableViewDelegate(cellActionHandler: swipeActionHandler, cellHeight: 198)
-        
+        issueTableDelegate = IssueTableViewDelegate(cellActionHandler: swipeActionHandler, cellSelectHandler: goToTargetedDetailIssue, cellHeight: 198)
+
         issueTableView.delegate = issueTableDelegate
         issueTableView.dataSource = issueTableDatasource
     }
 
-    
+    private func goToTargetedDetailIssue(index: Int) {
+        guard let targetIssue = issueTableDatasource?.issues[index] else { return }
+        
+        let issueDetailViewController = IssueDetailViewController()
+        issueDetailViewController.setIssuNumber(targetIssue.issueNumber)
+        navigationController?.pushViewController(issueDetailViewController, animated: true)
+    }
+        
     private func setNetworkManager() {
         let loginInfo = LoginInfo.shared
         guard let jwt = loginInfo.jwt else { return }
@@ -108,7 +115,7 @@ final class IssueViewController: UIViewController {
         DispatchQueue.main.async {
             self.issueTableView.reloadData()
         }
-    }
+    }    
     
     private func swipeActionHandler(_ index: Int, _ action: CellAction) {
         guard let targetIssue = issueTableDatasource?.issues[index] else { return }
@@ -142,12 +149,11 @@ extension IssueViewController {
     private func loadIssues() {
         let issueListEndpoint = EndPoint.issue.path()
         networkManager?.get(endpoint: issueListEndpoint, queryParameters: nil,
-                            completion: { [weak self] (result: Result<IssueDTO, NetworkError>) in
+                            completion: { [weak self] (result: Result<CommonDTO<Issue>, NetworkError>) in
             switch result {
             case .success(let result):
                 guard let issues = result.data else { return }
                 self?.issueTableDatasource?.update(issues: issues)
-                self?.issueTableDelegate?.update(issues: issues)
                 self?.reloadTableView()
             case .failure(let error):
                 self?.presentAlert(with: error.description)

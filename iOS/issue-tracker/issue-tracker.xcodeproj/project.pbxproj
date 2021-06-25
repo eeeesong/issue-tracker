@@ -84,6 +84,13 @@
 		FAF927AD2680DCCA0017F8DE /* IssueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927AC2680DCCA0017F8DE /* IssueTableViewCell.swift */; };
 		FAF927AF2681DA810017F8DE /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927AE2681DA810017F8DE /* Issue.swift */; };
 		FAF927B126831A570017F8DE /* IssueDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927B026831A570017F8DE /* IssueDetailViewController.swift */; };
+		FAF927B6268373150017F8DE /* IssueDetailTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927B5268373150017F8DE /* IssueDetailTableHeaderView.swift */; };
+		FAF927B926837B6F0017F8DE /* IssueStatusUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927B826837B6F0017F8DE /* IssueStatusUIView.swift */; };
+		FAF927BB2683826A0017F8DE /* IssueDetailTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927BA2683826A0017F8DE /* IssueDetailTableViewDataSource.swift */; };
+		FAF927BD268382AE0017F8DE /* IssueDetailTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927BC268382AE0017F8DE /* IssueDetailTableViewDelegate.swift */; };
+		FAF927BF26844F810017F8DE /* IssueDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927BE26844F810017F8DE /* IssueDetail.swift */; };
+		FAF927C12684BAA80017F8DE /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927C02684BAA80017F8DE /* Date.swift */; };
+		FAF927C32684C8360017F8DE /* IssueDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF927C22684C8360017F8DE /* IssueDetailTableViewCell.swift */; };
 		FAFD11B1268078F80064AED4 /* CommonTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFD11B0268078F80064AED4 /* CommonTableDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -105,7 +112,7 @@
 		E42AD109266E52FE0071B436 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E42AD10B266E52FE0071B436 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E42AD1172670886F0071B436 /* IssueTrackerTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTrackerTabBarController.swift; sourceTree = "<group>"; };
-		E42AD11D267093320071B436 /* IssueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IssueViewController.swift; path = IssueEditing/IssueViewController.swift; sourceTree = "<group>"; };
+		E42AD11D267093320071B436 /* IssueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IssueViewController.swift; path = IssueDetail/IssueViewController.swift; sourceTree = "<group>"; };
 		E42AD11F267093430071B436 /* LabelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelViewController.swift; sourceTree = "<group>"; };
 		E42AD121267093590071B436 /* MileStoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileStoneViewController.swift; sourceTree = "<group>"; };
 		E42AD123267093700071B436 /* MyAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +172,13 @@
 		FAF927AC2680DCCA0017F8DE /* IssueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTableViewCell.swift; sourceTree = "<group>"; };
 		FAF927AE2681DA810017F8DE /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
 		FAF927B026831A570017F8DE /* IssueDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewController.swift; sourceTree = "<group>"; };
+		FAF927B5268373150017F8DE /* IssueDetailTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailTableHeaderView.swift; sourceTree = "<group>"; };
+		FAF927B826837B6F0017F8DE /* IssueStatusUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueStatusUIView.swift; sourceTree = "<group>"; };
+		FAF927BA2683826A0017F8DE /* IssueDetailTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailTableViewDataSource.swift; sourceTree = "<group>"; };
+		FAF927BC268382AE0017F8DE /* IssueDetailTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailTableViewDelegate.swift; sourceTree = "<group>"; };
+		FAF927BE26844F810017F8DE /* IssueDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetail.swift; sourceTree = "<group>"; };
+		FAF927C02684BAA80017F8DE /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		FAF927C22684C8360017F8DE /* IssueDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailTableViewCell.swift; sourceTree = "<group>"; };
 		FAFD11B0268078F80064AED4 /* CommonTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTableDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -256,6 +270,7 @@
 				E43912F3267CAA8D003CD344 /* UITextFieldExtension.swift */,
 				FA431FFC267F61150010EA91 /* String.swift */,
 				E49695792682CB33001AEB89 /* UITableCellExtension.swift */,
+				FAF927C02684BAA80017F8DE /* Date.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -488,6 +503,7 @@
 				FAF927AE2681DA810017F8DE /* Issue.swift */,
 				E496959826832B5A001AEB89 /* NewIssue.swift */,
 				E496958F268317C1001AEB89 /* User.swift */,
+				FAF927BE26844F810017F8DE /* IssueDetail.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -495,6 +511,7 @@
 		FAF927A62680D95B0017F8DE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FAF927B4268372B30017F8DE /* IssueDetail */,
 				FAF927AC2680DCCA0017F8DE /* IssueTableViewCell.swift */,
 				E496956C26819042001AEB89 /* IssueEditing */,
 			);
@@ -504,13 +521,33 @@
 		FAF927A72680D9630017F8DE /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				E42AD11D267093320071B436 /* IssueViewController.swift */,
+				FAF927B726837A350017F8DE /* IssueDetail */,
 				E496959626832693001AEB89 /* IssueTableViewDelegate.swift */,
+				E42AD11D267093320071B436 /* IssueViewController.swift */,
 				FAF927AA2680DB1C0017F8DE /* IssueTableViewDataSource.swift */,
-				FAF927B026831A570017F8DE /* IssueDetailViewController.swift */,
 				E496956A2680B3FE001AEB89 /* IssueEditing */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		FAF927B4268372B30017F8DE /* IssueDetail */ = {
+			isa = PBXGroup;
+			children = (
+				FAF927B5268373150017F8DE /* IssueDetailTableHeaderView.swift */,
+				FAF927B826837B6F0017F8DE /* IssueStatusUIView.swift */,
+				FAF927C22684C8360017F8DE /* IssueDetailTableViewCell.swift */,
+			);
+			path = IssueDetail;
+			sourceTree = "<group>";
+		};
+		FAF927B726837A350017F8DE /* IssueDetail */ = {
+			isa = PBXGroup;
+			children = (
+				FAF927B026831A570017F8DE /* IssueDetailViewController.swift */,
+				FAF927BA2683826A0017F8DE /* IssueDetailTableViewDataSource.swift */,
+				FAF927BC268382AE0017F8DE /* IssueDetailTableViewDelegate.swift */,
+			);
+			path = IssueDetail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -623,17 +660,22 @@
 				E43912F6267CAE01003CD344 /* TopMenuView.swift in Sources */,
 				E42AD122267093590071B436 /* MileStoneViewController.swift in Sources */,
 				E496956E2681905A001AEB89 /* IssueInfoView.swift in Sources */,
+				FAF927B6268373150017F8DE /* IssueDetailTableHeaderView.swift in Sources */,
 				E496957A2682CB33001AEB89 /* UITableCellExtension.swift in Sources */,
 				FA733A2E267C3D77005A40C8 /* Milestone.swift in Sources */,
 				E4F7E8EC26733A9700CE51C2 /* IssueTrackerTabBarCreator.swift in Sources */,
 				E43912EC267B1A4E003CD344 /* LoginInfoDTO.swift in Sources */,
+				FAF927B926837B6F0017F8DE /* IssueStatusUIView.swift in Sources */,
+				FAF927C12684BAA80017F8DE /* Date.swift in Sources */,
 				E426DAC22671B1C60069E77D /* LoginKeyChainManager.swift in Sources */,
 				E43912D426788CC3003CD344 /* ImageBarButton.swift in Sources */,
+				FAF927BF26844F810017F8DE /* IssueDetail.swift in Sources */,
 				E43912D2267878F4003CD344 /* HexColorCode.swift in Sources */,
 				FA431FFD267F61150010EA91 /* String.swift in Sources */,
 				FAB2C36C2679F6CC009F879C /* MileStoneLabelView.swift in Sources */,
 				E426DAC72671F6A00069E77D /* LoginError.swift in Sources */,
 				E43912D626789812003CD344 /* RequestManager.swift in Sources */,
+				FAF927C32684C8360017F8DE /* IssueDetailTableViewCell.swift in Sources */,
 				E426DAC42671D95D0069E77D /* LoginService.swift in Sources */,
 				E42AD120267093430071B436 /* LabelViewController.swift in Sources */,
 				E43912D826789A83003CD344 /* EndPoint.swift in Sources */,
@@ -646,12 +688,14 @@
 				FAF927AF2681DA810017F8DE /* Issue.swift in Sources */,
 				E43912EE267C3C0E003CD344 /* CellAction.swift in Sources */,
 				E49695862682FD95001AEB89 /* AdditionalInfoTableDelegate.swift in Sources */,
+				FAF927BB2683826A0017F8DE /* IssueDetailTableViewDataSource.swift in Sources */,
 				E4F7E8E826732B6300CE51C2 /* TabBarChildInfo.swift in Sources */,
 				FAC6D88B2671D5A100A9E5F9 /* GithubAuthorizationManager.swift in Sources */,
 				E4F7E8EA2673394300CE51C2 /* ImageLoadManager.swift in Sources */,
 				E42AD11E267093320071B436 /* IssueViewController.swift in Sources */,
 				E43912F4267CAA8D003CD344 /* UITextFieldExtension.swift in Sources */,
 				E49695882682FDC9001AEB89 /* CellSelectionTableDelegate.swift in Sources */,
+				FAF927BD268382AE0017F8DE /* IssueDetailTableViewDelegate.swift in Sources */,
 				E43912DC2678A737003CD344 /* JWT.swift in Sources */,
 				E4969592268318A4001AEB89 /* AssigneeInfoTableViewCell.swift in Sources */,
 				E426DABA2670EC2D0069E77D /* AppleAuthorizationManager.swift in Sources */,

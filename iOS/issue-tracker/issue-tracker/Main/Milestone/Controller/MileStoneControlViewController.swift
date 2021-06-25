@@ -51,12 +51,14 @@ class MileStoneControlViewController: UIViewController {
     private lazy var titleTextfield: UITextField = {
         let textField = UITextField()
         textField.placeholder = "(필수 입력)"
+        textField.returnKeyType = .next
         return textField
     }()
     
     private lazy var descriptionTextfield: UITextField = {
         let textField = UITextField()
         textField.placeholder = "(선택 사항)"
+        textField.returnKeyType = .next
         return textField
     }()
     
@@ -77,6 +79,7 @@ class MileStoneControlViewController: UIViewController {
         return singleLineHeight * 0.5
     }()
     
+    private var descriptionTextFieldDelegate: UITextFieldDelegate?
     private var currentMileStone: MileStone?
     private var sceneTitle: String?
     private var saveOperation: ((MileStone) -> Void)?
@@ -93,7 +96,7 @@ class MileStoneControlViewController: UIViewController {
         case .date:
             if text.isValid(validityType) {
                 mileStoneEditStackView.setLabelColor(correct: true)
-            }else{                
+            } else {
                 mileStoneEditStackView.setLabelColor(correct: false)
             }
         }
@@ -101,6 +104,8 @@ class MileStoneControlViewController: UIViewController {
     
     private func configureViews() {
         view.backgroundColor = Colors.background
+        hideKeyboardWhenTappedAround()
+        
         addTopMenu()
         addEditStackView()
     }
@@ -129,6 +134,8 @@ class MileStoneControlViewController: UIViewController {
     
     private func setTitleTextFieldSupporter() {
         titleTextfield.delegate = self
+        descriptionTextFieldDelegate = OrderedTextFieldDelgate(nextTextField: completeDateTextField)
+        descriptionTextfield.delegate = descriptionTextFieldDelegate
     }
     
     func configure(withTitle sceneTitle: String, currentMileStone: MileStone?) {
@@ -174,4 +181,9 @@ extension MileStoneControlViewController: UITextFieldDelegate {
         }
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        descriptionTextfield.becomeFirstResponder()
+        return true
+    }
 }

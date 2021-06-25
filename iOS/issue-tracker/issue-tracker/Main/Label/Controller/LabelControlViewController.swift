@@ -59,6 +59,7 @@ class LabelControlViewController: UIViewController {
     private lazy var titleTextfield: UITextField = {
         let textField = UITextField()
         textField.placeholder = "(필수 입력)"
+        textField.returnKeyType = .next
         return textField
     }()
     
@@ -114,6 +115,8 @@ class LabelControlViewController: UIViewController {
     
     private func configureViews() {
         view.backgroundColor = Colors.background
+        hideKeyboardWhenTappedAround()
+        
         addTopMenu()
         addEditStackView()
         addLabelPreview()
@@ -236,5 +239,11 @@ extension LabelControlViewController: UITextFieldDelegate {
         let hex = HexColorCode(from: hexColorString)
         let titleText = titleTextfield.isEmpty() ? "레이블" : titleTextfield.text
         previewLabel.configure(with: hex, titleText)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        descriptionTextfield.becomeFirstResponder()
+        return true
     }
 }

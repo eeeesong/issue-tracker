@@ -46,6 +46,7 @@
 		E43912F4267CAA8D003CD344 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43912F3267CAA8D003CD344 /* UITextFieldExtension.swift */; };
 		E43912F6267CAE01003CD344 /* TopMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43912F5267CAE01003CD344 /* TopMenuView.swift */; };
 		E43912F8267CB3D7003CD344 /* MultipleLineInputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43912F7267CB3D7003CD344 /* MultipleLineInputStackView.swift */; };
+		E45B0AA126857108006FDE3D /* OrderedTextFieldDelgate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45B0AA026857108006FDE3D /* OrderedTextFieldDelgate.swift */; };
 		E46E11242677391B005375A1 /* LabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46E11232677391B005375A1 /* LabelTableViewCell.swift */; };
 		E49695672680B0B7001AEB89 /* IssueEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49695662680B0B7001AEB89 /* IssueEditViewController.swift */; };
 		E496956E2681905A001AEB89 /* IssueInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E496956D2681905A001AEB89 /* IssueInfoView.swift */; };
@@ -128,6 +129,7 @@
 		E43912F3267CAA8D003CD344 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		E43912F5267CAE01003CD344 /* TopMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMenuView.swift; sourceTree = "<group>"; };
 		E43912F7267CB3D7003CD344 /* MultipleLineInputStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleLineInputStackView.swift; sourceTree = "<group>"; };
+		E45B0AA026857108006FDE3D /* OrderedTextFieldDelgate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderedTextFieldDelgate.swift; sourceTree = "<group>"; };
 		E46E11232677391B005375A1 /* LabelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTableViewCell.swift; sourceTree = "<group>"; };
 		E49695662680B0B7001AEB89 /* IssueEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueEditViewController.swift; sourceTree = "<group>"; };
 		E496956D2681905A001AEB89 /* IssueInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueInfoView.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				E42AD121267093590071B436 /* MileStoneViewController.swift */,
 				FA733A2F267C3E9E005A40C8 /* MilestoneTableViewDataSource.swift */,
 				FA431FF8267F36FA0010EA91 /* MileStoneControlViewController.swift */,
+				E45B0AA026857108006FDE3D /* OrderedTextFieldDelgate.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -597,6 +600,7 @@
 				FAFD11B1268078F80064AED4 /* CommonTableDelegate.swift in Sources */,
 				E43912E8267A1FE5003CD344 /* NewLabelDTO.swift in Sources */,
 				FAEB30B42670B76200C17BE9 /* NetworkManager.swift in Sources */,
+				E45B0AA126857108006FDE3D /* OrderedTextFieldDelgate.swift in Sources */,
 				E426DABC2670EC5E0069E77D /* LoginInfo.swift in Sources */,
 				E49695672680B0B7001AEB89 /* IssueEditViewController.swift in Sources */,
 				E43912CE26777310003CD344 /* HexColorConverter.swift in Sources */,

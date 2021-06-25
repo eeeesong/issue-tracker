@@ -18,8 +18,19 @@ class LoginViewController: UIViewController {
         return label
     }()
     
-    private lazy var loginIDTextField = UITextField()
-    private lazy var loginPwdTextField = UITextField()
+    private lazy var loginIDTextField: UITextField = {
+        let textField = UITextField()
+        textField.returnKeyType = .done
+        textField.delegate = self
+        return textField
+    }()
+    
+    private lazy var loginPwdTextField: UITextField = {
+        let textField = UITextField()
+        textField.returnKeyType = .done
+        textField.delegate = self
+        return textField
+    }()
     
     private lazy var loginStackView: UIStackView = {
         let superStackView = UIStackView()
@@ -100,6 +111,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Colors.background
+        hideKeyboardWhenTappedAround()
+        
         addTitleLabel()
         addLoginStackView()
         addLoginButtons()
@@ -244,4 +257,11 @@ extension LoginViewController: SocialLoginManagerDelegate {
         presentAlert(with: errorText)
     }
     
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }

@@ -163,6 +163,13 @@ final class AdditionalInfoViewController<InfoCell: UITableViewCell,
         }
     }
     
+    private func presentAlert(with errorMessage: String) {
+        DispatchQueue.main.async {
+            let alert = AlertFactory.create(body: errorMessage)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     private func setUpCurrentLabelInfo() {
         guard let tableDatasource = tableDatasource else { return }
         let selectedIndexs = selectedInfo.compactMap{ tableDatasource.index(for: $0) }
@@ -199,8 +206,7 @@ extension AdditionalInfoViewController {
                 tableDatasource.update(with: infos)
                 self?.reloadTableView()
             case .failure(let error):
-                print("\(error)")
-                //self?.presentAlert(with: error.description)
+                self?.presentAlert(with: error.description)
             }
         }
     }

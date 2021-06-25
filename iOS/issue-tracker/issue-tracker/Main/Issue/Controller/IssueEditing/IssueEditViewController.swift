@@ -96,6 +96,7 @@ final class IssueEditViewController: UIViewController {
     private lazy var titleTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "(필수 입력)"
+        textField.returnKeyType = .done
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         return textField
@@ -109,12 +110,22 @@ final class IssueEditViewController: UIViewController {
         return stackView
     }()
     
+    private lazy var bodyTextViewToolBar: UIToolbar = {
+        let toolBarFrame = CGRect(x: 0, y: 0, width: view.frame.width, height: 44.0)
+        let toolBar = UIToolbar(frame: toolBarFrame)
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let barButton = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(doneButtonTouched))
+        toolBar.setItems([space, barButton], animated: true)
+        return toolBar
+    }()
+    
     private lazy var bodyTextView: UITextView = {
         let textView = UITextView()
         textView.text = bodyPlaceholder
         textView.font = .systemFont(ofSize: 17)
         textView.textColor = .lightGray
         textView.dataDetectorTypes = UIDataDetectorTypes.all
+        textView.inputAccessoryView = bodyTextViewToolBar
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.delegate = self
         return textView
@@ -358,6 +369,10 @@ final class IssueEditViewController: UIViewController {
         let assigneeInfo = "\(firstAssignee.name)" + tail
         assigneeInfoControl.changeInfoLabelText(to: assigneeInfo)
     }
+    
+    @objc private func doneButtonTouched(_ sender: UIBarButtonItem) {
+        view.endEditing(true)
+    }
 }
 
 extension IssueEditViewController: UITextFieldDelegate {
@@ -369,6 +384,11 @@ extension IssueEditViewController: UITextFieldDelegate {
         DispatchQueue.main.async {
             self.saveButton.isEnabled = !textField.isEmpty()
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 

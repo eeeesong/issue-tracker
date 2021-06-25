@@ -1,19 +1,13 @@
-import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import Label from "components/common/Label";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { currentIssueIdAtom, issueListAtom } from "atoms/atoms";
+import { checkedIssueIdAtom, currentIssueIdAtom, issueListAtom } from "atoms/atoms";
 import { useHistory } from "react-router-dom";
 
-interface IIssue {
-  id: number;
-  checkedIndex: Array<number>;
-  setCheckedIndex: Dispatch<SetStateAction<Array<number>>>;
-}
-
-const Issue = ({ id, checkedIndex, setCheckedIndex }: IIssue) => {
-  const { title, label, milestone, author, status } = useRecoilValue(issueListAtom).filter(
-    (issue) => issue.id === id
+const Issue = ({ id }: { id: number }) => {
+  const [checkedIndex, setCheckedIndex] = useRecoilState(checkedIssueIdAtom);
+  const { title, labels, milestone, author, status } = useRecoilValue(issueListAtom).filter(
+    ({ issueNumber }) => issueNumber === id
   )[0];
   const check = () =>
     setCheckedIndex((arr) =>
@@ -31,9 +25,9 @@ const Issue = ({ id, checkedIndex, setCheckedIndex }: IIssue) => {
       <CheckBox type="checkbox" checked={checkedIndex.includes(id)} onClick={check} readOnly />
       <div onClick={moveDetailEvent}>
         <IssueTitle>
-          <OpenIcon status={status}/>
+          <OpenIcon status={status} />
           <TitleText>{title}</TitleText>
-          {label.map(({ id, name, color_code }) => (
+          {labels.map(({ id, name, color_code }) => (
             <LabelWrapper key={id}>
               <Label key={id} name={name} color_code={color_code} />
             </LabelWrapper>
@@ -42,7 +36,7 @@ const Issue = ({ id, checkedIndex, setCheckedIndex }: IIssue) => {
         <IssueInfo>
           <InfoText>#{id}</InfoText>
           <InfoText>
-            이 이슈가 {"대충시간처리로직"} 전, {author.loginId}님에 의해 작성되었습니다
+            이 이슈가 {"대충시간처리로직"} 전, {author.name}님에 의해 작성되었습니다
           </InfoText>
           {milestone && (
             <InfoText>
@@ -95,13 +89,7 @@ const OpenIcon = ({ status }: { status: boolean }) =>
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <path
-          d="M6.6665 8H9.33317"
-          stroke="#0025E7"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M6.6665 8H9.33317" stroke="#0025E7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
       </g>
       <defs>
         <clipPath id="clip0">

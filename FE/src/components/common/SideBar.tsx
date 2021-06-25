@@ -66,7 +66,7 @@ const SideBar = ({ isDetail }: { isDetail?: boolean }) => {
           <TitleButton />
         </ContentTitle>
         {currentAssignees.map((assignee) => (
-          <User key={assignee.loginId} {...assignee} />
+          <User key={assignee.id} {...assignee} />
         ))}
       </SideBarContent>
       <SideBarContent ref={labelDOM} onClick={() => setLabelOn(true)}>

@@ -9,13 +9,13 @@ const HeaderModal = () => {
   const userInfo = useRecoilValue(userInfoAtom);
   const createID = () => {
     let newObj = { ...userInfo };
-    return newObj.loginId;
+    return newObj.name;
   };
   const removeUserInfo = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("profileUrl");
     localStorage.removeItem("loginId");
-    setIsLogin((v) => false);
+    setIsLogin(false);
   };
   return (
     <HeaderModalWrapper onClick={(e) => e.stopPropagation()}>

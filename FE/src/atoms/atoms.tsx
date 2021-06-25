@@ -31,11 +31,31 @@ export const checkedIssueIdAtom = atom<Array<number>>({
 export const labelListAtom = atom({
   key: "labelList",
   default: [
-    { id: 1, name: "documentation", content: "문서 관련", color_code: "#004de3" },
+    {
+      id: 1,
+      name: "documentation",
+      content: "문서 관련",
+      color_code: "#004de3",
+    },
     { id: 2, name: "test", content: "색테스트", color_code: "#FF0000" },
-    { id: 3, name: "test2", content: "글자색 반응 테스트", color_code: "#AAAAAA" },
-    { id: 4, name: "test3", content: "글자색 반응 테스트", color_code: "#999999" },
-    { id: 5, name: "test4", content: "글자색 반응 테스트", color_code: "#EE99AA" },
+    {
+      id: 3,
+      name: "test2",
+      content: "글자색 반응 테스트",
+      color_code: "#AAAAAA",
+    },
+    {
+      id: 4,
+      name: "test3",
+      content: "글자색 반응 테스트",
+      color_code: "#999999",
+    },
+    {
+      id: 5,
+      name: "test4",
+      content: "글자색 반응 테스트",
+      color_code: "#EE99AA",
+    },
   ],
 });
 
@@ -46,9 +66,58 @@ export const labelCountSelector = selector({
   },
 });
 
-export const milestoneListAtom = atom({
+export const milestoneListAtom = atom<Array<IMilestone>>({
   key: "milestoneList",
-  default: [{ title: "마스터즈 코스" }],
+  default: [],
+});
+
+export const milestoneInputAtom = atom({
+  key: "milestoneInput",
+  default: {
+    title: "",
+    due_date: "",
+    description: "",
+  },
+});
+
+export const IssueDetailAtom = atom({
+  key: "IssueDetail",
+  default: {
+    data: {
+      id: 4,
+      title: "코드스쿼드 과정",
+      description: "얼마 안남았다 ㅜㅜ",
+      issueResponses: [
+        {
+          issueNumber: 2,
+          title: "[BE] Issue 등록",
+          status: false,
+          author: {
+            id: 5,
+            name: "Starve",
+            imageUrl: "https://avatars.githubusercontent.com/u/69128652?v=4",
+          },
+          assignees: [
+            {
+              id: 1,
+              name: "JINSEO PARK",
+              imageUrl: "https://avatars.githubusercontent.com/u/52390975?v=4",
+            },
+          ],
+          labels: [
+            {
+              id: 1,
+              name: "documentation",
+              color_code: "#84e6b1",
+            },
+          ],
+          created_date: "2021-06-22 07:21",
+        },
+      ],
+      due_date: "2021-06-25 18:00",
+    },
+    error: null,
+  },
 });
 
 export const milestoneCountSelector = selector({
@@ -72,19 +141,28 @@ const filter = [
   {
     id: 1,
     body: "is:issue author:@me",
-    logic: (arr: Array<IIssue>, user: IUser) => arr.filter(({ author }) => author.name === user.name),
+    logic: (arr: Array<IIssue>, user: IUser) =>
+      arr.filter(({ author }) => author.loginId === user.loginId),
   },
   {
     id: 2,
     body: "is:issue assignee:@me",
     logic: (arr: Array<IIssue>, user: IUser) =>
-      arr.filter(({ assignees }) => assignees.filter(({ name }) => name === user.name).length !== 0),
+      arr.filter(
+        ({ assignee }) =>
+          assignee.filter(({ loginId }) => loginId === user.loginId).length !==
+          0
+      ),
   },
   {
     id: 3,
     body: "is:issue comment:@me ",
     logic: (arr: Array<IIssue>, user: IUser) =>
-      arr.filter(({ comment }) => comment.filter(({ author }) => author.name === user.name).length !== 0),
+      arr.filter(
+        ({ comments }) =>
+          comments.filter(({ author }) => author.loginId === user.loginId)
+            .length !== 0
+      ),
   },
 ];
 
@@ -101,13 +179,18 @@ export const filterIndexAtom = atom({
 export const currentFilterSelector = selector({
   key: "currentFilter",
   get({ get }) {
-    return filter[get(filterIndexAtom)].logic(get(issueListAtom), get(userInfoAtom));
+    return filter[get(filterIndexAtom)].logic(
+      get(issueListAtom),
+      get(userInfoAtom)
+    );
   },
 });
 
 export const currentFilterBodySelector = selector({
   key: "currentFilterBody",
   get({ get }) {
-    return `is:${get(openFilterAtom) ? "open" : "close"} ${filter[get(filterIndexAtom)].body}`;
+    return `is:${get(openFilterAtom) ? "open" : "close"} ${
+      filter[get(filterIndexAtom)].body
+    }`;
   },
 });

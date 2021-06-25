@@ -18,9 +18,11 @@ export interface IComment {
 }
 
 export interface IMilestone {
-  id:number;
-  title: string;
-}
+  id: number,
+  title: string,
+  due_date: string,
+  description: string,
+} 
 
 export interface IIssue {
   issueNumber: number;

@@ -3,11 +3,6 @@ import { Route, Redirect } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { LoginState } from "../../atoms/atoms";
 
-// type Props = RouteProps & {
-//   component: React.ComponentType<RouteComponentProps>;
-//   render: (props: any) => React.ComponentType<RouteComponentProps>;
-//   path: string;
-// };
 const AuthRoute = ({ component: Component, render, ...rest }: any) => {
   const [, setIsLogin] = useRecoilState(LoginState);
   const token = localStorage.getItem("token");

@@ -38,10 +38,10 @@ class IssueDetailTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var markdownView: DownView = {
+    private lazy var descriptionMarkDownView: DownView = {
         let downView = try! DownView(frame: .zero, markdownString: "")
+        downView.translatesAutoresizingMaskIntoConstraints = false
         downView.pageZoom = 1.5
-        downView.isHidden = true
         return downView
     }()
     
@@ -59,6 +59,7 @@ class IssueDetailTableViewCell: UITableViewCell {
         addUserImageView()
         addUserNameLabel()
         addCreatedDatedLabel()
+        addDescriptionMarkDownView()
     }
     
     private func addUserImageView() {
@@ -92,11 +93,24 @@ class IssueDetailTableViewCell: UITableViewCell {
             createdDateLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 2)
         ])
     }
+    
+    private func addDescriptionMarkDownView() {
+        addSubview(descriptionMarkDownView)
+        
+        NSLayoutConstraint.activate([
+            descriptionMarkDownView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 68),
+            descriptionMarkDownView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            descriptionMarkDownView.topAnchor.constraint(equalTo: createdDateLabel.bottomAnchor, constant: 8),
+            descriptionMarkDownView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
+        ])
+    }
+    
     func configure(name: String, description: String, imageUrl: String, createdDate: String) {
-        print("이름 :",name,"\n설명 :", description,"\n이미지url :",imageUrl,"\n생긴날짜 :",createdDate)
         nameLabel.text = name
         updateUserImage(imageUrl: imageUrl)
         createdDateLabel.text = calculateDateTime(createdDate: createdDate)
+        try? descriptionMarkDownView.update(markdownString: description)
+//        print("웹뷰 사이즈 =",descriptionMarkDownView.scrollView.contentSize.height)
     }
  
     private func updateUserImage(imageUrl: String) {

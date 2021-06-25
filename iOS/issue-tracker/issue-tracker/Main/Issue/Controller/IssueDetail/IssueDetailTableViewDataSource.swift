@@ -27,4 +27,5 @@ final class IssueDetailTableViewDataSource: NSObject, UITableViewDataSource {
         cell.configure(name: comment.author.name, description: comment.description ?? "", imageUrl: comment.author.imageUrl, createdDate: comment.createdDate)
         return cell
     }
+        
 }

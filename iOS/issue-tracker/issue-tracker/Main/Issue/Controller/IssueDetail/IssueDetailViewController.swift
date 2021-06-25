@@ -17,8 +17,6 @@ class IssueDetailViewController: UIViewController {
         tableView.register(IssueDetailTableViewCell.self, forCellReuseIdentifier: cellID)
         tableView.backgroundColor = Colors.background
         tableView.translatesAutoresizingMaskIntoConstraints = false
-//        tableView.rowHeight = UITableView.automaticDimension
-//        tableView.estimatedRowHeight = 120
         return tableView
     }()
     
@@ -82,6 +80,8 @@ class IssueDetailViewController: UIViewController {
         
         issueDetailTableView.delegate = issueDetailTableViewDelegate
         issueDetailTableView.dataSource = issueDetailTableViewDataSource
+        
+        
     }
     
     private func setHeaderView() {
@@ -95,8 +95,6 @@ class IssueDetailViewController: UIViewController {
         ])
         
         issueDetailTableHeaderView.backgroundColor = UIColor.white
-        
-        
     }
     
     @objc func backToIssuesTouched(_ sender: UIButton) {
@@ -128,7 +126,6 @@ class IssueDetailViewController: UIViewController {
     }
 }
 
-
 //MARK: - Network Methods
 extension IssueDetailViewController {
     private func loadDetailIssue(for id: Int) {
@@ -143,6 +140,7 @@ extension IssueDetailViewController {
                     self?.issueDetailTableHeaderView.configure(title: issueDetail.title, issueNumber: issueDetail.issueNumber, status: issueDetail.status, createdDate: issueDetail.createdDate, aurthor: issueDetail.author.name)
                     guard let comments = issueDetail.comments else { return }
                     self?.issueDetailTableViewDataSource?.update(comments: comments)
+                
                     self?.issueDetailTableView.reloadData()
                 }
             case .failure(let error):

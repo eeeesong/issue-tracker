@@ -171,18 +171,9 @@ export const labelCountSelector = selector({
   },
 });
 
-export const milestoneListAtom = atom({
+export const milestoneListAtom = atom<Array<IMilestone>>({
   key: "milestoneList",
-  default: [
-    {
-      id: 1,
-      title: "",
-      due_date: "",
-      description: "",
-      completion: "",
-      total: "",
-    },
-  ],
+  default: [],
 });
 
 export const milestoneInputAtom = atom({

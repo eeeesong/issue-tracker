@@ -107,7 +107,7 @@ class IssueDetailTableHeaderView: UIView {
     private func calculateDateTime(createdDate: String) -> String {
                 
         let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier:"ko_KR")
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         guard let startDate = dateFormatter.date(from: createdDate) else { return "방금"}
         let interval = Date() - startDate

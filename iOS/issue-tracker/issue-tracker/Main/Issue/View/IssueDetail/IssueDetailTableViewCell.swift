@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Down
+
 class IssueDetailTableViewCell: UITableViewCell {
     
     private let imageLoadManager = ImageLoadManager()
@@ -34,6 +36,13 @@ class IssueDetailTableViewCell: UITableViewCell {
         label.text = "방금 전"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    private lazy var markdownView: DownView = {
+        let downView = try! DownView(frame: .zero, markdownString: "")
+        downView.pageZoom = 1.5
+        downView.isHidden = true
+        return downView
     }()
     
     required init?(coder: NSCoder) {
@@ -102,7 +111,7 @@ class IssueDetailTableViewCell: UITableViewCell {
     private func calculateDateTime(createdDate: String) -> String {
                 
         let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier:"ko_KR")
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         guard let startDate = dateFormatter.date(from: createdDate) else { return "방금"}
         let interval = Date() - startDate

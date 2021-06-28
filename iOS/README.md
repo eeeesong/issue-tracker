@@ -19,6 +19,17 @@
 
 - 백엔드 연동 미구현으로 애플 로그인으로 서비스를 이용할 수는 없음
 
+## 📄 이슈
+- 이슈 조회 & 추가 & 삭제 & 이슈 코멘트
+
+<img src= https://user-images.githubusercontent.com/52390975/123604660-03e36580-d836-11eb-9755-9c22941ac8d7.gif width=300 align = left> 
+<img src= https://user-images.githubusercontent.com/52390975/123604402-c7176e80-d835-11eb-94ba-b6810b50122e.gif width=300 align = center> 
+
+<img src= https://user-images.githubusercontent.com/52390975/123604592-f29a5900-d835-11eb-92fd-89726c6844e2.gif width=300 align = left> 
+<img src= https://user-images.githubusercontent.com/52390975/123604507-db5b6b80-d835-11eb-8bf1-84232aa9899e.gif width=300 align = center> 
+
+
+
 ## 🏷 레이블
 - 레이블 조회 및 추가 & 수정 & 삭제
 

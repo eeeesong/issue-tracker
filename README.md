@@ -6,9 +6,78 @@
 
 - `개발 기간` 2021년 6월 7일 ~ 6월 25일
 - `팀` iOS 2인 (with 백엔드 1인, 웹프론트엔드 2인) / + 코드 리뷰어 1인
+- `협업 방식` github issues와 discussions을 통한 협의, 공유
 - `주요 개발 키워드` MVC, Social Login(apple & github Auth), Code Based View, Alamofire
 
+<br>
 
+
+## 상세 개발 내용
+
+### Social Login
+- apple과 github 두 가지 방식의 소셜 로그인 기능을 구현했습니다.
+- 두 로그인 방식뿐만 아니라 다른 소셜 로그인 방식이 추가되었을 때를 고려하여 확장 가능하도록 코드를 작성했습니다.
+- 로그인 관리 객체의 타입을 추상화하여 의존성을 낮추고, 중복 코드를 줄였습니다. 
+- LoginInfo 객체는 앱을 통틀어 같은 정보를 공유한다는 점을 고려하여 싱글톤으로 작성하였습니다.
+
+```swift
+// 로그인 관리 객체들의 공통 프로토콜 
+protocol SocialLoginManagable {
+    func login()
+}
+
+protocol SocialLoginManagerDelegate: AnyObject {
+    func didSocialLoginSuccess(with loginInfo: LoginInfoDTO)
+    func didSocialLoginFail(with error: LoginError)
+}
+```
+
+```swift
+// ViewController에서의 로그인 기능 구현
+class LoginViewController: UIViewController {
+    private var socialLoginManager: SocialLoginManagable? // AppleAuth & GithubAuth 객체가 공통으로 채택
+    private let loginInfo = LoginInfo.shared
+
+    @objc private func loginWithGithubTouched(_ sender: UIButton) {
+        configureLoginManager(service: .github)
+        socialLoginManager?.login()
+    }
+    
+    @objc private func loginWithAppleTouched(_ sender: UIButton) {
+        configureLoginManager(service: .apple)
+        socialLoginManager?.login()
+    }
+    
+    private func configureLoginManager(service: LoginService) {
+        let keyChainManager = LoginKeyChainManager(loginService: service)
+        loginInfo.service = service
+        
+        switch service {
+        case .github:
+            socialLoginManager = GithubAuthorizationManager(viewController: self, delegate: self, keyChainSaver: keyChainManager)
+        case .apple:
+            socialLoginManager = AppleAuthorizationManager(viewController: self, delegate: self, keyChainSaver: keyChainManager)
+        }
+    }
+    // 이외의 코드 생략
+}
+
+extension LoginViewController: SocialLoginManagerDelegate {
+    func didSocialLoginSuccess(with loginInfoDTO: LoginInfoDTO) {
+        let loginInfo = LoginInfo.shared
+        loginInfo.store(loginInfoDTO: loginInfoDTO)
+        presentIssueViewController()
+    }
+    
+    func didSocialLoginFail(with error: LoginError) {
+        let errorText = error.description
+        presentAlert(with: errorText)
+    } 
+}
+```
+
+
+<br>
 
 
 ## 화면 별 구현 내용
